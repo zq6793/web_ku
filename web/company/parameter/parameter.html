@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>参数配置</title>
+	<link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+	<link rel="stylesheet" type="text/css" href="../static/css/parameter.css" />
+</head>
+<body>
+    <div class="rightBox" id="param">
+		<nav class="nav clearfix">
+			<li class="active">项目部分划分</li>
+			<li  @click="toUrl(2)">物资类别</li>
+		</nav>
+		<div class="contant clearfix" >
+			<div class="cont_left fl">
+				<h3>分管员列表</h3>
+				<!-- <p class="add" id="addPeople">添加分管员</p> -->
+				<ul class="list">
+					<li v-for="val,index in leftList"   :class="{'active':val.active}" @click="check(index)">{{val.name}}</li>
+						
+				</ul>
+				<!-- 添加项目部 -->
+				<div class="showNewRole none" id="people">
+				    <p>
+				        <span>分管员:</span>
+				        <input type="text" class="writeIn" placeholder="分管员姓名" v-model="typeName">
+				    </p>
+				   
+				    <p style="float:right;">
+				        <button type="button" class="noBtn">取 消</button>
+				        <button type="button" class="saveBtn" @click="subType()">保 存</button>
+				    </p>
+				    
+				</div>
+			</div>
+			<!-- right -->
+			<div class="cont_right fr">
+				<div class="right_top clearfix">
+					<p class="fl btn" @click="toUrl(1)">添加项目部</p>
+					<p class="fl btn" style="margin-left: 30px;" @click="remove(-1)">批量移除</p>
+					<span class="err fl">11</span>
+					<p class="fr blue" @click="checkList">查询</p>
+					<ul class="fr clearfix" style="margin-left: 20px;">
+						<input type="text" placeholder="项目部名称、项目部简称" class="fl" v-model="condition" @keyup="enter($event)">
+						<span class="fl" ></span>
+					</ul>
+					
+					
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th @click="selectAll"><input type="checkbox"  :checked="allSelect" /></th>
+							<th>序号</th>
+							<th>项目部全称</th>
+							<th>项目部简称</th>
+							
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="val,index in rigtList" :id="val.projectId">
+							<td><input type="checkbox" :checked="allSelect" /></td>
+							<td>{{index+1}}</td>
+							<td>{{val.projectName}}</td>
+							<td>{{val.abbreviation}}</td>
+							<td @click="remove(val.projectId)">移除</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="../../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var uId = DX.getParam('id');
+	var vm = new Vue({
+		el:'#param',
+		mounted:function(){
+			this.getLeft();
+		},
+		data:{
+			'leftList':[],//左边菜单栏
+			'rigtList':[],//右边查询结果列表
+			'leftId':'',//左侧菜单选中id
+			'typeName':'',//分管员名称
+			'allSelect':false,//全选控制按钮
+			'condition':'',//查询条件
+		},
+		methods:{
+			getLeft:function(){//获取左边列表
+				var $this = this;
+				DX.ajax_method({
+					'type':'GET',
+					'url':'/user/emp/findAllMaterialClerk',
+					'param':{}, 
+					'callBack':function(res){
+						console.log(res);
+						if(res.code == '200'){
+							$this.leftList = res.data;
+							$this.selectFirst();
+						}
+					}
+				});
+			},
+			selectFirst:function(){//默认第一个选中
+				var $this =this;
+				if(uId != null){
+					this.leftId = uId;
+					// this.leftList[uId].active = true;
+					$.each($this.leftList,function(i,val){
+						if(uId == val.id){
+							$this.leftList[i].active = true; return false;
+						}
+					})
+				}else{
+					this.leftId = this.leftList[0].id;
+					this.leftList[0].active = true;
+					
+				}
+				this.selectRight(this.leftId);
+				
+				
+			},
+			check:function(b){//点击left菜单栏
+				var $this = this;
+				
+				for(var i = 0;i < $this.leftList.length;i++){
+					$this.leftList[i].active = false;
+				}
+				$this.leftList[b].active = true;
+				var tmp = $this.leftList;
+				$this.leftList = [];
+				$this.leftList = tmp;
+				
+				this.selectRight($this.leftList[b].id);
+				this.leftId = $this.leftList[b].id;
+			},
+			selectRight:function(id){//调用右侧列表数据
+				var $this = this;
+				var condition = $this.condition;
+				DX.ajax_method({
+					'url':'/user/project/getProjects',
+					'type':'GET',
+					'param':{'uid':id,'content':condition},
+					'callBack':function(res){
+						if(res.code == '200'){
+							$this.rigtList = res.data;
+							$.each($('.cont_right tr'),function(i,val){
+								$(this).find('input').prop('checked',false);
+							});
+						}
+					}
+				});
+			},
+			subType:function(){//新增分管员
+				$('.err').hide();
+				var name = this.typeName
+				var isName =DX.isNull(name);
+				if(isName){
+					$('.err').show().text('分管员名称不能为空');return;
+				}
+				// DX.ajax_method({
+				// 	'type':'POST',
+				// 	'url':'/materials/product/addProductType',
+				// 	'param':{'name':name},
+				// 	'callBack':function(res){
+				// 		if(res.code == '200'){
+				// 			console.log(res);
+				// 			location.reload();
+				// 		}
+				// 	}
+				// })
+				
+			},
+			selectAll:function(){//全选
+				if(this.allSelect){
+					this.allSelect = false;
+				}else{
+					this.allSelect = true;
+				}
+			},
+			remove:function(value){//移除
+				var $this = this;
+				var arr = [];
+	
+				if(value != -1){//单个删除
+					arr.push(value);
+					
+				}else{//批量删除
+					$.each($('.cont_right tr'),function(i,val){
+						if($(this).find('input').prop('checked')){
+							arr.push($(this).attr('id'));
+						}
+					});
+				}
+				if(arr.length <1){
+					$('.err').show().text('请选择项目部');return;
+				}
+			
+				DX.ajax_method({
+					'type':'POST',
+					'param':{'projectIds[]':arr},
+					'url':'/user/project/revokeAssignProject',
+					'change':value.target,
+					'callBack':function(res){
+						if(res.code == '200'){
+							$this.selectRight($this.leftId);
+						}
+					}
+				});
+			},
+			checkList:function(){//查询
+				var id = this.leftId;
+				this.selectRight(id);
+			},
+			enter:function(event){//enter 回车查询
+				
+				if (event.keyCode == 13){
+					event.returnValue=false;
+					event.cancel = true;
+					this.checkList();
+				}
+			},
+			toUrl:function(param){
+				var val = '';
+				if(param == 1){
+					var id = this.leftId;
+					val = 'addproject.html?id='+id;
+				}else if(param == 2){
+					val = 'typeof.html';
+				}
+				console.log(val);
+				window.location.href = val;
+			},
+			
+		}
+	})
+	
+	$(document).ready(function(){
+		
+		//添加物资
+		$('#addPeople').click(function(){
+			if($('#people').hasClass('none')){
+				$('#people').removeClass('none');
+			}else{
+				$('#people').addClass('none');
+			}
+		})
+		//弹层取消
+		$('.noBtn').click(function(){
+			$(this).parents('.showNewRole').addClass('none');
+		})
+	})
+</script>

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加评价</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/company.css"/>
+</head>
+<style type="text/css">
+   .supplierlist{margin-top:0mm;margin-left: 0mm;}
+    @page {size: 210mm,280mm;margin:20mm 0mm 0mm 0mm;}
+    #printList{width: 100%;height: 100%;font-size:14px;}
+    #printList tbody tr td{border:1.5px solid #000;}
+   @media print{
+       .noprint{display: none;}
+   }
+
+</style>
+<body>
+    <div class="rightBox">
+         <div class="surStep noprint" id="surStep">
+           
+        </div>
+        <div class="apply noprint"></div>
+        <!-- 公司详细信息 -->
+        <div class="supplierlist noprint" style="margin-top:145px;margin-left: 10%;">
+            <p class="surList surListHeader">供 方 调 查 评 价 表</p>
+            <!-- 需要填写打印的表格 -->
+            <table id="List" cellspacing="0" cellpadding="0">
+                <thead></thead>
+                <tbody>
+                    <!-- 第一行 -->
+                    <tr>
+                        <td class="colfir">供方名称</td>
+                        <td class="col name">
+                            <!-- <input type="text" class="sameInput" id="name"> -->
+                        </td>
+                        <td class="col">供方性质</td>
+                        <td id="radio" class="col">
+                            <label for="sc0" class="lt"><input type="radio" name="dan" id="sc0" disabled class="lt" style="margin-top: 4px;margin-right:4px;">生产厂家</label>
+                            <label for="sc1" class="lt"><input type="radio" name="dan" id="sc1" disabled class="lt" style="margin-top: 4px;margin-right:4px;margin-left: 30px;">流通领域</label>
+                        </td>
+                    </tr>
+                    <!-- 第二行 -->
+                    <tr>
+                        <td>主要产品</td>
+                        <td class="par">
+                            <!-- <input type="text" id="par" class="sameInput" autocomplete="off"> -->
+                        </td>
+                        <td>物资类别</td>
+                        <td id="second" class="productType"></td>
+                    </tr>
+                    <!-- 弹窗 -->
+                    <!-- <div class="openWin">
+                        <ul class="firNav">
+                            
+                        </ul>
+                        <div class="secNav">
+                            
+                        </div>
+                        <button type="button" id="btnS" style="position: absolute;right: 10px;bottom: 10px;">确认</button>
+                    </div> -->
+                      <!-- 部门id -->
+                    <!-- <input type="hidden"  id="parentId" value="" />
+                    <input type="hidden"  id="subId" value="" /> -->
+                    <!-- 第三行 -->
+                    <tr>
+                        <td>联系人</td>
+                        <td class="liaison">
+                            <!-- <input type="text" id="liaison" class="sameInput"> -->
+                        </td>
+                        <td>电话</td>
+                        <td style="min-width:185px;" class="mobile">
+                            <!-- <input type="text" id="mobile" class="sameInput"> -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>地    址</td>
+                        <td colspan="3" class="address">
+                            <!-- <input type="text" id="address" class="sameInput"> -->
+                        </td>
+                    </tr>
+                    <!-- 第四行 -->
+                    <tr class="approveBefore">
+                        <td>供方环境及安全内容</td>
+                        <td colspan="3" class="envSafe">
+                            <!-- <input type="text" class="sameInput" id="envSafe"> -->
+                        </td>
+                    </tr>
+                    <!-- 第五行 -->
+                    <!-- <tr>
+                        <td>通过何种认证及证书编号</td>
+                        <td><input type="text" id="approveType" class="sameInput"></td>
+                        <td><span class="align">编号：</span><input type="text" style="width:85%;" id="approveNo" class="sameInput"></td>
+                        <td>
+                            <button id="approveFile" onclick="preView(this)" type="button" class="upandshow">预览</button>
+                        </td>
+                    </tr> -->
+                    <!-- 第六行 -->
+                    <tr>
+                        <td rowspan="2">营业执照</td>
+                        <td colspan="2">
+                            <span class="align"">注册号：</span><span class="businessLicense align"></span>
+                            <!-- <input type="text" id="businessLicense" style="width:55%;" class="sameInput"> -->
+                        </td>
+                        <td rowspan="2">
+                            <button type="button" id="businessLicenseFile" onclick="preView(this)" class="upandshow">预览</button>
+                            <button type="button" class="download upandshow" id="businessdownload" onclick="downLoad(this)">下载</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="lt" style="margin-top: 9px;">注册资金:</span>
+                            <span class="businessRegisterMoney"></span>
+                            <!-- <input type="text" class="sameInput" id="businessRegisterMoney" autocomplete="off" style="width:25%;"> -->
+                            <span style="line-height: 40px;">(万元)</span>
+                        </td>
+                        <td>
+                            <span class="lt">有效期：</span>
+                            <span class="businessExpireDate align"></span>
+                            <!-- <input type="text" id="businessExpireDate" class="sameInput" autocomplete="off" style="width:45%;"> -->
+                        </td>
+                    </tr>
+                    <!-- 第七行 -->
+                    <tr>
+                        <td>生产许可证</td>
+                        <td>
+                            <span class="lt">许可证号：</span>
+                            <span class="productLicence lt"></span>
+                            <!-- <input type="text" style="width:55%;" id="productLicence" class="sameInput"> -->
+                        </td>
+                        <td style="text-indent: 10px;">
+                            <span class="lt">有效期：</span>
+                            <span class="productExpireDate lt"></span>
+                            <!-- <input type="text" id="productExpireDate" class="sameInput" autocomplete="off" style="width:45%;"> -->
+                        </td>
+                        <td>
+                            <button type="button" id="productLicenceFile" onclick="preView(this)" class="upandshow">预览</button>
+                            <button type="button" class="download upandshow" id="productdownload" onclick="downLoad(this)">下载</button>
+                        </td>
+                    </tr>
+                    <!-- 第八行 -->
+                    <tr>
+                        <td>资信等级</td>
+                        <td class="level" colspan="2" style="text-align:left;">
+                            <label for="a3" class="lt"><input type="radio" name="lev" id="a3" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">AAA</label>
+                            <label for="a2" class="lt"><input type="radio" name="lev" id="a2" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">AA</label>
+                            <label for="a1" class="lt"><input type="radio" name="lev" id="a1" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">A</label>
+                            <!-- <label for="aa2"><input type="radio" name="lev" id="aa2">AA-</label>
+                            <label for="a1"><input type="radio" name="lev" id="a1">A+</label>
+                            <label for="a"><input type="radio" name="lev" id="a">A</label>
+                            <label for="a2"><input type="radio" name="lev" id="a2">A-</label>
+                            <label for="bbb"><input type="radio" name="lev" id="bbb">BBB</label>
+                            <label for="bb"><input type="radio" name="lev" id="bb">BB</label>
+                            <label for="b"><input type="radio" name="lev" id="b">B</label> -->
+                        </td>
+                        <td>
+                            <button type="button" id="creditLevelFile" onclick="preView(this)" class="upandshow">预览</button>
+                            <button type="button" class="download upandshow" id="creditdownload" onclick="downLoad(this)">下载</button>
+                        </td>
+                    </tr>
+                    <!-- 第九行 -->
+                    <tr>
+                        <td>生产能力/销售能力</td>
+                        <td colspan="3">
+                            <span class="align" style="margin-top: 9px;">年产量/年销售额：</span>
+                            <span class="productAbility"></span>
+                            <!-- <input type="text" id="productAbility" class="sameInput" style="width:45%;"> -->
+                            <span style="line-height: 40px;">(万元)</span>
+                        </td>
+                    </tr>
+                    <!-- 第十行 -->
+                    <tr>
+                        <td>同类产品中的价格比较</td>
+                        <td colspan="3" style="text-align:left;" id="radios">
+                            <label for="b1" class="lt"><input type="radio" value="1" name="bet" id="b1" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">较高</label>
+                            <label for="b2" class="lt"><input type="radio" value="2" name="bet" id="b2" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">居中</label>
+                            <label for="b3" class="lt"><input type="radio" value="3" name="bet" id="b3" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">较低</label>
+                        </td>
+                    </tr>
+                    <!-- 第十一行 -->
+                    <tr>
+                        <td>应急供应能力</td>
+                        <td colspan="3" style="text-align:left;" id="radioTwo">
+                            <label for="c1" class="lt"><input type="radio" value="1" name="beet" id="c1" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">较强</label>
+                            <label for="c2" class="lt"><input type="radio" value="2" name="beet" id="c2" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">一般</label>
+                            <label for="c3" class="lt"><input type="radio" value="3" name="beet" id="c3" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">较差</label>
+                        </td>
+                    </tr>
+                    <!-- 第十二行 -->
+                    <tr>
+                        <td>代办运输能力</td>
+                        <td colspan="3" style="text-align:left;" id="radiosThree">
+                            <label for="d1" class="lt"><input type="radio" value="1" name="has" id="d1" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">有</label>
+                            <label for="d2" class="lt"><input type="radio" value="2" name="has" id="d2" disabled class="lt" style="margin-top: 3px;margin-right:-5px;">无</label>
+                        </td>
+                    </tr>
+                    <!-- 第十三行 -->
+                    <tr>
+                        <td>售后服务项目</td>
+                        <td colspan="3" class="afterSale">
+                            <!-- <input type="text" id="afterSale" class="sameInput"> -->
+                        </td>
+                    </tr>
+                    <!-- 第十四行 -->
+                    <tr>
+                        <td>其他资料</td>
+                        <td colspan="3" class="otherInfo">
+                            <!-- <input type="text" id="otherInfo" class="sameInput"> -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>调查人</td>
+                        <td class="surveyId_show">
+                            <!-- <input type="text" class="sameInput" id="surveyId"> -->
+                        </td>
+                        <td>调查日期</td>
+                        <td class="surveyDate">
+                            <!-- <input type="text" id="surveyDate" class="sameInput" autocomplete="off"> -->
+                        </td>
+                    </tr>
+                    <tr style="height:120px;">
+                        <td>参加评价人签名</td>
+                        <td colspan="3" class="appraiser" style="text-align: left;text-indent: 20px;vertical-align: top;padding-top: 10px;">
+                           
+                        </td>
+                    </tr>
+                    <tr style="height:120px;" class="verdict none">
+                        <td><span style="color:red;">*</span>评议结论</td>
+                        <td colspan="3" style="height:120px;">
+                            <textarea name="" class="verdict_show" style="width: 100%;height:100%;float: left; border: none; resize: none;"></textarea>
+                            <input type="hidden" id="evaluateCommentStatus">
+                        </td>
+                    </tr>
+                    <tr style="height:120px;" class="comComment none">
+                        <td><span style="color:red;">*</span>公司业务部门意见</td>
+                        <td colspan="3" style="height:120px;">
+                            <textarea name="" class="comidea" style="width: 100%;height:100%;float: left; border: none; resize: none;"></textarea>
+                            <input type="hidden" id="companyCommentStatus">                            
+                        </td>
+                    </tr>
+                    <input type="hidden" id="status">
+                </tbody>
+            </table>
+            <button type="button" class="sumbit btnBlue" style="margin-left: 50%;margin-bottom: 50px;">提交</button>
+        </div>
+        <!-- 需要打印的表格 -->
+        <!--startprint-->
+        <div class="printsurTable none" style="width: 80%;margin-left: 10%;">
+            <p class="surList" style="margin-bottom: 40px; font-size: 22px;">供 方 调 查 评 价 表</p>
+            <table id="printList" cellspacing="0" cellpadding="0" style="width: 100%;">
+                <thead></thead>
+                <tbody>
+                    <!-- 第一行 -->
+                    <tr style="height: 40px;">
+                        <td style="width: 22%;">供方名称</td>
+                        <td class="name" style="width:28%;"></td>
+                        <td style="width: 22%;">供方性质</td>
+                        <td id="radio" style="width:28%;">
+                            <label for="lt0" class="lt"><input type="checkbox" name="da" id="lt0" class="lt" style="margin-top: 4px;margin-right:4px;">生产厂家</label>
+                            <label for="lt1" class="lt"><input type="checkbox" name="da" id="lt1" class="lt" style="margin-top: 4px;margin-right:4px;margin-left: 15px;">流通领域</label>
+                        </td>
+                    </tr>
+                    <!-- 第二行 -->
+                    <tr style="height: 40px;">
+                        <td>主要产品</td>
+                        <td class="par"></td>
+                        <td>物资类别</td>
+                        <td id="second" class="productType"></td>
+                    </tr>
+                    <!-- 第三行 -->
+                    <tr style="height: 40px;">
+                        <td>地址</td>
+                        <td class="mobile"></td>
+                        <td>电话/联系人</td>
+                        <td class="perandmob"></td>
+                    </tr>
+                    <!-- 第四行 -->
+                    <tr class="printapproveBefore" style="height: 40px;">
+                        <td>供方环境及安全内容</td>
+                        <td colspan="3" class="envSafe"></td>
+                    </tr>
+                    <!-- 第五行 认证方式创建-->
+                    <tr style="height: 40px;">
+                        <td>营业执照</td>
+                        <td colspan="3">
+                            <span class="align" style="margin-left: 20px;">注册号：</span>
+                            <span class="businessLicense align"></span>
+                            <span style="float:right;margin-right: 30px;" class="align">(提供证书)</span>
+                            <!-- <input type="text" id="businessLicense" style="width:55%;" class="sameInput"> -->
+                        </td>
+                    </tr>
+                    <!-- 第六行 -->
+                    <tr style="height: 40px;">
+                        <td>生产许可证</td>
+                        <td colspan="3">
+                            <span class="align" style="margin-left: 20px;">许可证号：</span>
+                            <span class="productLicence align"></span>
+                            <span style="float:right;margin-right: 30px;" class="align">(提供证书)</span>   
+                            <!-- <input type="text" style="width:55%;" id="productLicence" class="sameInput"> -->
+                        </td>
+                    </tr>
+                    <!-- 第七行 -->
+                    <tr style="height: 40px;">
+                        <td>资信等级</td>
+                        <td class="level" colspan="3" style="text-align:left;">
+                            <label for="e3" class="lt"><input type="checkbox" name="le" id="e3" class="lt" style="margin-top: 3px;margin-right:5px;">AAA</label>
+                            <label for="e2" class="lt"><input type="checkbox" name="le" id="e2" class="lt" style="margin-top: 3px;margin-right:5px;">AA</label>
+                            <label for="e1" class="lt"><input type="checkbox" name="le" id="e1" class="lt" style="margin-top: 3px;margin-right:5px;">A</label>
+                        </td>
+                    </tr>
+                    <!-- 第八行 -->
+                    <tr style="height: 40px;">
+                        <td>生产能力/销售<br/>能力</td>
+                        <td colspan="3">
+                            <span class="align" style="margin-left: 20px;margin-top: 11px;">年产量/年销售额：</span>
+                            <span class="productAbility align" style="margin-top: 11px;"></span>
+                            <span style="line-height: 40px;">(万元)</span>
+                        </td>
+                    </tr>
+                    <!-- 第九 -->
+                    <tr style="height: 40px;">
+                        <td>同类产品中的价<br/>格比较</td>
+                        <td colspan="3" style="text-align:left;" id="radios">
+                            <label for="f1" class="lt"><input type="checkbox" value="1" name="be" id="f1" class="lt" style="margin-top: 3px;margin-right:5px;">较高</label>
+                            <label for="f2" class="lt"><input type="checkbox" value="2" name="be" id="f2" class="lt" style="margin-top: 3px;margin-right:5px;">居中</label>
+                            <label for="f3" class="lt"><input type="checkbox" value="3" name="be" id="f3" class="lt" style="margin-top: 3px;margin-right:5px;">较低</label>
+                        </td>
+                    </tr>
+                    <!-- 第十行 -->
+                    <tr style="height: 40px;">
+                        <td>应急供应能力</td>
+                        <td colspan="3" style="text-align:left;" id="radioTwo">
+                            <label for="g1" class="lt"><input type="checkbox" value="1" name="bee" id="g1" class="lt" style="margin-top: 3px;margin-right:5px;">较强</label>
+                            <label for="g2" class="lt"><input type="checkbox" value="2" name="bee" id="g2" class="lt" style="margin-top: 3px;margin-right:5px;">一般</label>
+                            <label for="g3" class="lt"><input type="checkbox" value="3" name="bee" id="g3" class="lt" style="margin-top: 3px;margin-right:5px;">较差</label>
+                        </td>
+                    </tr>
+                    <!-- 第十一行 -->
+                    <tr style="height: 40px;">
+                        <td>代办运输能力</td>
+                        <td colspan="3" style="text-align:left;" id="radiosThree">
+                            <label for="h1" class="lt"><input type="checkbox" value="1" name="ha" id="h1" class="lt" style="margin-top: 3px;margin-right:5px;">有</label>
+                            <label for="h2" class="lt"><input type="checkbox" value="2" name="ha" id="h2" class="lt" style="margin-top: 3px;margin-right:5px;">无</label>
+                        </td>
+                    </tr>
+                    <!-- 第十二行-->
+                    <tr style="height: 40px;">
+                        <td>售后服务项目</td>
+                        <td colspan="3" class="afterSale"> </td>
+                    </tr>
+                    <!-- 第十三行 -->
+                    <tr style="height: 40px;">
+                        <td>其他资料</td>
+                        <td colspan="3" >
+                            <span class="otherInfo align"></span>
+                            <span class="align" style="float:right;margin-right:30px;">(必要时提供相关资料)</span>
+                        </td>
+                    </tr>
+                    <!-- 第十四行 -->
+                    <tr style="height: 40px;">
+                        <td>调查人</td>
+                        <td class="surveyId_show"></td>
+                        <td>调查日期</td>
+                        <td class="surveyDate"></td>
+                    </tr>
+                    <tr style="height:50px;">
+                        <td>参加评价人签名</td>
+                        <td colspan="3" class="appraiser" style="text-align: left;text-indent: 20px;vertical-align: top;padding-top: 10px;">
+                            
+                        </td>
+                    </tr>
+                    <tr style="height:50px;" class="verdict none">
+                        <td>评议结论</td>
+                        <td colspan="3" style="height:50px;">
+                            <textarea name="" class="verdict_show" style="width: 100%;height:100%;float: left; border: none; resize: none;overflow: hidden;"></textarea>
+                            <input type="hidden" id="evaluateCommentStatus">
+                        </td>
+                    </tr>
+                    <tr style="height:50px;" class="comComment none">
+                        <td>公司业务部门意见</td>
+                        <td colspan="3" style="height:50px;">
+                            <textarea name="" class="comidea" style="width: 100%;height:100%;float: left; border: none; resize: none;overflow: hidden;"></textarea>
+                            <input type="hidden" id="companyCommentStatus">                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--endprint-->
+    </div>
+</body>
+</html>
+<script src="../../static/js/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../../static/laydate/laydate.js"></script>
+<script src="../static/js/progress.js"></script>
+<script src="../static/js/comment.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+   
+    var supplierId = DX.getParam('id');
+    randerDetail(supplierId);
+
+   
+})
+
+function randerDetail(supplierId){
+   
+   DX.ajax_method({
+       'type':'GET',
+       'url':'/materials/supply/supplierSurvey/findById',
+       'param':{id:supplierId},
+       'callBack':function(res){
+           // console.log(res.data)
+           doRander(res.data);
+       }
+   })
+}
+//通过何种认证及证书编号
+var approveTypeMap = {1:'质量管理体系认证',2:'安全管理体系认证',3:'环境管理体系认证',4:'职业健康安全管理认证体系'}
+//资信等级
+var creditLevelMap = {1:'1A',2:'2A',3:'3A'}
+//应急供应能力  1,较强,2:一般,3:较差
+var supportAbilityMap = {1:'较强',2:'一般',3:'较差'}
+//同类价格比较(1:较高,2:居中,3:较低) ,
+var priceCompareMap = {1:'较高',2:'居中',3:'较低'}
+// 赋值渲染
+function doRander(data){
+   console.log(data)
+   if(data.showBtn != true || data.status == 4){
+        $('.sumbit').addClass('none');
+        data.status = 4;
+    }
+   for(var j in data){
+       if(!data[j] && data[j] != 0){
+           data[j] = '';
+       }
+   }
+   var appraiserDate = '';
+    $.each(JSON.parse(data.appraiser),function(i,n){
+        if(n.signDate && n.signDate > appraiserDate){
+            appraiserDate = n.signDate;
+        }
+    })
+    // 流程
+    $('.surStep').progress({
+        active:data.status,
+        data:  [{
+                title: '提交资料',
+                date: data.createTime
+            }, 
+            {
+                title: '评价人员签字',
+                date: appraiserDate
+            },
+            {
+                title: '项目经理审核',
+                date: data.evaluateDate
+            },
+            {
+                title: '公司业务部门审核',
+                date: data.companyCommentDate
+            }
+        ]
+    })
+    $('#par').val(data.product);
+    if(data.productClassify === 'A' || data.productClassify === '地材'){
+        $('#surStep').progress('show',4)
+    }else{
+        $('#surStep').progress('hide',4);
+        $('.comComment').hide();
+    }
+   $('#status').val(data.status);
+   $('.name').text(data.supplier.name); 
+   $('.address').text(data.supplier.addressProvince+data.supplier.addressSuffix);
+   $('.par').text(data.product);
+   $('.productType').text(data.productClassify);
+   $('.liaison').text(data.liaison);
+   $('.mobile').text(data.mobile);
+   $('.perandmob').text(data.liaison+'/'+data.mobile);
+   $('.envSafe').text(data.envSafe);
+   $('#sc'+ data.supplier.type).prop('checked',true);
+   $('#lt'+ data.supplier.type).attr('checked','checked');
+   $('#approveType').val(approveTypeMap[data.supplier.approveType]);
+   $('#approveNo').val(data.supplier.approveNo);
+   $('.businessLicense').text(data.supplier.businessLicense);
+   $('.businessRegisterMoney').text(data.supplier.businessRegisterMoney);
+   if(data.supplier.businessExpireDate == '9999-12-31'){
+        $('.businessExpireDate').text('长期');
+    }else{
+        $('.businessExpireDate').text(data.supplier.businessExpireDate);
+    }
+//    $('.businessExpireDate').text(data.supplier.businessExpireDate);
+    $('.productLicence').text(data.supplier.productLicence);
+    $('.productExpireDate').text(data.supplier.productExpireDate);
+    $('#a'+data.supplier.creditLevel).prop('checked',true);
+    $('#e'+data.supplier.creditLevel).attr('checked','checked');
+    $('.productAbility').text(data.productAbility);
+    $('.otherInfo').text(data.supplier.otherInfo);
+    $('.afterSale').text(data.afterSale);
+    $('.surveyId_show').text(data.survey);
+    $('.surveyDate').text(data.surveyDate);
+    $('#b'+data.priceCompare).prop('checked',true);
+    $('#f'+data.priceCompare).attr('checked','checked');
+    $('#c'+data.supportAbility).prop('checked',true);
+    $('#g'+data.supportAbility).attr('checked','checked');
+    $('#d'+data.transportAbility).prop('checked',true);
+    $('#h'+data.transportAbility).attr('checked','checked');
+    $('#approveFile').attr('fid',data.supplier.approveFile);
+    $('#approvedownload').attr('fid',data.supplier.approveFile);
+    $('#businessLicenseFile').attr('fid',data.supplier.businessLicenseFile);
+    $('#businessdownload').attr('fid',data.supplier.businessLicenseFile);
+    $('#productLicenceFile').attr('fid',data.supplier.productLicenceFile);
+    $('#productdownload').attr('fid',data.supplier.productLicenceFile);
+    $('#creditLevelFile').attr('fid',data.supplier.creditLevelFile);
+    $('#creditdownload').attr('fid',data.supplier.creditLevelFile);
+   var approveJson = JSON.parse(data.supplier.approve);
+    var approve = '';
+    $.each(approveJson,function(i,n){
+        approve += '<tr style="height:40px;">'
+            if(i == 0){
+                approve += '<td rowspan="' + approveJson.length + '">通过何种认证及证书编号</td>';
+            }
+            approve += '<td style="text-align:left;">' + approveTypeMap[n.type] + '</td>';
+            approve += '<td style="text-indent: 10px;"><span class="lt" style="margin-top: 9px;">编号：</span><input type="text" style="width:40%;" class="sameInput lt" value="' + n.no + '"></td>';
+            approve += '<td><button type="button" onclick="preView(this)" class="upandshow" fid="' + n.file + '">预览</button><button type="button" class="download upandshow" id="approvedownload" onclick="downLoad(this)" fid="' + n.file + '">下载</button></td>';
+            approve += '</tr>';
+    })
+    $('.approveBefore').after(approve);
+   var appraiser = JSON.parse(data.appraiser);
+    var appraiserHtml = '';
+    $.each(appraiser,function(i,n){
+        if(n.signFileId){
+            appraiserHtml+='<img style="display:inline-block;max-height:40px;" src="'+DX.domain('user')+'/user/file/img?size=80&fid='+ n.signFileId +'">';
+            if(n.departName){
+                appraiserHtml += '<small style="display: inline;margin-left: 0;font-size: 12px;opacity: .5;margin-right:20px;">(' + n.departName + ')</small>'
+            }
+        }else{
+            appraiserHtml+='<span ' + (n.sign == 1 ? 'class="signit">' : 'class="unsign" style="margin-right:20px;">') + n.name;
+            if(n.departName){
+                appraiserHtml += '<small style="display: inline;margin-left: 0;font-size: 12px;opacity: .5;">(' + n.departName + ')</small>'
+            }
+            appraiserHtml+= '</span>';
+        }
+    })
+    $('.appraiser').html(appraiserHtml);
+
+    var status = data.status;
+    if(status == 2){
+        $('.verdict').removeClass('none');
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('.verdict_show').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                       $('#evaluateCommentStatus').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else if(status == 3){
+        $('.verdict').removeClass('none');
+        $('.comComment').removeClass('none');
+        $('.verdict_show').comment({
+            readonly:true,
+            sign:data.evaluate.name,
+            signDate:data.evaluateDate,
+            signFile:data.evaluateSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.evaluateSignFile:null, 
+            signStatus:data.evaluateCommentStatus, 
+            content:data.evaluateComment
+        })
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('.comidea').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                        $('#companyCommentStatus').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else{
+        $('.verdict').removeClass('none');
+        $('.comComment').removeClass('none');
+        $('.sumbit').remove();
+        $('.surListHeader').after('<p><button type="button" class="btnBlue" style="float: right;margin-bottom:20px;" id="prints">打印</button></p>')
+        $('.verdict_show').comment({
+            readonly:true,
+            sign:data.evaluate.name,
+            signDate:data.evaluateDate,
+            signFile:data.evaluateSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.evaluateSignFile:null,
+            signStatus:data.evaluateCommentStatus, 
+            content:data.evaluateComment
+        })
+        $('.comidea').comment({
+            readonly:true,
+            sign:data.company.name,
+            signFile:data.companySignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.companySignFile:null,
+            signStatus:data.companyCommentStatus,
+            signDate:data.companyCommentDate,
+            content:data.companyComment
+        })
+    }
+    
+    $('#prints').click(function () {
+        // $('.anewList').css('margin-top','-10px');
+        $('.printsurTable').removeClass('none');
+        $('.colfir').css('width', '31%');
+        $('.col').css('width','23%');
+        var approveJson = JSON.parse(data.supplier.approve);
+        var approve = '';
+        $.each(approveJson,function(i,n){
+            approve += '<tr style="height:40px;">'
+                if(i == 0){
+                    approve += '<td rowspan="' + approveJson.length + '">通过何种认证及证书编号</td>';
+                }
+                approve += '<td style="text-align:left;">' + approveTypeMap[n.type] + '</td>';
+                approve += '<td colspan="2"><span class="align" style="margin-top: 11px;">编号：</span><input type="text" style="width:50%;height:38px;" class="sameInput lt" value="' + n.no + '"></td>';
+                // approve += '<td><button type="button" onclick="preView(this)" class="upandshow" fid="' + n.file + '">预览</button></td>';
+                approve += '</tr>';
+        })
+        $('.printapproveBefore').after(approve);
+        DX.print();
+    })
+}
+
+//提交
+$('.sumbit').click(function(){
+    var url,obj = {id: DX.getParam('id')};
+    var status = $('#status').val();
+    if(status == 2){
+        url = '/materials/supply/supplierSurvey/addEvaluateComment';
+        obj.status = $('#evaluateCommentStatus').val();
+        obj.evaluateComment = $('#verdict').val();
+    }
+    if(status == 3){
+        url = '/materials/supply/supplierSurvey/addCompanyComment';
+        obj.status = $('#companyCommentStatus').val();
+        obj.companyComment = $('#comidea').val();
+    }
+    console.log(obj);
+    var that = $(this);
+    DX.ajax_method({
+        'type':'POST',
+        'url':url,
+        'param':obj,
+        'change':that[0],
+        'callBack':function(res){
+            console.log(res);
+            if(res.code == 200){
+                window.location.href = 'comsurvey.html';
+            }else{
+                alert(res.msg);
+            }
+        }
+    })
+})
+
+function getDate(){
+    var now = new Date();
+    var year = now.getFullYear(); //得到年份
+    var month = now.getMonth();//得到月份
+    var date = now.getDate();//得到日期
+    month = month + 1;
+    return year+'/'+month+'/'+date;
+}
+function preView(e){
+    var fid = $(e).attr('fid');
+    if(!fid){
+        alert('文件未上传')
+        return
+    }
+    window.parent.open(DX.preview('materials',fid))
+}
+function downLoad(e){
+    var fid = $(e).attr('fid');
+    if(!fid){
+        alert('文件未上传')
+        return
+    }
+    window.parent.open(DX.domain('materials') + '/materials/file/download?fid=' + fid);
+}
+</script>

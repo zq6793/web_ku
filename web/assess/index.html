@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<title>劳务队展现</title>
+		<link rel="icon" type="image/png" href="../static/icon.png" sizes="32x32" />
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+		
+	</head>
+	<body>
+
+		<!-- right -->
+		<div class="rightBox">
+			
+			<!-- <div class="nav">
+			    <span>当前所在位置：劳务队列表></span><span class="pointer">劳务队列表</span>
+			</div> -->
+			<div class="clearfix">
+				
+				<!-- 查询 -->
+				<div class="query clearfix fl" style="width: 70%;">
+					<a href="mod.html" class="fl btnBlue" style="margin-left: 30px;">新增劳务队</a>
+					<input type="text" placeholder="公司名称、劳务队负责人电话" id="checked" class="fl" style="width: 40%;" autocomplete="off">
+					<button type="button" class="fl  btnBlue" id="subCheck">查询</button>
+					<span class="err fl index_err"></span>
+				</div>
+				<!-- <div class="insert fr clearfix" style="width: 30%;margin-right: 34px;">
+					
+					
+				</div> -->
+			</div>
+			
+			<div class="table" id="table">
+				<table>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th style="width:15%">公司名称</th>
+							<th>劳务队负责人</th>
+							<th>身份证号</th>
+							<th>劳务队负责人电话</th>	
+							<th>合同签订人</th>
+							<th>录入人</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+			<!-- 分页 -->
+			<div class="page1"></div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		var checked = $('#checked').val();//公司名称,劳务队负责人名称或电话
+		if(checked == $('#checked').attr('placeholder')){
+			checked = '';
+		}
+		
+		pages.init({
+			'key':['checked'],
+			'value':[checked],
+			'url':'/eva/eva/findTeamBychecked',
+			'callBack':selectcall
+		})
+		
+		//点击查询
+		$('#subCheck').click(function(){
+			checked = $('#checked').val();//公司名称,劳务队负责人名称或电话
+			if(checked == $('#checked').attr('placeholder')){
+				checked = '';
+			}
+			
+			pages.init({
+				'key':['checked'],
+				'value':[checked],
+				'url':'/eva/eva/findTeamBychecked',
+				'callBack':selectcall
+			})
+		})
+ 		//回车查询
+		$('#checked').keydown(function(event){
+			if (event.keyCode == 13){
+				event.returnValue=false;
+				event.cancel = true;
+				$('#subCheck').trigger('click');
+			}
+		}) 
+		
+		// 回调渲染
+		function selectcall(res){
+			$('.err').hide();
+			console.log(res);
+			if(res.code !='200'){
+				console.log('数据错误');return;
+			}
+			// $('.page_index').html('第'+res.data.pageNum+'页');
+			// $('.page_count').html('总共'+res.data.pages+'页');
+			// $('.page_count1').html('总共'+res.data.total+'条');
+			// 
+			// $("#page_index").val(res.data.pageNum);
+			// $("#page_last").val(res.data.pages);
+			// $("#page_pre").val(res.data.prePage);
+			// $("#page_next").val(res.data.nextPage);				
+			var html = '';
+			
+			$.each(res.data.list,function(i,val){
+				html += '<tr>'
+				html += '<td>'+(i+1)+'</td>';
+				html += '<td>'+val.team_name+'</td>';
+				html += '<td>'+val.contractor+'</td>';
+				html += '<td>'+val.cardid+'</td>';
+				html += '<td>'+val.principal_phone+'</td>';
+				
+				html += '<td>'+val.principaltwo+'</td>';
+				html += '<td>'+val.name+'</td>';
+				html += '<td ctid="'+val.ctid+'"><a href="mod.html?ctid='+val.ctid+'">修改</a><span class="pointer rem">删除</span></td>';
+				html += '</tr>';
+			})
+			
+			
+			$('#table table tbody').html('');
+			$('#table table tbody').append(html);
+			$('#table table tbody tr').click(function(){
+				DX.clickTr($(this))
+			})
+			$('.rem').click(function(){
+				remove($(this));
+			})
+		}
+		
+		// 删除函数
+		function remove(obj){
+			$('.err').hide();
+			var ctid = obj.parent('td').attr('ctid');
+			var com= confirm('确认删除');
+			if(com){
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/eva/delete',
+					'change':obj[0],
+					'param':{'id':ctid},
+					'callBack':function(res){
+						// console.log(res);
+						if(res.code == '200'){
+							checked = $('#checked').val();//公司名称,劳务队负责人名称或电话
+							if(checked == $('#checked').attr('placeholder')){
+								checked = '';
+							}
+							pages.init({
+								'key':['checked'],
+								'value':[checked],
+								'url':'/eva/eva/findTeamBychecked',
+								'callBack':selectcall
+							})
+						}else{
+							$('.err').show();
+							$('.err').html(res.msg);
+						}
+					}
+				})
+			}
+			
+		}
+	})
+</script>

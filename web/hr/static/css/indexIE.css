@@ -1,0 +1,26 @@
+.nameSearch{
+    float: left;
+    margin-top: 23px;
+    margin-bottom: 23px;
+}
+.creatTime{
+    float: left;
+}
+.timeSearch{
+    margin-top: 23px;
+    float: right;
+}
+.timeStart{
+    float: left;
+    /* margin-left: 180px;  */
+}
+.search span{
+    float: left;
+    margin-top: 6px;
+}
+.timeEnd{
+    float: left;
+}
+#list{
+    width: 100%;
+}

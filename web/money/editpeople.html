@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>编辑人员</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+		
+	</head>
+	<body>
+		<div class="editpeople" id="editpeople" v-cloak>
+			<form>
+				<p class="clearfix">
+					<span class="fl">人员名称：</span>
+					<em class="fl">{{name}}</em>
+				</p>
+				<p class="clearfix">
+					<span class="fl">岗位：</span>
+					<select class="fl one-txt-cut" v-model="workid" @change="selectChange">
+						<option v-for="val,index in work" :value ="val.id">{{val.work_name}}</option>
+					</select>
+					<select class="fl ml20" v-model="workids" v-show="show" @change="twoSelect">
+						<option v-for="val,index in work2" :value ="val.id">{{val.level}}</option>
+					</select>
+					<select class="fl ml20" v-model="scores">
+						<option v-for="val,index in score" :value ="val.score">{{val.key}}</option>
+					</select>
+				</p>
+				<p class="clearfix">
+					<span class="fl">技术职称：</span>
+					<select v-model="technicalid">
+						<option  value ="">请选择</option>
+						<option v-for="val,index in technical" :value ="val.id">{{val.title_name}}</option>
+					</select>
+				</p>
+				<p class="clearfix">
+					<span class="fl">技能：</span>
+					<select v-model="skillid">
+						<option  value ="">请选择</option>
+						<option v-for="val,index in skill" :value ="val.id">{{val.title_name}}</option>
+					</select>
+				</p>
+				<p class="clearfix">
+					<span class="fl">人员类别：</span>
+					<select v-model="personType">
+						<option  v-for="val,index in typeList" :value="index+1">{{val.value}}</option>
+					</select>
+				</p>
+				<p class="clearfix">
+					<span class="fl">身份证号：</span>
+					<input type="text"  v-model="idCard" class="fl" autocomplete="off" />
+				</p>
+				<p class="clearfix">
+					<span class="fl">入职时间：</span>
+					<input type="text"  :value="join_time" class="fl" id="time" autocomplete="off" readonly />
+				</p>
+				<!-- <p class="clearfix">
+					<span class="fl">性别：</span>
+					<label class="fl">
+						<input type="radio" name="1"  value="男" class="fl" checked  v-model="sex"/>
+						<em class="fl">男</em>
+					</label>
+					<label class="fl">
+						<input type="radio" name="1"  value="女" class="fl" v-model="sex"/>
+						<em class="fl">女</em>
+					</label>
+				</p> -->
+				<em class="err">{{message}}</em>
+				<button type="button" class="btnOrange submit" @click="addSub">提交</button>
+			</form>
+			
+		</div>
+		
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var endTime = laydate.render({
+		elem: '#time',
+		// min: $("#starttime").val(), //可选择的最小日期为开始日期
+	});	
+	var userid = DX.getParam('id');
+	var vm = new Vue({
+		el:'#editpeople',
+		mounted:function(){
+			this.setUserid();
+			this.getData();
+			
+		},
+		
+		data:{
+			'message':"",
+			'show':false,//二级岗位是否显示
+			'shows':false,
+			'userid':'',//用户id
+			'name':'',//姓名
+			'sex':'男',//性别
+			'idCard':'',//身份证
+			'join_time':'',//入职时间
+			'workid':'',//一级岗位id
+			'workids':'',//二级岗位id
+			'personType':'',//人员类别
+			'skillid':'',//技能id
+			'technicalid':'',//技术id
+			'scores':'',//abc等级选中
+
+			'typeList':[],//人员类别数组
+			'skill':[],//技能数组
+			'technical':[],//技术数组
+			'work':[],//岗位
+			'work2':[],//二级岗位
+			'score':[],//abc等级
+		},
+		methods:{
+			getData:function(){//获取数据
+				var $this=this;
+				var obj={'uid':userid};
+				if(!this.userid){
+					obj={};
+				}
+				DX.ajax_method({
+					'type':'POST',
+					'param':obj,
+					'url':'/finance/work/findUserWorkByid',
+					'callBack':function (res) {
+						if(res.code == 200){
+							console.log(res);
+							$this.work = res.data.work;
+							$this.technical = res.data.technical;
+							$this.skill = res.data.skill;
+							var indexs=0;
+							$.each(res.data.work,function(i,val){
+								if(val.id == res.data.levelone){
+									indexs = i;
+								}
+							})
+							
+							$this.work2 = res.data.work[indexs].works;
+							if(res.data.work[indexs].works.length>1){
+								$this.show = true;
+							}
+							
+							$this.name = res.data.username;
+							$this.sex = res.data.sex=='' ? '男' : res.data.sex;
+							$this.idCard = res.data.idCard;
+							$this.join_time = res.data.join_time;
+							$this.workid = res.data.levelone;
+							// $this.scores = res.data.score;
+							$this.workids = res.data.leveltwo=="" ? res.data.work[0].works[0].id : res.data.leveltwo;
+							$this.typeList = res.data.typeList;
+							$this.personType = res.data.isTrue;
+							$this.getWrokScore($this.workids);
+							
+							$this.technicalid =res.data.technical_id;
+							$this.skillid =res.data.skill_id;
+						}
+					}
+				})
+			},
+			twoSelect:function(){//二级岗位改变
+				this.getWrokScore(this.workids);
+			},
+			getWrokScore:function(worid){//获取abc等级
+				var $this = this;
+				
+				DX.ajax_method({
+					'param':{'workScoreId':worid,'uid':$this.userid},
+					'url':'/finance/work/getWrokScore',
+					'callBack':function(res){
+						if(res.code == 200){
+							$this.score = res.data.list;
+							$this.scores = res.data.check;
+						}
+					}
+				})
+			},
+			setUserid:function(){//赋值userid
+				this.userid = userid;
+			},
+			selectChange:function(){//select改变
+			
+				var vals = this.workid;
+				var indexs=0;
+				
+				
+				$.each(this.work,function(i,val){
+					if(val.id == vals){
+						indexs = i;
+					}
+				})
+				// console.log(res.data.work[indexs].works);
+				this.work2 = [];
+				console.log(indexs);
+				this.work2 = this.work[indexs].works;
+				this.workids = this.work2[0].id;
+				if(this.work2.length>1){
+					this.show = true;
+				}else{
+					this.show = false;
+				}
+				this.getWrokScore(this.workids);
+			},
+			addSub:function(values){//提交数据
+				var $this =this;
+				$this.message = '';
+				var obj = {'work_id':$this.workids,'workscore':$this.scores,'user_id':$this.userid};
+				if(!DX.verIdCard($this.idCard)){
+					$this.message = '身份证号格式错误';return;
+				}else{
+					obj.idCard = $this.idCard;
+				}
+				var join_time = $('#time').val();
+				if(DX.isNull(join_time)){
+					$this.message = '请选择入职时间';return;
+				}else{
+					obj.join_time = join_time;
+				}
+				if(!DX.isNull($this.skillid)){
+					obj.skill_id = $this.skillid;
+				}
+				if(!DX.isNull($this.technicalid)){
+					obj.technical_id = $this.technicalid;
+				}
+				obj.type = $this.personType;
+				DX.ajax_method({
+					'type':'POST',
+					'param':obj,
+					'url':'/finance/work/insertOrupdateWorkScore',
+					'change':values.target,
+					'callBack':function(res){
+						if(res.code == '200'){
+							window.location.href = 'people.html';
+						}else{
+							$this.message = res.msg;
+						}
+					}
+				})
+			}
+		}
+	})
+</script>

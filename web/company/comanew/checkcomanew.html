@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查看打印重新评价</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/common.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/company.css" />
+    <style type="text/css">
+        .anewList{margin-top:0mm;margin-left: 23mm;}
+        @page {size: 210mm 297mm;margin: 10mm 0mm 0mm 0mm;}
+        @media print{
+            .noprint{display: none;}
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rightBox">
+        <div class="surStep noprint">
+
+        </div>
+        <div class="anewsur noprint"></div>
+        <!-- 公司详细信息 -->
+        <div class="anewList">
+            <!-- 需要填写打印的表格 -->
+            <p class="anewsurList anewSurListHeader">供 方 重 新 评 价 表</p>
+            <p style="float:right;margin-bottom:20px;"><button type="button" class="btnBlue" id="prints">打印</button></p>
+            <!--startprint-->
+            <table class="printList" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <!-- 第一行 -->
+                    <tr style="height: 40px;">
+                        <td id="printWidth" style="width: 100px;">供方名称</td>
+                        <td style="width: 12.66%" colspan="5">
+                            <span class="sameInput" id="name"></span>
+                        </td>
+                        <!-- <td>供方性质</td>
+                                <td id="radio">
+                                    <label for="sc"><input type="radio" name="dan" id="sc">生产厂家</label>
+                                    <label for="lt"><input type="radio" name="dan" id="lt">流通领域</label>
+                                </td> -->
+                    </tr>
+                    <!-- 第二行 -->
+                    <tr style="height: 40px;">
+                        <td style="width: 12.66%" class="interval">地址</td>
+                        <td style="width: 12.66%" colspan="5"><span id="address" class="sameInput"></span></td>
+
+                    </tr>
+                    <!-- 弹窗 -->
+                    <!-- <div class="openWin">
+                                <ul class="firNav">
+                                    
+                                </ul>
+                                <div class="secNav">
+                                    
+                                </div>
+                                <button type="button" id="btnS" style="position: absolute;right: 10px;bottom: 10px;">确认</button>
+                            </div> -->
+                    <!-- 部门id -->
+                    <!-- <input type="hidden"  id="parentId" value="" />
+                            <input type="hidden"  id="subId" value="" /> -->
+                    <!-- 第三行 -->
+                    <tr style="height: 40px;">
+                        <td style="width: 12.66%" class="interval">联系人</td>
+                        <td style="width: 12.66%" colspan="2"><span class="sameInput" id="liaison"></span></td>
+                        <td style="width: 12.66%" class="interval">电话</td>
+                        <td style="width: 12.66%" style="min-width:185px;" colspan="2"><span id="mobile"
+                                class="sameInput"></span></td>
+
+                    </tr>
+                    <!-- 第四行 -->
+                    <tr style="height: 40px;">
+                        <td style="width: 12.66%" class="interval">应用物资及服务</td>
+                        <td style="width: 12.66%" colspan="5" id="productName" style="text-align:left;"></td>
+                    </tr>
+                    <!-- 第五行 -->
+                    <tr style="height: 40px;">
+                        <td style="width: 12.66%" class="interval">供方环境及安全内容</td>
+                        <td style="width: 12.66%" colspan="5" id="envSafe" style="text-align:left;"></td>
+                    </tr>
+                    <!-- 第六行 -->
+                    <tr style="height: 40px;">
+                        <td style="width: 12.66%" rowspan="2" class="interval">考核评价指标</td>
+                        <td style="width: 12.66%" class="interval">供货质量情况(40分)</td>
+                        <td style="width: 12.66%" class="interval">供货交付情况(10分)</td>
+                        <td style="width: 12.66%" class="interval">售后服务质量(20分)</td>
+                        <td style="width: 12.66%" class="interval">供货价格水平(30分)</td>
+                        <td style="width: 12.66%" class="interval">总分</td>
+                    </tr>
+                    <tr style="height: 40px;">
+                        <td style="width: 12.66%"><span class="sameInput" id="qualityScore"></span></td>
+                        <td style="width: 12.66%"><span class="sameInput" id="deliveryScore"></span></td>
+                        <td style="width: 12.66%"><span class="sameInput" id="afterSaleScore"></span></td>
+                        <td style="width: 12.66%"><span class="sameInput" id="priceScore"></span></td>
+                        <td style="width: 12.66%"><span class="sameInput" id="total"></span></td>
+                    </tr>
+                    <!-- 第七行 -->
+                    <tr style="height:120px;" class="materialsComment none">
+                        <td style="width: 12.66%" class="interval">物资部门意见</td>
+                        <td style="width: 12.66%" colspan="5" style="height:120px;">
+                            <textarea name="" id="materialsComment" style="width: 100%;height:100%;float: left; border: none; resize: none;"></textarea>
+                            <input type="hidden" id="mater">
+                        </td>
+                    </tr>
+                    <tr style="height:120px;" class="manageComment none">
+                        <td style="width: 12.66%" class="interval">项目经理意见</td>
+                        <td style="width: 12.66%" colspan="5" style="height:120px;">
+                            <textarea name="" id="manageComment" style="width: 100%;height:100%;float: left; border: none; resize: none;"></textarea>
+                            <input type="hidden" id="manage">
+                        </td>
+                    </tr>
+                    <tr style="height:120px;" class="companyComment none">
+                        <td style="width: 12.66%" class="interval">公司业务部门意见</td>
+                        <td style="width: 12.66%" colspan="5" style="height:120px;">
+                            <textarea name="" id="companyComment" style="width: 100%;height:100%;float: left; border: none; resize: none;"></textarea>
+                            <input type="hidden" id="com">
+                        </td>
+                    </tr>
+                    <input type="hidden" id="status">
+                </tbody>
+            </table>
+            <!--endprint-->
+            <p style="text-align:center;margin: 20px 0;">
+                <button type="button" class="submit btnBlue">提 交</button>
+            </p>
+        </div>
+    </div>
+</body>
+<script src="../../static/js/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../static/js/progress.js"></script>
+<script src="../static/js/comment.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var id = DX.getParam('id');
+        randerDetail(id);
+    })
+    function randerDetail(id) {
+        DX.ajax_method({
+            'type': 'GET',
+            'url': '/materials/supply/supplierResurvey/findById',
+            'param': { id: id },
+            'callBack': function (res) {
+                doRander(res.data);
+            }
+        })
+    }
+
+    // 赋值渲染
+    function doRander(data) {
+        console.log(data)
+        if(data.showBtn != true || data.status == 4){
+            $('.submit').addClass('none');
+            data.status = 4;
+        }
+        // 流程
+        $('.surStep').progress({
+            active: data.status,
+            data: [{
+                title: '提交资料',
+                date: '2019-10'
+            },
+            {
+                title: '项目物资部审核',
+                date: '2019-11'
+            },
+            {
+                title: '公司业务部门审核',
+                date: '2019-12'
+            }
+            ]
+        })
+        $('#status').val(data.status);
+        $('#name').text(data.supplierSurvey.supplier.name);
+        $('#address').text(data.supplierSurvey.supplier.addressProvince+data.supplierSurvey.supplier.addressSuffix);
+        $('#liaison').text(data.supplierSurvey.liaison);
+        $('#mobile').text(data.supplierSurvey.mobile);
+        $('#envSafe').text(data.supplierSurvey.envSafe);
+        $('#productName').text(data.supplierSurvey.product);
+
+
+
+        $('#qualityScore').text(data.qualityScore);
+        $('#deliveryScore').text(data.deliveryScore);
+        $('#afterSaleScore').text(data.afterSaleScore);
+        $('#priceScore').text(data.priceScore);
+        $('#total').text(data.qualityScore + data.deliveryScore + data.afterSaleScore + data.priceScore);
+
+
+        $('.materialsComment').removeClass('none');
+        $('.manageComment').removeClass('none');
+        $('.companyComment').removeClass('none');
+        $('.submit').remove();
+        $('#materialsComment').comment({
+            readonly: true,
+            sign: data.materials.name,
+            signDate: data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content: data.materialsComment
+        })
+        $('#manageComment').comment({
+            readonly: true,
+            sign: data.manage.name,
+            signDate: data.manageCommentDate,
+            signFile:data.manageSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.manageSignFile:null,
+            signStatus:data.manageCommentStatus,
+            content: data.manageComment
+        })
+        $('#companyComment').comment({
+            readonly: true,
+            sign: data.company.name,
+            signDate: data.companyCommentDate,
+            signFile:data.companySignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.companySignFile:null,
+            signStatus:data.companyCommentStatus,
+            content: data.companyComment
+        })
+        $('#prints').click(function () {
+            // $('.anewList').css('margin-top','-10px');
+            $(this).addClass('none');
+            $('.anewsurList').css({'font-size':'22px'});
+            $('#printWidth').css('width', '17.66%');
+            $('.printList tbody tr td').css('border','1.5px solid #000');
+            DX.print();
+        })
+    }
+</script>
+
+</html>

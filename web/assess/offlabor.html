@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<title>劳务队名录</title>
+		<link rel="icon" type="image/png" href="../static/icon.png" sizes="32x32" />
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+		
+	</head>
+	<body>
+		<!-- right -->
+		<div class="rightBox">
+
+			<!-- <div class="nav">
+			    <span>当前所在位置：劳务队></span><span class="pointer">劳务队名录</span>
+			</div> -->
+			<div class="clearfix">
+				
+				<!-- 查询 -->
+				<div class="query clearfix fl" style="width: 70%;">
+					<input type="text" placeholder="项目部、劳务队名称" id="checked" class="fl" style="width: 40%;" autocomplete="off">
+					<button type="button" class="fl btnBlue" id="subCheck">查询</button>
+					<span class="err fl index_err"></span>
+				</div>
+				<!-- <div class="insert fr clearfix" style="width: 30%;margin-right: 34px;">
+					
+					
+				</div> -->
+			</div>
+			
+			<div class="table tableHover" id="table">
+				<table>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th style="width:15%">公司名称</th>
+							<th>劳务队负责人</th>
+							<th>身份证号</th>
+							<th>劳务队负责人电话</th>	
+							<th>所属项目部</th>
+							<th>录入人</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						
+						
+					</tbody>
+				</table>
+				<!-- <div class="labor clearfix">
+					<p>公司名称：ssssss</p>
+					<p>劳务队负责人：ssssss</p>
+					<p>身份证号：ssssss</p>
+					<p>劳务队负责人电话：ssssss</p>
+					<p>合同签订人：ssssss</p>
+					<p>录入人：ssssss</p>
+				</div> -->
+			</div>
+			<!-- 分页 -->
+					
+				<div class="page1"></div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		var checked = $('#checked').val();
+		domAjax();
+		
+		function domAjax(){
+			pages.init({
+				'key':['content'],
+				'value':[checked],
+				'type':'POST',
+				'url':'/eva/eva/findTeamOnUnitList',
+				'callBack':selectcall,
+			})
+		}
+		
+		//点击查询
+		$('#subCheck').click(function(){
+			checked = $('#checked').val();
+			pages.init({
+				'key':['content'],
+				'value':[checked],
+				'type':'POST',
+				'url':'/eva/eva/findTeamOnUnitList',
+				'callBack':selectcall,
+			})
+		})
+		//回车查询
+		$('#checked').keydown(function(event){
+			checked = $('#checked').val();
+			if (event.keyCode == 13){
+				event.returnValue=false;
+				event.cancel = true;
+				pages.init({
+					'key':['content'],
+					'value':[checked],
+					'type':'POST',
+					'url':'/eva/eva/findTeamOnUnitList',
+					'callBack':selectcall,
+				})
+				
+			}
+		})
+		
+		/*
+		var page = {'curPage':$('#page_index').val(),'pageSize':$('#page_number').val()};
+		select(page);
+		//点击查询
+		$('#subCheck').click(function(){
+			var obj = {'curPage':1,'pageSize':$('#page_number').val()}
+			select(obj);
+		})
+		//回车查询
+		$('#checked').keydown(function(event){
+			if (event.keyCode == 13){
+				event.returnValue=false;
+				event.cancel = true;
+				$('#subCheck').trigger('click');
+				
+			}
+		})
+		
+		 // 点击首页
+		$('.first').click(function(){
+		    $('.pages li').removeClass('page_active');
+		    var obj = pageValue();
+		    if(Number(obj.page_index) > 1) {
+				var page = {'curPage':1,'pageSize':obj.page_number};
+				select(page);	
+		    }
+		   
+		    $('.first').addClass('page_active');
+		    $('.pre').addClass('page_active');
+		});
+		// 点击上一页
+		$('.pre').click(function(){
+		    $('.pages li').removeClass('page_active');
+		    var obj = pageValue();
+		    if(Number(obj.page_index) > 1) {
+		        var page = {'curPage':obj.page_pre,'pageSize':obj.page_number};
+		        select(page);	
+		    }
+		    if(Number(obj.page_index) <= 2){
+				$('.first').addClass('page_active');
+				$('.pre').addClass('page_active');
+			}
+		    // $('.first').addClass('page_active');
+		    
+		})
+		// 点击下一页
+		$('.next').click(function(){
+		    $('.pages li').removeClass('page_active');
+		    var obj = pageValue();
+		    if(Number(obj.page_index) < Number(obj.page_last)) {
+				var page = {'curPage':obj.page_next,'pageSize':obj.page_number};
+				select(page);
+		    }
+		   if(Number(obj.page_index) >= Number(obj.page_last)-1) {
+			   $('.last').addClass('page_active');
+			   $('.next').addClass('page_active');
+		   }
+		    
+		    
+		})
+		// 点击尾页
+		$('.last').click(function(){
+		    $('.pages li').removeClass('page_active');
+		    var obj = pageValue();
+			
+			if(Number(obj.page_index) < Number(obj.page_last)){
+				var page = {'curPage':obj.page_last,'pageSize':obj.page_number};
+				select(page);
+			}
+			
+			$(this).addClass('page_active');
+			$('.next').addClass('page_active');
+		       
+		   
+		})
+		// 点击跳转指定页
+		$('#page_tourl').click(function(){
+		    var obj = pageValue();
+		    var toUrl = $('.tourl input').val();
+		    if (Number(obj.page_index) == toUrl) return;
+		    var page = {'curPage':toUrl,'pageSize':obj.page_number};
+		    select(page);
+		})
+		*/
+		/* 获取分页value
+		* page_index 当前页码
+		* page_number 显示数量
+		* page_last 共多少页
+		*/
+		function pageValue(){
+		    var page_index = $('#page_index').val();
+		    var page_number = $('#page_number').val();
+		    var page_last = $('#page_last').val();
+		    var page_pre = $('#page_pre').val();
+		    var page_next = $('#page_next').val();
+		    return obj = {"page_index":page_index,"page_number":page_number,"page_last":page_last,
+		    'page_pre':page_pre,'page_next':page_next}
+		}
+		
+		//查询函数 
+		function select(obj){
+			var checked = $('#checked').val();
+			if(checked == '项目部、劳务队名称'){
+				obj.content = '';
+			}else{
+				obj.content = checked;
+			}
+			
+		    DX.ajax_method({
+		        'type':'POST',
+		        'url':'/eva/eva/findTeamOnUnitList',
+		        'param':obj,
+		        'callBack':selectcall
+		    });
+		}
+		// 回调渲染
+		function selectcall(res){
+			$('.err').hide();
+			console.log(res);
+			if(res.code !='200'){
+				console.log('数据错误');return;
+			}
+			// $('.page_index').html('第'+res.data.pageNum+'页');
+			// $('.page_count').html('总共'+res.data.pages+'页');
+			// $('.page_count1').html('总共'+res.data.total+'条');
+			// 
+			// $("#page_index").val(res.data.pageNum);
+			// $("#page_last").val(res.data.pages);
+			// $("#page_pre").val(res.data.prePage);
+			// $("#page_next").val(res.data.nextPage);				
+			var html = '';
+			
+			$.each(res.data.list,function(i,val){
+				html += '<tr ctid= '+val.ctid+' pid= '+val.pid+'>';
+				html += '<td>'+(i+1)+'</td>';
+				html += '<td class="detaila"><span class="listToDetail">'+val.team_name+'</span></td>';
+				html += '<td>'+val.contractor+'</td>';
+				html += '<td>'+val.cardid+'</td>';
+				html += '<td>'+val.principal_phone+'</td>';
+				
+				html += '<td>'+val.abbreviation+'</td>';
+				html += '<td>'+val.name+'</td>';
+				
+				html += '</tr>';
+			})
+			
+			
+			$('#table table tbody').html('');
+			$('#table table tbody').append(html);
+			$('#table table tbody tr').click(function(){
+				DX.clickTr($(this));
+			})
+			//点击详情
+			$('.detaila span').click(function(){
+				var obj = $(this);
+				var pid = $(this).parents('tr').attr('pid');
+				var ctid = $(this).parents('tr').attr('ctid');
+				if($(this).parents('tr').next('td').hasClass('isShow')){
+					$(this).parents('tr').next().children('div').slideUp('normal',function(){
+						obj.parents('tr').next().remove();
+					});
+					
+				}else{
+					details($(this),pid,ctid);
+				}
+	
+			})
+			
+		}
+		// 详情
+		function details(objs,pid,ctid){
+			var that = this;
+			var ret='';
+			DX.ajax_method({
+				'type':'POST',
+				'param':{'pid':pid,'ctid':ctid},
+				'change':objs[0],
+				'url':'/eva/eva/findTeamOnUnitByCtidAndpid',
+				'callBack':function(res){
+					var html='<td colspan="7" class="isShow ">';
+					if(res.code == '200'){
+						html += '<div class="labor clearfix none">';
+						html += '<p>公司名称：'+res.data.team_name+'</p>';
+						html += '<p>劳务队负责人：'+res.data.contractor+'</p>';
+						html += '<p>身份证号：'+res.data.cardid+'</p>';
+						html += '<p>劳务队负责人电话：'+res.data.principal_phone+'</p>';
+						html += '<p>合同签订人：'+res.data.principaltwo+'</p>';
+						
+						
+						html += '<p>录入人：'+res.data.name+'</p>';			
+						html += '<p>入场时间：'+res.data.approach_time+'</p>';		
+						html += '<p>退场时间：'+res.data.out_of_time+'</p>';						
+						// html += '<p>最后操作时间：'+res.data.operator_time+'</p>';
+						html += '<p style="width:80%;">所属项目部：'+res.data.project_name+'</p>';
+						html += '</div>';
+					}
+					html +='</td>';
+					
+					console.log(objs.parents('tr').next('td').hasClass('isShow'));
+					// if(objs.parent('tr').next('td').hasClass('isShow')){
+					// 	objs.parent('tr').next().remove();
+					// }else{
+						objs.parents('tr').after(html);
+						objs.parents('tr').next('td').children('div').slideDown();
+					// }
+					
+				}
+			})
+			// console.log(res);
+			// return res;
+		}
+		
+		
+	})
+</script>

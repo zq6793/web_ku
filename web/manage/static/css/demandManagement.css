@@ -1,0 +1,274 @@
+.rightBox {
+    width: calc(100% - 60px);
+    margin-left: 30px;
+}
+
+
+
+
+.btn{
+	outline: none;
+	margin-left: 20px;
+	padding: 5px 20px;
+	border-radius: 4px;
+	border: none;
+	background-color: #F46322;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+.btn:hover{
+	background-color: #F46322!important;
+}
+.btns{
+	outline: none;
+	margin-left: 20px;
+	padding: 5px 5px;
+	border-radius: 6px;
+	border: 1px solid #F46322;
+	color: #0675BC;
+	background-color: rgba(255,255,255,0);
+	cursor: pointer;
+}
+.btns:hover{
+	color: #F46322!important;
+	border:1px solid #F46322!important;
+}
+.btn:active{
+	color: #F46322;
+}
+
+.demand-head {
+    padding: 20px 0px 20px 0px;
+    width: 100%;
+    min-width: 902px;
+}
+
+.demand-head label {
+	font-size: 14px;
+	font-weight: 600;
+    display: inline-block;
+    margin: 0px 20px 0px 20px;
+}
+
+.demand-head label:nth-child(1){
+    margin: 0px 20px 0px 0px;
+}
+.choosed-state {
+    width: 16%;
+    min-width: 140px;
+    height: 26px;
+    padding-left: 10px;
+}
+.btnOrange{
+	margin-left: 10px;
+}
+
+
+.input-1 {
+    width: 16%;
+    height: 26px;
+    padding-left: 10px;
+    min-width: 140px;
+}
+
+.demand-content {
+    width: 100%;
+    min-width: 946px;
+}
+
+.demand-title {
+    width: 100%;
+    min-width: 946px;
+}
+
+
+.demand-wrapper {
+    width: 100%;
+    min-width: 946px;
+}
+
+
+
+
+
+tbody >tr:hover{
+	cursor: pointer;
+}
+tbody >tr td:last-child{
+	min-width: 190px;
+}
+tbody >tr td:nth-child(11){
+	min-width: 98px;
+}
+tbody >tr:not(.slide-content) td:last-child span{
+	display: inline-block;
+	width: 60px;
+}
+tbody >tr td:last-child >span:nth-child(1):hover{
+	cursor: pointer;
+	color: #1A90EB;
+}
+tbody >tr td:last-child >span:nth-child(2):hover{
+	cursor: pointer;
+	color: #1A90EB;
+}
+tbody >tr td:last-child >span:nth-child(3):hover{
+	cursor: pointer;
+	color: red;
+}
+
+table tr th:nth-child(1){
+	width: 6%;
+}
+table tr th:nth-child(2){
+	width: 16%;
+}
+table tr th:nth-child(3){
+	width: 8%;
+}
+table tr th:nth-child(4){
+	width: 8%;
+}
+table tr th:nth-child(5){
+	width: 8%;
+}
+table tr th:nth-child(6){
+	width: 8%;
+}
+table tr th:nth-child(7){
+	width: 8%;
+}
+table tr th:nth-child(8){
+	width: 6%;
+}
+table tr th:nth-child(9){
+	width: 6%;
+}
+table tr th:nth-child(10){
+	width: 10%;
+}
+table tr th:nth-child(11){
+	width: 9%;
+}
+table tr th:nth-child(12){
+	width: 14%;
+}
+
+
+
+table{
+	min-width: 902px;	
+}
+.demand-message{
+	display: none;
+	background-color: #F2F2F2;
+	width: 100%;
+	min-width: 800px;
+	height: 225px;
+}
+.demand-message-title{
+	padding: 20px 0px 20px 20px;
+	width: 40%;
+	min-width: 800px;
+	text-align: left;
+}
+
+.demand-message-title-left span{
+	font-size: 15px;
+	font-weight: 600;
+}
+.demand-message-title-left{
+	float: left;
+}
+.demand-message-title-right{
+	float: right;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.demand-message-title-right span{
+	padding: 0px 10px 0px 10px;
+}
+.demand-message-title:after{
+	clear: both;
+	content: "";
+	display: block;
+}
+.demand-message-title >div{
+}
+.mixing-plant{
+	font-size: 15px;
+	font-weight: 600;
+	padding: 0px 10px 0px 10px;
+}
+.mix-message{
+	width: 100%;
+	min-width: 800px;
+}
+
+.construction-site{
+	width: 100%;
+	min-width: 800px;
+}
+.construction-site-left{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 20px 0px 0px 0px;
+	text-align: left;
+	width: 100%;
+}
+.construction-site-right{
+	width: 100%;
+}
+.mix-message-title{
+	padding-left: 20px;
+	text-align: left;
+}
+.mix-message-title>div{
+	padding: 0px 20px 0px 0px;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 600;
+}
+.construction-site-left select{
+	padding-left: 10px;
+	background-color: #FFFFFF;
+	width: 14%;
+	min-width: 160px;
+}
+.construction-site-left input{
+	padding-left: 10px;
+	width: 13.4%;
+	min-width: 149px;
+}
+.construction-site-left span{
+	display: inline-block;
+	width: 94px;
+	padding-left: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.concrete-Information{
+}
+
+.pouring-information{
+	display: none;
+}
+.construction-site{
+	display: none;
+}
+
+.choosed{
+	color: #0675bc;
+}

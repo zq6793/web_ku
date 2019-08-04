@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>查看表二</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<!-- <link rel="stylesheet" type="text/css" href="static/css/office.css"/>
+		 -->
+		 <style type="text/css">
+		 	/* 查看表二 */
+			.score{margin: 0 30px;font-size: 14px;}
+			.score h3{line-height: 40px;font-weight: bold;margin-top: 20px;text-align: center;font-size: 20px;}
+			.score .dlc{line-height: 40px;font-size: 16px;}
+			.score .dlc span{padding-right: 30px;}
+		 	.score table tr th{width: 10%;}
+			.score table tr th:first-child{width: 20%;}
+		 	.score table tr th:nth-child(2){width: 40%;}
+		 </style>
+	</head>
+	<body>
+		<div class="score" id="score">
+			<h3>{{projectName}}劳务分包队伍信用评价评分表</h3>
+			<p class="dlc">
+				<span>劳务队伍名称：{{name}}</span>
+				<span>合同签订人：{{people}}</span>
+				<span>日期：{{date}}</span>
+			</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>评定内容</th>
+						<th>不良行为</th>
+						<th>行为等级和扣分标准</th>
+						<th>扣分</th>
+						<th>说明</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="6">重大不良行为</td>
+						<td>因施工原因发生较大安全事故</td>
+						<td>100分</td>
+						<td name='a1'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<!-- <td rowspan="7">重大不良行为</td> -->
+						<td>将劳务分包内容转包且不能有效管控的</td>
+						<td>100分</td>
+						<td name='a2'></td>
+						<td></td>
+					</tr>
+					<!-- <tr>
+						<td>中途退场或不按合同约定办理结算，且存在漫天要价的</td>
+						<td>100分</td>
+						<td name='a3'></td>
+						<td></td>
+					</tr> -->
+					<tr>
+						<!-- <td rowspan="7">重大不良行为</td> -->
+						<td>与公司发生劳务纠纷并诉讼法律</td>
+						<td>100分</td>
+						<td name='a3'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<!-- <td rowspan="7">重大不良行为</td> -->
+						<td>指使民工到项目部及相关部门闹事，或因恶意拖欠民工工资、材料款，且因拖欠问题造成群体事件或不良社会影响</td>
+						<td>100分</td>
+						<td name='a4'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<!-- <td rowspan="7">重大不良行为</td> -->
+						<td>施工过程倒卖材料</td>
+						<td>100分</td>
+						<td name='a5'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<!-- <td rowspan="7">重大不良行为</td> -->
+						<td>因队伍施工原因发生质量事故，且损失在100万元以上的</td>
+						<td>100分</td>
+						<td name='a6'></td>
+						<td></td>
+					</tr>
+					
+					
+					<tr>
+						<td rowspan="3">人员、设备到位（满分10分，扣完为止。）</td>
+						<td>承诺的现场负责人未按承诺到位，或在施工期间未经批准擅自更换，或每月在现场不能保证22天以上</td>
+						<td>2分/人次</td>
+						<td name='a7'></td>
+						<td>项目要求更换的除外</td>
+					</tr>
+					<tr>
+						<!-- <td rowspan="3">人员、设备到位（满分10分，扣完为止。）</td> -->
+						<td>主要施工机械不能满足现场要求</td>
+						<td>1分/台套</td>
+						<td name='a8'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<!-- <td rowspan="3">人员、设备到位（满分10分，扣完为止。）</td> -->
+						<td>未按规定实名制签订劳务用工合同</td>
+						<td>0.2分/人次</td>
+						<td name='a9'></td>
+						<td></td>
+					</tr>
+					
+					
+					<tr>
+						<td rowspan="6">安全生产（满分15分，扣完为止。）</td>
+						<td>未向作业人员提供安全防护品</td>
+						<td>3分/次</td>
+						<td name='a10'></td>
+						<td></td>
+					</tr>
+					<tr>
+
+						<td>现场作业人员不服从管理，存在“三违”行为（违章指挥、违反管理规定和操作规程）</td>
+						<td>3分/次</td>
+						<td name='a11'></td>
+						<td></td>
+					</tr>
+					<tr>
+
+						<td>不及时整改安全隐患，或多次整改仍有安全问题，对存在重大安全事故隐患但拒绝停工整改</td>
+						<td>5分/次</td>
+						<td name='a12'></td>
+						<td></td>
+					</tr>
+					<tr>
+
+						<td>因施工原因发生一般安全事故，没有给公司造成不良影响的</td>
+						<td>8分/次</td>
+						<td name='a13'></td>
+						<td></td>
+					</tr>
+					<tr>
+					
+						<td>因施工原因发生一般安全事故，且给公司造成不良影响的</td>
+						<td>15分/次</td>
+						<td name='a14'></td>
+						<td></td>
+					</tr>
+					<tr>
+					
+						<td>其它不符合项目安全生产规定的行为</td>
+						<td>1～10分/次</td>
+						<td name='a15'></td>
+						<td></td>
+					</tr>
+					
+					
+					<tr>
+						<td rowspan="5">质量管理（满分15分，扣完为止。）</td>
+						<td>因施工原因出现质量问题，对工程实体质量影响不大(如水泥混凝土表面蜂窝麻面、砌筑砂浆不饱满、钢筋混凝土保护层不够等)</td>
+						<td>0.5分/次，最多不超过5分</td>
+						<td name='a16'></td>
+						<td></td>
+					</tr>
+					<tr>
+						
+						<td>因施工原因发生质量事故，损失在0-50万元的</td>
+						<td>8分/次</td>
+						<td name='a17'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>因施工原因发生质量事故，损失在50-100万元的</td>
+						<td>15分/次</td>
+						<td name='a18'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>出现质量问题拒不整改</td>
+						<td>5分/次</td>
+						<td name='a19'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>其它不符合项目质量管理的行为</td>
+						<td>1～10分/次</td>
+						<td name='a20'></td>
+						<td></td>
+						
+					</tr>
+					
+					
+					<tr>
+						<td rowspan="4">进度管理（满分10，扣完为止。）</td>
+						<td>因队伍原因未能完成评价期内总进度指标的</td>
+						<td>1～5分</td>
+						<td name='a21'></td>
+						<td></td>
+					</tr>
+					<tr>
+						
+						<td>因外界因素引起标准变化、工期调整或需抢工时，不能配合项目补充要素</td>
+						<td>2分/次</td>
+						<td name='a22'></td>
+						<td></td>
+					</tr>
+					<tr>
+						
+						<td>项目下达停工指令拒不执行</td>
+						<td>2分/次</td>
+						<td name='a23'></td>
+						<td></td>
+					</tr>
+					<tr>
+						
+						<td>其它不符合项目进度管理的行为</td>
+						<td>1～5分/次</td>
+						<td name='a24'></td>
+						<td></td>
+					</tr>
+					
+					
+					<tr>
+						<td rowspan="2">验工计价及结算（满分10分，扣完为止。）</td>
+						<td>在项目付款后拖欠农民工工资、材料款，尚未造成影响</td>
+						<td>5分/次</td>
+						<td name='a25'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>不按合同约定办理结算，存在合同纠纷</td>
+						<td>10分/次</td>
+						<td name='a26'></td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td rowspan="5">文明施工（满分10分，扣完为止。）</td>
+						<td>未按项目要求施工产生的废旧物资、废渣等随意堆放和丢弃，废水随意排放</td>
+						<td>2分/次</td>
+						<td name='a27'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>不积极配合项目文明施工要求</td>
+						<td>2分/次</td>
+						<td name='a28'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>因文明施工、标准化施工被业主检查批评</td>
+						<td>3分/次</td>
+						<td name='a29'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>文明施工、标准化施工差，项目提出后屡教不改</td>
+						<td>5分/次</td>
+						<td name='a30'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>其它不符合项目文明施工要求的行为</td>
+						<td>1～5分/次</td>
+						<td name='a31'></td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td>项目经理（满分30分，扣完为止。）</td>
+						<td>项目经理认为扣分的行为</td>
+						<td></td>
+						<td name='a32'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="2">扣分合计</td>
+						
+						<td></td>
+						<td>{{count}}</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			<span class="btnBlue inline-block" style="margin-top: 10px;" @click="toUrl">返回</span>
+			<div style="height: 30px;visibility: hidden;"></div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var search = DX.getParam('search');//查询条件
+	var year = DX.getParam('year');//查询条件
+	var eid = DX.getParam('id');
+	var vm = new Vue({
+		el:'#score',
+		created() {
+			this.getData();
+		},
+		data:{
+			'projectName':'',//项目部名称
+			'name':'',//施工队名称
+			'people':'',//合同签订人
+			'date':'',//时间
+			'score':[],//扣分数组
+			'count':''//扣的总分
+		},
+		methods:{
+			getData:function(){
+				var $this = this;
+				
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/report/FindReportTwo',
+					'param':{'eid':eid},
+					// 'change':value.target,
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$this.projectName=res.data.projectName;
+							$this.name=res.data.team_name;
+							$this.people =res.data.contractor;
+							$this.date = res.data.data;
+							$this.score = res.data.CreditRatingList;
+							$this.count = res.data.sum == 0 ? '' : '-'+res.data.sum;
+						}
+					}
+				})
+			},
+			toUrl:function(){
+				var str ='';
+				if(search){
+					str = '?search='+search+'&year='+year;
+				}
+				window.location.href='officesee.html'+str;
+			}
+		},
+		watch:{
+			score:function(newval,oldval){
+				if(newval.length < 1) return;
+				$.each($('#score tbody tr td'),function(i,val){
+					var that = $(this);
+					$.each(newval,function(s,vals){
+						
+						if(that.attr('name') == vals.credit_name){
+							if(vals.score == 0){ return true;}
+							that.text('-'+vals.score);
+						}
+					}
+					)
+					
+				})
+			}
+		}
+	})
+	
+	
+</script>

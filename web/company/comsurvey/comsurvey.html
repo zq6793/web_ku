@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>供方调查评价</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/company.css"/>
+</head>
+<body>
+    <!-- left -->
+    <!-- <div class="leftBox"> -->
+        <!-- logo -->
+        <!-- <p class="logo"><span class="logoImg"></span></p> -->
+        <!-- 每一个模块 -->
+        <!-- <a class="title clearfix " href="javascript:void(0)" data-permission="c_1">
+            <span class="left1"></span>
+            <span>物资部业务管理</span> -->
+        <!--<span class="direction"></span>-->
+        <!-- </a>
+        <ul class="personList none" id="project">
+            <li data-permission="c_1"><span class=""></span>工作台</li>
+            <ul class="threeMenu none">
+                <p class="" data-permission="c_1"><a href="workbench.html">工作台</a></p>
+            </ul>
+            <li data-permission="c_1"><span class=""></span>物资合同审核</li>
+            <ul class="threeMenu none">
+                <p class="" data-permission="c_1"><a href="contract.html">合同审核</a></p>
+                <p class="" data-permission="c_1"><a href="survey.html">供方调查评价</a></p>
+                <p class="" data-permission="c_1"><a href="supplier.html">供应商管理</a></p>
+            </ul>
+        </ul>
+    </div> -->
+    <div class="rightBox">
+        <!-- 搜索区域 -->
+        <div class="search">
+            <!-- <button type="button" class="btn joinsurvey">进入调查</button> -->
+            <select name="" id="status" class="chooseState select">
+                <!-- '0':'新申请评价','1':'参评人签字','2':'填写评议结论','3':'公司审核','4':'审核通过','-1':'驳回' -->
+                <option value="">请选择审核状态</option>
+                <option value="3">待审核</option>
+                <option value="4">审核通过</option>
+                <option value="-1">驳回</option>
+            </select>
+            <span class="retrieval">检索：</span>
+            <input type="text" id="condition" class="showPhone input" placeholder="供方名称、联系人、联系方式">
+            <input type="text" id="projectName" class="showPhone input" placeholder="项目部名称">
+            <button type="button" class="btnBlue suprefer" style="margin-left: 20px;">查询</button>
+        </div>
+        <div class="tableList supTable">
+            <table id="list" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr id="surOutfit">
+                        <th>序号</th>
+                        <th>编号</th>
+                        <th>项目部</th>
+                        <th>供应商</th>
+                        <!-- <th>供方性质</th> -->
+                        <th>物资类别</th>
+                        <th>主要产品</th>
+                        <th>联系人/电话</th>
+                        <!-- <th>营业执照</th> -->
+                        <th>价格比较</th>
+                        <th>供应能力</th>
+                        <th>录入时间</th>
+                        <th>评价状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr id="surDetail" class="surDetail">
+                        <td>1</td>
+                        <td class="surveyId">DC-10-1</td>
+                        <td>首钢股份有限公司</td>
+                        <td>生产厂家</td>
+                        <td>建材</td>
+                        <td>螺纹钢</td>
+                        <td>李强/15101196548</td>
+                        <td>asd1212121</td>
+                        <td>较高</td>
+                        <td>较强</td>
+                        <td>2019/5/2</td>
+                        <td>已评价</td>
+                        <td><button type="button" class="tableBtn pointer" onclick="window.location.href='addcomsur.html'">去评价</button></td>
+                    </tr>
+                    <tr id="surDetail" class="surDetail">
+                        <td>1</td>
+                        <td class="surveyId">DC-10-1</td>
+                        <td>首钢股份有限公司</td>
+                        <td>生产厂家</td>
+                        <td>建材</td>
+                        <td>螺纹钢</td>
+                        <td>李强/15101196548</td>
+                        <td>asd1212121</td>
+                        <td>较高</td>
+                        <td>较强</td>
+                        <td>2019/5/2</td>
+                        <td>已评价</td>
+                        <td><button type="button" class="tableBtn pointer" onclick="window.location.href='checkcomsur.html'">查看</button></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+            <!-- 分页 -->
+        <div class="page1">
+            
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../static/js/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../static/js/progress.js"></script>
+<script src="../../static/js/pages.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var status = $('#status').val();
+    var condition = $('#condition').val();
+    var projectName = $('#projectName').val();
+    pages.init({
+        'key':['status','condition','projectName'],
+        'value':[status,condition,projectName],
+        'url':'/materials/supply/supplierSurvey/findAll',
+        'callBack':surveyList
+    })
+
+     //初始化页面
+    //  var page = {'curPage':$('#page_index').val(),'pageSize':$('#page_number').val()};
+    // search(page);
+	//删除
+	// $('.del').click(function(){
+	// 	var id = $(this).parents('tr').attr('oid');
+	// 	DX.ajax_method({
+	// 		'type':'GET',
+	// 		'url':'GET /materials/contractAudit/delete',
+	// 		'param':{'auid':id},
+	// 		'callBack':function(res){
+	// 			if(res.code == '200'){
+	// 				var obj = pageValue();
+	// 				var page = {'curPage':obj.page_pre,'pageSize':obj.page_number};
+	// 				search(page);;
+	// 			}
+	// 		}
+	// 	})
+	// })
+    //查询
+    $('.suprefer').click(function(){
+        var status = $('#status').val();
+        var condition = $('#condition').val();
+        var projectName = $('#projectName').val();
+        pages.init({
+            'key':['status','condition','projectName'],
+            'value':[status,condition,projectName],
+            'url':'/materials/supply/supplierSurvey/findAll',
+            'callBack':surveyList
+        })
+    });
+
+    //点击首页
+    // $('.first').click(function(){
+    //     $('.pages li').removeClass('page_active');
+    //     var obj = pageValue();
+    //     if(Number(obj.page_index) < 2){
+    //         $('.first').addClass('page_active').siblings().removeClass('page_active');
+    //     }
+    //     var page = {'curPage':1,'pageSize':obj.page_number};
+    //     search(page);
+    // });
+
+    //点击上一页
+    // $('.pre').click(function(){
+    //     $('.pages li').removeClass('page_active');
+    //     var obj = pageValue();
+		
+    //     if(Number(obj.page_index) < 2){
+    //         $('.pre').addClass('page_active').siblings().removeClass('page_active');
+    //         return false;
+    //     }
+    //     var page = {'curPage':obj.page_pre,'pageSize':obj.page_number};
+    //     search(page);
+    // });
+
+    //点击下一页
+    // $('.next').click(function(){
+    //     $('.pages li').removeClass('page_active');
+    //     var obj = pageValue();
+    //     if(Number(obj.page_index) >= Number(obj.page_last)){
+    //         $('.next').addClass('page_active').siblings().removeClass('page_active');
+    //         return false;
+    //     }
+    //     var page = {'curPage':obj.page_next,'pageSize':obj.page_number};
+    //     search(page);
+    // });
+
+    //点击尾页
+    // $('.last').click(function(){
+    //     $('.pages li').removeClass('page_active');
+    //     var obj = pageValue();
+    //     if(Number(obj.page_index) < 2){
+    //         $('.last').addClass('page_active').siblings().removeClass('page_active');
+    //     }
+    //     var page = {'curPage':obj.page_last,'pageSize':obj.page_number};
+    //     search(page);
+    // })
+
+    //点击跳转指定页
+    // $('#page_tourl').click(function(){
+    //     var obj = pageValue();
+    //     var toUrl = $('.tourl input').val();
+    //     if(Number(obj.page_index) == toUrl) return;
+    //     var page = {'curPage':toUrl,'pageSize':obj.page_number};
+    //     search(page);
+    // })
+
+
+        // 获取分页value
+    // page_index  当前页码
+    // page_number 显示数量
+    // page_last   共多少页
+    // function pageValue(){
+    //     var pageIndex = $('#page_index').val();
+    //     var pageNumber = $('#page_number').val();
+    //     var pageLast = $('#page_last').val();
+    //     var pagePre = $('#page_pre').val();
+    //     var pageNext = $('#page_next').val();
+		
+    //     return obj = {
+    //         "page_index":pageIndex,
+    //         "page_number":pageNumber,
+    //         "page_last":pageLast,
+    //         "page_pre":pagePre,
+    //         "page_next":pageNext
+    //     }
+		
+    // }
+
+
+    //点击供应商名称出现详情
+    $('body').on('click','.surveyId',function(){
+        if($(this).parent().parent().next().hasClass('none')){
+                $(this).parent().parent().removeClass('bgcolor');
+                $(this).parent().parent().next().stop().slideUp(200).children().children().stop().slideUp(200,function(){
+                    $(this).parent().parent().remove();
+                });
+        }else{
+            $(this).parent().parent().addClass('bgcolor')
+            var _this = $(this).parent();
+            DX.ajax_method({
+                'type':'GET',
+                'url':'/materials/supply/supplierSurvey/findById',
+                'change':$(this)[0],
+                'param':{id:_this.parent().attr('oid')},
+                'callBack':function(res){
+                    console.log(res)
+                    if(res.code == 200){
+                        var html = surveyDetail(res.data);
+                        _this.parent('tr').after(html);
+                        _this.parent().next().stop().slideDown(200).children().children().stop().slideUp(0).slideDown(200)
+                    }else{
+                        alert('服务器异常');
+                    }
+                }
+            })
+        }
+    })
+
+     //回车搜索
+     $('#condition').on('keypress',function(e){
+        if(e.keyCode == 13){
+            $('.suprefer').click();
+        }
+    })  
+    //回车搜索
+    $('#projectName').on('keypress',function(e){
+        if(e.keyCode == 13){
+            $('.suprefer').click();
+        }
+    })  
+    $('#status').on('change',function(){
+        $('.suprefer').click();
+    })
+})
+
+//搜索
+// function search(page){
+//     var obj = {
+//         status:$('#status').val(),
+//         condition:$('#condition').val(),
+//         projectName:$('#projectName').val()
+//     }
+//     obj = $.extend(obj,page);
+//     if(!obj.curPage){obj.curPage = '1'}
+//     if(!obj.pageSize){obj.pageSize = '10'}
+//     if(obj.curPage < 1){obj.curPage = 1}
+//     DX.ajax_method({
+//         'type':'GET',
+//         'url':'/materials/supplierSurvey/findAll',
+//         'param':obj,
+//         'callBack':function(res){
+//             if(res.code == 200){
+//                 $('.page_index').html('第'+res.data.pageNum+'页');
+//                 $('.page_count').html('总共'+res.data.pages+'页');
+//                 $('.page_count1').html('总共'+res.data.total+'条');
+
+//                 $('#page_index').val(res.data.pageNum);
+//                 $('#page_last').val(res.data.pages);
+//                 $('#page_pre').val(res.data.prePage);
+//                 $('#page_next').val(res.data.nextPage);
+//                 surveyList(res.data);
+//             }else{
+//                 alert('服务器异常');
+//             }
+//         }
+//     })
+// }
+//通过何种认证及证书编号
+var approveTypeMap = {1:'质量管理体系认证',2:'安全管理体系认证',3:'环境管理体系认证',4:'职业健康安全管理认证体系'}
+//资信等级
+var creditLevelMap = {1:'1A',2:'2A',3:'3A'}
+//应急供应能力  1,较强,2:一般,3:较差
+var supportAbilityMap = {1:'较强',2:'一般',3:'较差'}
+//同类价格比较(1:较高,2:居中,3:较低) ,
+var priceCompareMap = {1:'较高',2:'居中',3:'较低'}
+var statusMap = {'0':'新申请评价','1':'参评人签字','2':'填写评议结论','3':'公司审核','4':'审核通过','-1':'驳回'}
+//创建列表
+function surveyList(data){
+    var data = data.data;
+    console.log(data)
+    var html = '';
+    for(var i=0;i<data.list.length;i++){
+        var node = data.list[i];
+        html+='<tr id="surDetail" class="surDetail" oid="' + node.id + '">';
+        html+='<td>'+ ((data.pageNum - 1) * data.pageSize + i + 1) +'</td>';
+        html+='<td>'+'<span class="surveyId listToDetail">'+'DC-'+node.projectId+'-'+ node.id +'</span>'+'</td>';
+        html+='<td>'+'<span class="omit" style="display:inline-block;max-width:150px;" title="'+node.projectName+'">'+node.projectName+'</span>'+'</td>';
+        html+='<td>'+'<span class="omit" style="display:inline-block;max-width:150px;" title="'+node.supplierName+'">'+node.supplierName+'</span>'+'</td>';
+        // html+='<td>'+(node.type==0?'生产厂家':'流通领域')+'</td>';
+        html+='<td>'+node.productClassify+'</td>';
+        html+='<td title="'+node.product+'">'+'<span class="omit" style="display:inline-block;max-width:100px;">'+node.product+'</span>'+'</td>';
+        html+='<td>'+node.liaison+'/'+node.mobile+'</td>'
+        // html+='<td>'+node.businessLicense +'</td>'
+        html+='<td>'+(node.priceCompare?priceCompareMap[node.priceCompare]:'')+'</td>';
+        html+='<td>'+(node.supportAbility?supportAbilityMap[node.supportAbility]:'')+'</td>';
+        html+='<td>'+node.createTime +'</td>';
+        html+='<td>'+statusMap[node.status]+'</td>';
+        html+='<td>' + (node.showBtn ? getButton(node.status,node.id) : '<button class="upandshow listToDetail" type="button" onclick="gotoCheck(\'' + node.id + '\')">查看</button>') + '</td>';
+        // html+=<td><button type="button" class="tableBtn pointer">查看</button></td>
+        html+='</tr>';
+    }
+    $('#list tbody').empty().append(html);
+    $('#list tbody tr').click(function(){
+        DX.clickTr($(this));  
+    })
+}
+//'0':'新申请评价','1':'参评人签字','2':'填写评议结论','3':'公司审核','4':'审核通过','-1':'驳回'
+function getButton(status,id){
+    if(status == 3){
+        return '<button class="upandshow listToDetail" type="button" onclick="gotoSur(\'' + id + '\')">审核</button>';
+    }
+    return '<button class="upandshow listToDetail" type="button" onclick="gotoCheck(\'' + id + '\')">查看</button>';
+}
+
+function surveyDetail(data){
+    var approve = JSON.parse(data.supplier.approve);
+    var approveHtml='';
+    
+    $.each(approve,function(i,n){
+        approveHtml+=approveTypeMap[n.type]+'：'+n.no+'&emsp;&emsp;';
+    })
+    var html = '';
+        html+='<tr class="addcondet none">';
+        html+='<td colspan="14" style="background:none;position:relative;">';
+        html+='<div class="supplierdetail" style="position: absolute;width: 100%;top: 0;">';
+        html+='<ul><li class="mesnav">';
+        html+='<span class="supmes pointer">基本信息</span>';
+        html+='<span class="suppow pointer">证照、能力</span>';
+        html+='<span class="supeva pointer" data-node=\'' + JSON.stringify(data) + '\'>评价信息</span>';
+        // html+='<span class="suphis pointer">历史评价</span>';
+        html+='</li><li>';
+        html+='<div class="messup">';
+        html+='<p class="mesfirrow">';
+        html+='<span class="sameSpan">供方名称：</span><span class="samedetail">'+data.supplier.name+'</span>';
+        html+='<span class="sameSpan">供方性质：</span><span class="samedetail">'+(data.supplier.type==0?'生产厂家':'流通领域')+'</span>';
+        html+='<span class="sameSpan">主要产品：</span><span class="samedetail" style="text-indent:20px;" title="'+data.product+'">'+data.product+'</span>';
+        html+='</p>';
+        html+='<p class="messecrow">';
+        html+='<span class="sameSpan">物资类别：</span><span class="samedetail">'+data.productType+'</span>';
+        html+='<span class="sameSpan">公司地址：</span><span class="samedetail" style="width:252.14px;overflow:hidden; white-space:nowrap;text-overflow: ellipsis;" title="'+data.supplier.addressProvince+data.supplier.addressSuffix+'">'+data.supplier.addressProvince+data.supplier.addressSuffix+'</span>';
+        html+='<span class="sameSpan">联系人/电话：</span><span class="samedetail">'+data.liaison+' '+data.mobile+'</span>';
+        html+='</p>'
+        html+='<p class="messecrow">'
+        html+='<span class="sameSpan">环境安全：</span><span class="samedetail">'+data.envSafe+'</span>';
+        html+='</p>';
+        html+='</div>';
+        html+='<div class="powsup none">';
+        html+='<p class="powfirrow">';
+        html+='<span class="sameSpan">营业执照：</span><span class="samedetail">'+data.supplier.businessLicense+'</span>';
+        html+='<span class="sameSpan">有效日期：</span><span class="samedetail">'+data.supplier.businessExpireDate+'</span>';
+        html+='</p>';
+        html+='<p class="powsecrow">';
+        html+='<span class="sameSpan">资信等级：</span><span class="samedetail">'+(data.supplier.creditLevel?creditLevelMap[data.supplier.creditLevel]:'')+'</span>';
+        html+='<span class="sameSpan">许可证号：</span><span class="samedetail">'+data.supplier.productLicence+'</span>';
+        html+='<span class="sameSpan">有效日期：</span><span class="samedetail">'+data.supplier.productExpireDate+'</span>';
+        html+='</p>';
+        html+='<p class="powthrrow">';
+        html+='<span class="sameSpan">供应能力：</span><span class="samedetail">'+(data.supportAbility ?supportAbilityMap[data.supportAbility]:'')+'</span>';
+        html+='<span class="sameSpan">生产能力：</span><span class="samedetail">'+data.productAbility+'(万元)/年</span>';
+        html+='<span class="sameSpan">同类比价：</span><span class="samedetail">'+(data.priceCompare ?priceCompareMap[data.priceCompare]:'')+'</span>';
+        html+='</p>';
+        html+='<p class="powfourow">';
+        html+='<span class="sameSpan">运输能力：</span><span class="samedetail">'+(data.transportAbility ==0?'有':'无')+'</span>';
+        html+='<span class="sameSpan">售后服务：</span><span class="samedetail">'+data.afterSale+'</span>';
+        html+='<span class="sameSpan">其他资料：</span><span class="samedetail">'+data.supplier.otherInfo+'</span>';
+        html+='</p>';
+        html+='<p>';
+        html+='<span class="sameSpan">认证方式：</span><span style="min-width:121px;line-height: 35px;float: left;">'+approveHtml+'</span>';
+        html+='</p>'
+        html+='</div>';
+        // html+='<!-- 评价信息 -->';
+        html+='<div class="evasup none" id="pj'+data.id+'" style="padding:20px;box-sizing:border-box;">';
+        html+='</div>';
+        // html+='<!-- 历史评价 -->';
+        // html+='<div class="hissup none">';
+        // html+='<span>历史评价</span>';
+        // html+='</div>';
+        html+='</li>';
+        html+='</ul>';
+        html+='</div>';
+        html+='</td>';
+        html+='</tr>';
+        return html;
+}
+
+
+//标签类切换
+$('body').on('click','.suppow',function(e){
+    $(e.target).css('color','#ffffff').siblings().css('color','black');
+    $(e.target).css('background','#0675bc').siblings().css('background','#ffffff');
+    $(e.target).parent().next().find('.powsup').css('display','block').siblings().css('display','none');
+})
+$('body').on('click','.supeva',function(e){
+    $(e.target).css('color','#ffffff').siblings().css('color','black');
+    $(e.target).css('background','#0675bc').siblings().css('background','#ffffff');
+    $(e.target).parent().next().find('.evasup').css('display','block').siblings().css('display','none');
+    var node = $(e.target).attr('data-node');
+    if(node){
+        node = JSON.parse(node);
+    }
+    console.log(node)
+    var appraiserDate = '';
+    $.each(JSON.parse(node.appraiser),function(i,n){
+        if(n.signDate && n.signDate > appraiserDate){
+            appraiserDate = n.signDate;
+        }
+    })
+    // 流程
+    $('#pj' + node.id).empty().progress({
+        active:node.status,
+        data: [{
+                title: '提交资料',
+                date: node.createTime
+            }, 
+            {
+                title: '评价人员签字',
+                date: appraiserDate
+            },
+            {
+                title: '项目经理审核',
+                date: node.evaluateDate
+            },
+            {
+                title: '公司业务部门审核',
+                date: node.companyCommentDate
+            }
+        ]
+    })
+})
+$('body').on('click','.supmes',function(e){
+    $(e.target).css('color','#ffffff').siblings().css('color','black');
+    $(e.target).css('background','#0675bc').siblings().css('background','#ffffff');
+    $(e.target).parent().next().find('.messup').css('display','block').siblings().css('display','none');
+})
+
+
+
+
+//跳转审核页面
+function gotoSur(id){
+    window.location.href='addcomsur.html?id='+id;
+}
+function gotoCheck(id){ 
+    window.location.href='checkcomsur.html?id='+id;
+    // var r = confirm('确认重新评价')
+    // if(r){
+    //     DX.ajax_method({
+    //         'type':'POST',
+    //         'url':'/materials/supplierResurvey/startSupplierResurvey',
+    //         'param':{surveyId:id},
+    //         'callBack':function(res){
+    //             // console.log(res)
+    //             if(res.code == 200){
+    //                 window.location.href='../comanew/comanew.html';
+    //             }
+    //         }
+    //     })
+    // }
+}
+</script>

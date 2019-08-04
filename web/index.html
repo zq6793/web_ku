@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大西信息科技有限公司</title>
+	<!-- <link rel="icon" href="/favicon.ico" type="image/x-icon" /> -->
+	<link rel="icon" href="static/img/favicon.ico" type="image/x-icon" >
+    <link rel="stylesheet" type="text/css" href="static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="static/common.css"/>
+</head>
+<body>
+    <!-- left -->
+    <div class="leftBox">
+		<span id="scale" class="none"></span>
+        <!-- logo -->
+        <p class="logo"><span class="logoImg"></span></p>
+		<!-- 每一个模块 -->
+		<!-- 工作台 -->
+		<a class="title1 clearfix " href="javascript:void(0)" data-permission="0" id="message" onclick="javascript:ajaxHtml('message/message.html')">
+			<span class="left"></span>
+			<span>个人中心</span>
+		<!--<span class="direction"></span>-->
+		</a>
+		<ul class="personList none"></ul>
+		
+		<!-- 劳务队管理 -->
+        <a class="title clearfix " href="javascript:void(0)" data-permission="56">
+            <span class="left0"></span>
+            <span>计划合同部</span>
+<!--            <span class="direction"></span>-->
+        </a>
+		<ul class="personList none" id="assess">
+			<li data-permission="56"><span class=""></span>劳务队</li>
+			<ul class="threeMenu none">
+				<p class="" data-permission="56"><a href="javascript:ajaxHtml('assess/index.html')">劳务队管理</a></p>
+				<p class="" data-permission="55"><a href="javascript:ajaxHtml('assess/show.html')">劳务队评价</a></p>
+			</ul>
+			
+		</ul>
+		<!-- 物资管理部 -->
+		<a class="title clearfix " href="javascript:void(0)" data-permission="69">
+			<span class="left1"></span>
+			<span>物资管理部</span>
+		</a>
+		<ul class="personList none" id="project" >
+			<li data-permission="69" onclick="javascript:ajaxHtml('project/flow.html')"><span class=""></span>供应商</li>
+			<ul class="threeMenu none">
+					<p class="" data-permission="63"><a href="javascript:ajaxHtml('project/supplier/supplier.html')">供应商管理</a></p>
+					<p class="" data-permission="64"><a href="javascript:ajaxHtml('project/survey/survey.html')">调查评价</a></p>
+					<p class="" data-permission="65"><a href="javascript:ajaxHtml('project/contract/contract.html')">合同审核</a></p>
+					<p class="" data-permission="66"><a href="javascript:ajaxHtml('project/anew/anew.html')">重新评价</a></p>
+					<p class="" data-permission="70"><a href="javascript:ajaxHtml('project/directories/directories.html')">供应商名录</a></p>
+			</ul>
+			<li data-permission="" ><span class=""></span>入库管理</li>
+			<ul class="threeMenu none">
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('enterstock/index.html')">现场收料</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('enterstock/detail.html')">收料明细</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('enterstock/contract.html')">入库存料</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('enterstock/anew.html')">开点验单</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('enterstock/directories.html')">点验单明细</a></p>
+			</ul>
+			<li data-permission="" ><span class=""></span>出库管理</li>
+			<ul class="threeMenu none">
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('outstock/supplier.html')">入库明细发料</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('outstock/survey.html')">库存发料</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('outstock/contract.html')">出库明细</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('outstock/anew.html')">开发料单</a></p>
+					<p class="" data-permission="0"><a href="javascript:ajaxHtml('outstock/directories.html')">发料单明细</a></p>
+			</ul>
+			<li data-permission="" ><span class=""></span>拉动式生产</li>
+			<ul class="threeMenu none">
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('project/supplier/')">采购申请</a></p>
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('project/rolling/rolling-wave.html')">滚动计划</a></p>
+			</ul>
+		</ul>
+		<!-- 实验室 -->
+		<a class="title clearfix " href="javascript:void(0)" data-permission="">
+			<span class="left4"></span>
+			<span>搅拌站</span>
+		</a>
+		<ul class="personList none" id="manage" >
+			<li data-permission="" onclick="javascript:ajaxHtml('manage/flow.html')"><span class=""></span>试验室</li>
+			<ul class="threeMenu none">
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('manage/proportion.html')">配置配合比</a></p>
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('manage/demandManagement.html')">需求管理</a></p>
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('manage/mixManage.html')">配合比管理</a></p>
+			</ul>
+			<li data-permission="" onclick="javascript:ajaxHtml('manage/flow.html')"><span class=""></span>统筹安排</li>
+			<ul class="threeMenu none">
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('manage/carManage.html')">车辆管理</a></p>
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('manage/demanPooling.html')">需求统筹</a></p>
+					<p class="" data-permission=""><a href="javascript:ajaxHtml('manage/addAccount.html')">账号管理</a></p>
+			</ul>
+		</ul>
+		<!-- 权限管理 -->
+		<a class="title clearfix " href="javascript:void(0)" data-permission="0">
+			<span class="left2"></span>
+			<span>权限管理</span>      
+		<!--<span class="direction"></span>-->
+		</a>
+		<ul class="personList none" id="power">
+			<li data-permission="0" ><span class=""></span>用户权限管理</li>
+			<ul class="threeMenu none">
+				<p class="" data-permission="51"><a href="javascript:ajaxHtml('power/check.html')">用户审核</a></p>
+				<p class="" data-permission="0" ><a href="javascript:ajaxHtml('power/identityinformationlist.html')">职位管理</a></p>
+				
+			</ul>
+			<li data-permission="51"><span class=""></span>角色权限管理</li>
+			<ul class="threeMenu none">
+				<p class="" data-permission="51"><a href="javascript:ajaxHtml('power/manage.html')">角色管理</a></p>
+				
+			</ul>
+		</ul>
+		
+	</div>
+    <!-- right -->
+    <div class="rightBox1">
+		<header>
+			<span id="loginName" pid=""></span>
+			<div class="tx">
+				<span class="woker" id="userName"></span>
+				<span class="txImg"></span>
+				<!-- 退出按钮 -->
+				<ul class="quit none">
+					<li id="loginout"><a href="javascript:void(0)"><span></span>退出</a></li>
+					<li><a href="javascript:ajaxHtml('message/personal-center.html')"><span></span>基本信息</a></li>
+					<li><a href="javascript:void(0)"><span></span>反馈</a></li>
+					<li><a href="javascript:void(0)"><span></span>帮助</a></li>
+				</ul>	
+			</div>
+			<span class="fr message" title=""><i class="roundRed" ></i></span>
+			<!-- 切换项目部 弹层-->
+			<ul class="project" style="display: none;" id="projectbox"></ul>
+			<span class="openWin" title="打开新标签页"></span>
+		</header>
+		<div id="rightBox">
+			<!-- <img src="static/img/404.png" alt="" style="display: none;" id="nofund"> -->
+		</div>
+    </div>
+	
+	<!-- 上传弹层 -->
+	<div  id="showModel">
+		<img src="static/img/upload.gif">
+	</div>
+</body>
+</html>
+<script src="static/js/jquery-1.8.3.js"></script><br /><br />
+<script src="static/js/common.js"></script>
+<script src="static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	domReady();
+	// 切换项目部
+	$('#loginName').click(function(){
+		if($('#projectbox').css('display') == 'block'){
+			$('#projectbox').css('display','none');
+		}else{
+			clickProject();
+		}
+	})
+	
+	//接受消息通知
+	DX.setInterval(callBackMessage,300);
+	// DX.webSoket({'send':{'message':111},'message':callBackMessage});
+	//点击进消息页面
+	$('span.message').click(function(){$('#message').click();})
+	//点击消息页面
+	$('#message').click(function(){
+		messageRed($(this));
+	});
+
+})
+
+</script>

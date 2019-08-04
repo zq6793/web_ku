@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>审核人员</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+	</head>
+	<body>
+		<div class="rightBox">
+			
+			<!-- <div class="nav">
+			    <span>当前所在位置：用户权限管理></span><span class="pointer">用户审核</span>
+			</div> -->
+			<div class="check">
+				<div class="top clearfix" id="checkNav">
+					<select class="fl">
+						<option value ="">请选择审核类型</option>
+						<option value ="1">职员注册审核</option>
+						<option value ="2">添加身份审核</option>
+						<option value ="3">身份变更审核</option>
+					</select>
+					<button type="button" class="fl one active"  style="margin-left: 30px;" status='1'>待审核</button>
+					<button type="button" class="fl two" status='2'>已审核</button>
+				</div>
+				<!-- <h3 class="title1">审核申请名单</h3> -->
+				
+				<table>
+					<thead>
+						<tr>
+							<!-- <th>登录账号</th> -->
+							<th>姓名</th>
+							<th>单位</th>
+							<th>部门</th>
+							<th>职位</th>
+							<th>时间</th>
+							<th>是否主管</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- <tr>
+							<td>1122</td>
+							<td>1122</td>
+							<td>1122</td>
+							<td>1122</td>
+							<td>1122</td>
+							<td><span class="yes">同意</span><span class="no">拒绝</span></td>
+						</tr>	 -->		
+						
+					</tbody>
+				</table>
+			</div>
+			<!-- 分页 -->
+			<div class="page1"></div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		var type = $('#checkNav select').val();
+		var url = '/user/emp/findAppliers';
+		
+		pages.init({
+			'key':['checkType'],
+			'value':[type],
+			'url':url,
+			'callBack':selectcall
+		})
+		
+		
+		
+		//selct改变请求接口
+		$('#checkNav select').change(function(){
+			// select(page);
+			type = $('#checkNav select').val();
+			if($('#checkNav button.active').attr('status') == '2'){
+				url = '/user/emp/findCheckHistory';
+			}
+			console.log(url);
+			pages.init({
+				'key':['checkType'],
+				'value':[type],
+				'url':url,
+				'callBack':selectcall
+			})
+		})
+		
+		// 点击待审核 已审核
+		$('#checkNav button').click(function(){
+			$(this).addClass('active').siblings().removeClass('active');
+			if($(this).attr('status') == '2'){
+				url = '/user/emp/findCheckHistory';
+			}else{
+				url = '/user/emp/findAppliers';
+			}
+			type = $('#checkNav select').val();
+			
+			pages.init({
+				'key':['checkType'],
+				'value':[type],
+				'url':url,
+				'callBack':selectcall
+			})
+		})
+		
+		
+		
+	})
+	
+	//回调渲染
+	function selectcall(res){
+		console.log(res);
+		if(res.code != '200') return;
+		//分页数据
+		// $('.page_index').html('第'+res.data.pageNum+'页');
+		// $('.page_count').html('总共'+res.data.pages+'页');
+		// $('.page_count1').html('总共'+res.data.total+'条');
+		// 
+		// $("#page_index").val(res.data.pageNum);
+		// $("#page_last").val(res.data.pages);
+		// $("#page_pre").val(res.data.prePage);
+		// $("#page_next").val(res.data.nextPage);
+		
+		//页面渲染
+		var html = '';	
+		$.each(res.data.users,function(i,val){
+			// $.each(val.roles,function(index,value){
+				html += '<tr ujpid="'+val.ujpid+'" >';
+				// html += '<td>'+val.phone+'</td>';
+				html += '<td>'+val.name+'</td>';
+				html += '<td>'+val.projectName+'</td>';
+				html += '<td>'+val.departName+'</td>';
+				html += '<td>'+val.roleName+'</td>';
+				
+				html += '<td>'+val.applyTime+'</td>';
+				var as =val.isSupervisor==1 ? '是' : '否';
+				html += '<td>'+as+'</td>';
+				if($('#checkNav button.active').attr('status') == '1'){
+					html += '<td><span class="yes">同意</span><span class="no">拒绝</span></td>';
+				}else{
+					var ires = '<span style="color:red">审核拒绝</span>';
+					if(val.reviewStatus == 1||val.reviewStatus == 2){
+						ires = '<span style="color:#199ED8">审核通过</span>';
+					}
+					html +='<td>'+ires+'</td>';
+				}
+				
+				html+='</tr>';
+			// })
+		})
+		$('.check table tbody').html(html);
+		
+		$('.check table tbody tr').click(function(){
+			DX.clickTr($(this));
+		})
+		//同意
+		$('.yes').click(function(){
+			
+			yesNo($(this),1);
+		})
+		//拒绝
+		$('.no').click(function(){
+			yesNo($(this),-1);
+		})
+			
+	}
+	//同意和拒绝 value(1同意，-1拒绝)
+	function yesNo(obj,value){
+		// var rid = obj.parents('tr').attr('rid');
+		// var projectId = obj.parents('tr').attr('projectId');
+		// var unid = obj.parents('tr').attr('unid');
+		// var uid = obj.parents('tr').attr('uid');
+		var ujpid = obj.parents('tr').attr('ujpid');
+		var res = {'ujpid':ujpid,'reviewStatus':value};
+		// if(projectId != "null"){
+		// 	res.projectId = projectId;
+		// }
+		// if(unid != "null"){
+		// 	res.unid = unid;
+		// }
+		DX.ajax_method({
+			'type':'POST',
+			'url':'/user/emp/updateUserRole0525',
+			'change':obj[0],
+			'param':res,
+			'callBack':function(res){
+				if(res.code == '200'){
+					var type = $('#checkNav select').val();
+					var url = '/user/emp/findAppliers';
+					if($('#checkNav button.active').attr('status') == '2'){
+						url = '/user/emp/findCheckHistory';
+					}
+					pages.init({
+						'key':['checkType'],
+						'value':[type],
+						'url':url,
+						'callBack':selectcall
+					})
+				}
+			}
+		})
+	}
+</script>

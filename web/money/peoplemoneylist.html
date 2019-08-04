@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>人员工资列表</title>
+    <link rel="stylesheet" type="text/css" href="../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/wage.css"/>
+</head>
+<body>
+<div class="wage" id="wage">
+    <div class="clearfix mt20">
+ 
+        <input class="fl input ml20" placeholder="人员姓名" v-model="conant" @keyDown.enter="getData" style="width: 250px">
+        <span class="btnBlue fl ml20" @click="getData">查询</span>
+       <select class="fl select ml20" v-model="type" @change="getData" style="width: 120px;">
+            <option value="">全部</option>
+            <option value="1">正式工</option>
+            <option value="2">合同工</option>
+            <option value="3">乾泰(下属)</option>
+            <option value="4">临时工</option>
+        </select>
+    </div>
+    <table class="table tableHover mt20" style="max-width: 1200px;">
+        <thead>
+        <tr>
+            <th width="14%">姓名</th>
+            <th width="14%">岗位名称</th>
+            <th width="14%">工资时间</th>
+            <th width="14%">应发工资</th>
+            <th width="14%">实发工资</th>
+            <th width="14%">人员类别</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="v,index in list">
+            <td>{{v.userName}}</td>
+            <td>{{v.workNmae}}</td>
+            <td>{{v.year}}</td>
+            <td>{{v.shouldMoney}}</td>
+            <td>{{v.finalMoney}}</td>
+            <td>{{v.type}}</td>
+            <td><span class="listToDetail">修改</span><span class="listToDetail" style="margin-left: 10px;" @click="deletes(v.id)">删除</span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    var Year= DX.getParam("year");
+    var vm = new Vue({
+        el: '#wage',
+        mounted: function () {
+            this.getData();
+        },
+        data: {
+            'list': [],
+            'conant': "",//查询条件
+            'type':''//人员类别
+        },
+        methods: {
+            getData: function () {
+                var $this=this
+                var obj = {'year_quarter':Year,'type':this.type}
+
+                DX.ajax_method({
+                    'param':obj,
+                    'url': '/finance/fin/findFinanceDetails',
+                    'callBack': function (res) {
+                        if (res.code == 200) {
+                            console.log(res);
+                          $this.list=res.data;
+                        }else{
+                            alert(res.msg);
+                        }
+                    }
+                })
+            },
+            deletes: function (id) {
+                var $this=this;
+                DX.ajax_method({
+                    'param':{'id':id},
+                    'url': '/finance/fin/delete',
+                    'callBack': function (res) {
+                        if (res.code == 200) {
+                            $this.getData();
+                        }else{
+                            alert(res.msg);
+                        }
+                    }
+                })
+            }
+        }
+    })
+</script>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>入库明细发料</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/goods.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <div class="search">
+            <button type="button" class="btnOrange fr">发料</button>
+        </div>
+    </div>
+    <div class="rightBox">
+        <table class="table tableHover" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th style="width: 4.1%;">序号</th>
+                    <th style="width: 23%;">分类</th>
+                    <th style="width: 16.2%;">材料来源</th>
+                    <th style="width: 10.2%;">材料名称</th>
+                    <th style="width: 8.2%;">规格型号</th>
+                    <th style="width: 8.2%;">计量单位</th>
+                    <th style="width: 8.2%;">入库数量</th>
+                    <th style="width: 8.2%;">剩余数量</th>
+                    <th style="width: 9%;">入库时间</th>
+                    <th style="width: 4.7%"><span class="listToDetail">全选</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>其他二三项材料&nbsp;周转使用</td>
+                    <td>金长城门业经销部</td>
+                    <td>电动伸缩门</td>
+                    <td>无</td>
+                    <td>套</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>2010/5/2</td>
+                    <td><input type="checkbox" name="" id=""></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script src="../../static/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../../static/js/common.js"></script>
+<script src="../../static/js/pages.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.table tbody tr').click(function(){
+        DX.clickTr($(this));  
+    })
+})
+</script>

@@ -1,0 +1,73 @@
+.index{width: calc(100% - 60px);margin-left: 30px;margin-top: 20px;min-height: 350px;}
+.index .left{width: 20%;text-align: left;background: #fff;box-sizing: border-box;padding: 20px;}
+.index .right{width: 80%;background: #f8f8f8;min-height: 350px;margin-top: 30px;position: relative;}
+.index .left h3{font-size: 16px;font-weight: bold;line-height: 40px;}
+.index .left li{font-size: 13px;line-height: 30px;}
+.index .left li.act{background: #00F7DE;}
+.index .right label.select{display: block;width: 100%;font-weight: bold;margin-top: 10px;height: 40px;line-height: 40px;box-sizing: border-box;
+padding-left: 20px;}
+.index .right label.select select{width: 250px;line-height: 40px;height: 40px;margin-left: 20px;}
+/* 菜单权限 */
+.index .fl.menu{width: 30%;margin-left: 80px;min-height: 300px;background: #fff;padding: 20px;}
+.menu h4{font-size: 13px;text-align: left;line-height: 40px;}
+.menu ul{font-size: 13px;text-align: left;}
+.menu ul ol{padding-left: 30px;display: none;line-height: 30px;}
+.menu ul ol li.activeli{color: red;}
+.powmenu span:first-child{display: inline-block;width: 10px;height: 10px;background: url(../img/min-left.png);margin-right: 10px;}
+.powmenu span:first-child.showTwo{background: url(../img/min.png);}
+.powmenu span.desc{display: inline-block;width: 60%;}
+.index .submit{padding:0 20px;line-height: 30px;font-size: 13px;border: 0;background: #F46322;color: #fff;
+    border-radius: 5px;text-align: center;display: block;margin: 30px auto 0;}
+.bottom{width: 100%;margin-bottom: 20px;}
+
+
+/* 权限审核 */
+.check table>tbody>tr:hover{background: #f2f896;}
+.check{width: calc(100% - 60px);margin-left: 30px;color: #000;font-size: 13px;min-height: 350px;}
+.check h3{font-size: 16px;line-height: 50px;font-weight: bold;}
+.check ul{line-height: 40px;}
+.check ul li{width: 200px;text-align: center;font-size: 13px;float: left;cursor: pointer;}
+.check ul li.active{color: #2e719c;font-weight: bold;}
+.check table{width: 100%;}
+.check table thead th{width: 12%;background: #F5F5F6;line-height: 32px;border: 1px solid #e3e3e3;}
+.check table thead th:nth-child(2),.check table thead th:nth-child(5){width: 16%;}
+.check table thead th:nth-child(1),.check table thead th:nth-child(3),.check table thead th:nth-child(4){width: 10%;}
+.check table thead th:nth-child(6){width: 8%;}
+.check table tr td{border: 1px solid #e3e3e3;text-align: center;line-height: 32px;}
+.check table tr td span{margin: 0 10px;cursor: pointer;}
+.check table tr td span:hover{color: red;}
+.check .top{margin: 20px 0;}
+.check .top select{width: 160px;height: 30px;line-height: 30px;border-radius: 3px;text-indent: 5px;}
+.check .top button{width: 80px;height: 30px;border-radius: 3px;background: #fff;outline: none;border:1px solid rgba(25, 158, 216, 1);
+	color:rgba(25, 158, 216, 1);cursor: pointer;}
+.check .top button.one{border-top-right-radius:0;border-bottom-right-radius:0;}
+.check .top button.two{border-top-left-radius:0;border-bottom-left-radius:0;}
+.check .top button.active{background:rgba(25, 158, 216, 1);color: #fff;}
+/* 申请职位 */
+.newwork{width: calc(100% - 60px);margin-left: 30px;font-size: 13px;}
+.newwork ul.worknav{width: 100%;border-bottom: 1px solid #E3E3E3;padding: 0;}
+.newwork ul.worknav li{width: 90px;font-size: 16px;font-weight: bold;line-height: 30px;text-indent: 10px;cursor: pointer;}
+.newwork ul.worknav li:nth-child(2){margin-left: 30px;}
+.newwork ul.worknav li.active{color: #199ED8;border-bottom: 2px solid #199ED8;}
+.newwork a.back{margin:20px 0;}
+.newwork ul{padding: 10px 0;}
+.newwork ul p{width: 120px;line-height: 30px;text-align: right;}
+.newwork ul p em{color: red;}
+.newwork ul select{height: 30px;margin-left: 10px;width: 250px;text-indent: 5px;}
+.newwork ul label input[type='radio']{width: 16px;height: 16px;margin-top: 7px;float: left;margin-right: 5px;}
+.newwork ul label{line-height: 30px;width: 50px;}
+.newwork .submitb{padding:0 35px;line-height: 35px;font-size: 13px;border: 0;background: #199ed8;color: #fff;
+    border-radius: 5px;text-align: center;display: block;margin-left: 50px;margin-top: 50px;}
+
+.errl{font-size: 12px;color: red;text-indent: 40px;}
+.red{color: red;}
+.blue{color: #199ED8;}
+.green{color: #33CC00;}
+/* 我的身份信息 */
+.recording{width: calc(100% - 60px);margin: 0 auto;font-size: 13px;}
+.recording h3{text-indent: 10px;border-left: 4px solid #199ed8;line-height: 22px;font-size: 16px;margin:20px 0;}
+.recording table tr th:nth-child(2){width: 20%;}
+.recording table tr th:nth-child(1),.recording table tr th:nth-child(3),.recording table tr th:nth-child(4),.recording table tr th:nth-child(5){width: 13%;}
+.recording .top{margin: 20px 0;}
+.recording .top select{width: 160px;height: 30px;line-height: 30px;border-radius: 3px;text-indent: 10px;}
+.recording .top a{margin-left: 20px;}

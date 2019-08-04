@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>修改评分</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/office.css"/>
+	</head>
+	<body>
+		<div class="rightBox" id="office">
+			<div class="right_top clearfix">
+				<h3 class="fl">特殊项目加分</h3>
+				<select class="fl" v-model="selectValue" @change="onchange">
+					<option value="">请选择</option>
+					<option  v-for="val,key in select"  :value ="val.aid" >{{val.add_item}} </option>
+				</select>
+				<p class="fl">加分</p>
+				<p class="fl">{{slectScore}}分</p>
+			</div>
+			<div class="right_contant">
+				<h3>信用评价得分<span class="err"></span></h3>
+				<ul class="clearfix">
+					<p class="fl">根据劳务队的每项不良行为打分</p>
+					<p class="fl" style="margin-left: 400px;">总分：{{count}}</p>
+				</ul>
+				<div class="list clearfix" v-for="val,key in setScore">
+					<p class="fl">{{val.add_item}}</p>
+					<span class="fl">{{val.point_deduction_standard}}</span>
+					<span class="fr">分</span>
+					<input type="text"  value="" placeholder="请打分" class="fr" @blur="add"/>
+				</div>
+			</div>
+			<button type="button" class="btn ml34 mt30 btnAct1" @click="submit">提交</button>
+			<button type="button" class="btnBlue" @click="toUrl" style="margin-left: 20px;">取消</button>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var contant = DX.getParam('contant');
+	var eId = DX.getParam('id');
+	var vm = new Vue({
+		el:'#office',
+		mounted:function() {
+			this.getData(eId);
+		},
+		data:{
+			'count':'',//总分
+			'select':[],//select的[]
+			'selectValue':'',//select默认值 aid
+			'slectScore':'',//selct对应分数
+			'setScore':[],//行为打分
+		},
+		methods:{
+			add:function(){//计算总分
+				$('.err').hide();
+				var $this = this;
+				var num = 0;
+				$('.list').each(function(i,val){
+					var value = Number($(this).find('input').val());
+					if($this.setScore[i].flagScore == 1){
+						value = -value;
+					}
+					if(!isNaN(value)){
+						num = $this.numAdd(num,value)
+					}else{
+						$('.err').show().text('信用评价得分只能输入数字');
+					}
+				})
+				
+				this.count = num;
+				
+			},
+			getData:function(id){//获取数据
+				var $this = this;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/dlc/UpdateUnitByid',
+					'param':{'eid':id},
+					'callBack':function(res){
+						console.log(res);
+						if(res.code == '200'){
+							console.log(res);
+							$this.select = res.data.special;
+							$this.selectValue = res.data.special[0].flag ? res.data.special[0].aid : '';
+							$this.slectScore = res.data.special[0].flag ? res.data.special[0].project_score : 0;
+							$this.setScore = res.data.credit;
+							$this.count = res.data.list[0].misconduct_score;
+						}
+					}
+				})
+			},
+			onchange:function(){//select改变
+				var $this = this;
+				for (var i =0;i<$this.select.length;i++) {
+					if($this.selectValue == ''){
+						$this.slectScore = 0;return false;
+					}
+					if($this.select[i].aid == $this.selectValue){
+						$this.slectScore = $this.select[i].project_score;
+					}
+				}
+				
+			},
+			/**  
+			 * 加法运算，避免数据相加小数点后产生多位数和计算精度损失。   
+			 * @param num1加数1 | num2加数2  
+			 */  
+			numAdd:function (num1, num2) {
+				var baseNum, baseNum1, baseNum2;  
+				try {  
+					baseNum1 = num1.toString().split(".")[1].length;  
+				} catch (e) {  
+					baseNum1 = 0;  
+				}  
+				try {  
+					baseNum2 = num2.toString().split(".")[1].length;  
+				} catch (e) {  
+					baseNum2 = 0;  
+				}  
+				baseNum = Math.pow(10, Math.max(baseNum1, baseNum2));  
+				return (num1 * baseNum + num2 * baseNum) / baseNum;  
+			},
+			submit:function(){
+				var count = this.count;
+				var id = this.selectValue;
+				var $this = this;
+				DX.ajax_method({
+					'type':'POST',
+					'param':{'misconduct_score':count,'spproject_id':id,'eid':eId},
+					'url':'/eva/dlc/updateUnitsSpecial',
+					'callBack':function(res){
+						console.log(res);
+						if(res.code == '200'){
+							$this.toUrl();
+						}
+					}
+				});
+			},
+			toUrl:function(){
+				var str = '';
+				if(contant){
+					str = '?contant='+contant;
+				}
+				window.location.href ='companyGrade.html'+str;
+			}
+			
+		}
+	})
+</script>
+

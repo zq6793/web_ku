@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>已评价名单</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/office.css"/>
+	</head>
+	<body>
+		<div class="downFile midcontant" id="downFile" v-cloak>
+			<div>
+				<div class="top clearfix fl">
+					<input type="text" placeholder="项目部名称" class="fl" v-model="condition" @focus="projectData" @blur="blur">
+					<!-- <p class="fl blue" @click="checkList">查询</p> -->
+					<ul class="res" :class="{'none':show}">
+						<li v-for="val,index in serchlist" @click="clickSearch(index)" v-html="val.pro"></li>
+					</ul>
+				</div>
+				<div class="middle clearfix fl">
+					<h3 class="fl">当前项目部：{{pidName}}</h3>
+					<select class="fl" v-model="year" @change="selectChange">
+						<option  v-for="val,index in selectlist" :value ="val.value">{{val.valName}}</option>
+					</select>
+					<p class="fl"  @click="seeFile">查看附件</p>
+				</div>
+			</div>
+			<div class=" result1">
+				
+				<table>
+					<thead>
+						<tr>
+							<th>排名</th>
+							<th>级别</th>
+							<th>劳务分包队伍</th>
+							<th>劳务队负责人</th>
+							<th>队伍类别</th>
+							<th>当期产值（万元）</th>
+							<th>施工难度得分</th>
+							<th>队伍等级得分</th>
+							<th>队伍规模得分</th>
+							<th>操作</th>
+						</tr>	
+					</thead>
+					<tbody>
+						<tr v-for="val,key in list" >
+							<td>{{val.rownum}}</td>
+							<td>{{val.team_size_name}}</td>
+							<td>{{val.team_name}}</td>
+							<td>{{val.representative}}</td>
+							<td>{{val.teamCategories}}</td>
+							<td>{{val.current_production}}</td>
+							<td>{{val.partid_score}}</td>
+							<td>{{val.level_id_score}}</td>
+							<td>{{val.team_size_score}}</td>
+							<td><a :href="val.url+'&search='+pid+'&year='+val.year_quarter" class="listToDetail">信用评分</a></td>
+						</tr>	
+					</tbody>
+				</table>
+			</div>
+			
+			<!-- 弹层 查看附件 -->
+			<div class="model" :class="{'block':show1}" @click="modelClick"></div>
+			<div class="photo" :class="{'block':show1}">
+				<ul class="clearfix">
+					<!-- <li class="fl">下一个</li> -->
+					<li v-for="val,index in fileList">{{index+1}}、{{val.name}} <span class="fr" @click="dowload(index)">下载</span><span class="fr" @click="checkFile(index)">查看</span> </li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var search = DX.getParam('search') || '';
+	var year = DX.getParam('year') || '';
+	// if(search){
+	// 	search = decodeURI(search);
+	// }
+	var vm = new Vue({
+		el:'#downFile',
+		mounted:function(){
+			this.checkList();
+		},
+		
+		data:{
+			'condition':'',//查询条件
+			'show':true,//搜索结果 隐藏控制
+			'serchlist':[],//搜索结果
+			'list':[],//列表数据
+			'pid':search,//项目部id
+			'pidName':'',//项目部名称
+			'selectlist':[],//年份列表
+			'year':year,//选中年份的值
+			'flag':true,//input值改变 判断能否调接口
+			'fid':'',//能否查看附件
+			'src':'',//附件src
+			'fileList':[],//附件列表
+			'show1':false,//控制弹层
+		},
+		methods:{
+			checkList:function(value){//根据项目部id拿数据
+				var $this = this;
+				var pid = $this.pid;
+				// var year = $this.year;
+				var year = $this.year;
+				if(value){
+					year = value;
+				}
+				console.log(year);
+				// if(pid == '') return;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/dlc/UnitSelectProjectList',
+					// 'change':value.target,
+					'param':{'pid':pid,'year_quarter':year},
+					'callBack':function(res){
+						console.log(res);
+						if(res.code == '200'){
+							var data = [];
+							for (var i= 0;i<res.data.list.length;i++) {
+								data[i] = res.data.list[i];
+								var tes = '';
+								for(var j=0;j<res.data.list[i].teamCategories.length;j++){
+									tes += res.data.list[i].teamCategories[j].cname+',';
+								}
+								data[i].teamCategories = tes.substring(tes.length-1,-1);
+								data[i].url = 'checktwo.html?id='+res.data.list[i].eid;
+							}
+							// console.log(data);
+							$this.list = data;
+							
+							$this.pidName = res.data.projectName.abbreviation;
+							$this.pid = res.data.projectName.projectId;
+							
+							if(value){
+								$this.year = value;
+							}else if(year){
+								$this.year = year;
+							}else{
+								$this.year = res.data.year.length >0 ? res.data.year[0] :'';
+							}
+							
+							var selectlist = [];
+							$.each(res.data.year,function(i,val){
+								var arr = {};
+								arr.value = val;
+								var name = val.split('-');
+								arr.valName = name[0]+'年第'+name[1]+'季度';
+								selectlist.push(arr);
+							})
+							$this.selectlist = selectlist;
+							
+							$this.fid = res.data.list.length>0 ? res.data.list[0].fid : '';
+							
+							
+							
+							clickTr();
+						}
+					}
+				});
+			},
+			projectData:function(value){//模糊查找项目部
+				var $this = this; 
+				var contant = this.condition;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/dlc/UnitSelectProject',
+					
+					'param':{'content':contant},
+					'callBack':function(res){
+						console.log(res);
+						var arr = [];
+						arr = res.data.project;
+						if(res.code == '200'){
+							$.each(arr,function(i,val){
+								arr[i].pro = DX.replaceStr(val.abbreviation,contant);
+							})
+							$this.serchlist = arr;
+						}
+					}
+				});
+			},
+			clickSearch:function(index){//点击搜索结果列表
+			// console.log(this.serchlist);
+				this.flag = !this.flag; //不请求查询接口
+				this.pid = this.serchlist[index].projectId;//pid
+				this.pidName = this.serchlist[index].abbreviation;//项目部id
+				this.condition = this.serchlist[index].abbreviation;//查询框赋值
+				this.serchlist = [];//查询结果清空
+				this.checkList();//调用列表数据
+				
+			},
+			blur:function(){//查询框失去焦点
+				var $this = this;
+				setTimeout(function(){
+					$this.serchlist = [];
+				},200);
+			},
+			selectChange:function(){//select改变
+				// console.log(this.year);
+				this.checkList(this.year);
+			},
+			seeFile:function(values){//查看附件
+				var $this = this;
+				// var fid = this.fid;
+				// $this.src=DX.domain('user') + '/file/img?fid=' + fid;
+				DX.ajax_method({
+					'type':'POST',
+					'param':{'pid':$this.pid,'year_quarter':$this.year},
+					'url':'/eva/dlc/findFileList',
+					'change':values.target,
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$this.fileList = res.data;
+							$this.show1 = true;
+						}else{
+							alert(res.msg);
+						}
+					}
+				})
+				
+				
+			},
+			modelClick:function(){
+				this.show1 = false;
+			},
+			checkFile:function(index){//查看附件
+				var path = this.fileList[index].path;
+				var url = DX.domain('user') + path;
+				window.open(url);
+			},
+			dowload:function(index){//下载文件
+				console.log(index);
+				var url ='/eva/file/download/?fid='+this.fileList[index].fid;
+				
+				DX.DownLoadFile({'url':url});
+			}
+		},
+		watch:{
+			serchlist:function(newName,oldName){
+				if(newName.length > 0){
+					this.show = false;
+				}else{
+					this.show = true;
+				}
+			},
+			condition:function(newName,oldName){
+				if(this.flag){
+					this.projectData();
+				}else{
+					this.flag = true;
+				}
+			}
+			
+		}
+		
+	})
+	
+	function clickTr(){
+		setTimeout(
+			function(){
+				$('.result1 tbody tr').click(function(){
+					DX.clickTr($(this));
+					
+				})
+			}
+		,100);
+	}
+</script>

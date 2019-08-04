@@ -1,0 +1,135 @@
+ /*还原样式
+ ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,tr{ margin:auto; padding:inherit;}
+ input,select{ font-size:inherit;}
+ img{border: inherit;}
+ ul,li{margin:auto; padding:inherit;}
+ li{list-style-type:disc;}
+*/
+/*格式化样式*/
+html,body{ font-family:MicrosoftYaHei;font-size: 13px;}
+body,div,dl,dt,dd,ol,ul,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,button{margin:0;padding:0;} 
+table {border-collapse:collapse;border-spacing:0;} 
+fieldset,img {border:0} 
+address,caption,cite,code,dfn,em,strong,th,var {font-style:normal;font-weight:normal} 
+ol,ul,li {list-style:none} 
+/* caption,th {text-align:left}  */
+h1,h2,h3,h4,h5,h6 {font-size:100%;font-weight:normal} 
+q:before,q:after {content:''} 
+abbr,acronym { border:0}
+a{text-decoration: none;}
+/* 重写样式 */
+select{ appearance:none;-moz-appearance:none;-webkit-appearance:none;-ms-appearance:none;background: url("img/select.png") no-repeat right center;}
+select::-ms-expand {display: none;} 
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance: none !important; }/* chrome */
+input[type="number"]{-moz-appearance:textfield;}/* firefox */
+[v-cloak] {
+  display: none;
+}
+/* 重写 webkit的滚动条 */
+::-webkit-scrollbar{ width: 7px;/* 纵向滚动条*/ height: 5px;/* 横向滚动条 */ background-color: #fff; } 
+/*定义滚动条轨道 内阴影*/ 
+::-webkit-scrollbar-track{ -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0); background-color: #fff; } 
+/*定义滑块 内阴影*/ 
+::-webkit-scrollbar-thumb{ -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0); background-color: #C9C9C9; border-radius: 2px;}
+
+/* ie bug：th 不继承 text-align */
+/* th {text-align:inherit;} */
+.clearfix:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.fl {float: left;}  
+.fr {float: right;}
+  /* 单行溢出 */
+.one-txt-cut{overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+/*多行溢出 手机端使用*/  
+.txt-cut{overflow : hidden;text-overflow: ellipsis;display: -webkit-box;/* -webkit-line-clamp: 2; */ -webkit-box-orient: vertical;}  
+.w100{width: 100%;}
+.t_center{text-align: center;}
+.t_left{text-align:left;}
+.t-right{text-align:right;}
+.none {display: none; }
+.pointer{cursor:pointer;}
+.inline-block{display: inline-block;}
+.block{display: block;}
+.red{color: red;}
+.blue{color: #199ED8;}
+.mt20{margin-top: 20px;}
+/* 表格样式 */
+.table{width: 100%;font-size: 13px;}
+.table  thead th{background: #f5f5f6;}
+.table tr th,.table tr td{line-height: 32px;text-align: center;height: 32px;}
+.table tr th,.table tr td{border: 1px solid #e3e3e3;}
+/* .table tbody tr:hover{background: #f2f896;} */
+.tableHover tbody tr:hover{background: #f2f896;}
+
+/* tr点击变色 */
+.trclick{background: #f8f596 !important;}
+/* 表格可编辑样式 #e1eef7 */  
+.tableEdit{background:#F6F9E8;}
+/* input样式 */
+.input,.select{height: 28px;border: 1px solid #ccc;border-radius: 3px;text-indent: 5px;min-width: 80px;}
+.select{height: 30px;line-height: 30px;}
+/* 帮助说明 */
+.helpFont{width: 18px;height: 18px;background: url(img/help.png) no-repeat;display:inline-block;cursor: pointer;}
+.helpContext{padding: 17px 0;display: none;word-wrap: break-word;}
+.helpContext p{font-size: 13px;text-indent: 20px;color: #199ED8;}
+
+/* 按钮置灰 */
+.clickChangeColor{background: #C9C9C9 !important;}
+
+/* 按钮反馈 */
+.btnAct:hover{background: #ff4911 !important;}/*橘红色  */
+.btnAct1:hover{background: #0675bc !important;color: #FFFFFF;}/* 蓝色 */
+
+/* 统一按钮 */
+.btnBlue{line-height: 30px;font-size: 13px;border: 0;background: #199ed8;color: #fff;border-radius: 5px;text-align: center;cursor: pointer;padding: 0 20px;outline: none;}
+.btnBlue:hover{background: #0675bc !important;color: #FFFFFF;}
+/* 删除红色 */
+.btnRed{line-height: 30px;font-size: 13px;border: 0;background: red;color: #fff;border-radius: 5px;text-align: center;cursor: pointer;padding: 0 20px;outline: none;}
+/**
+ * 以后不用了
+ */
+.btnOrange{line-height: 30px;font-size: 13px;border: 0;background: #199ed8;color: #fff;border-radius: 5px;text-align: center;cursor: pointer;padding: 0 20px;outline: none;}
+.btnOrange:hover{background: #0675bc !important;}
+
+/* 返回按钮 */
+.back{background: url(img/back.png) no-repeat left center;color: #199ED8;font-size: 16px;text-indent: 20px;display: inline-block;font-weight: bold;}
+
+/* 列表页点击除详情的反馈 */
+.listToDetail{color: #0e93d9;cursor: pointer;outline: none;}
+.listToDetail:hover{text-decoration: underline;color: red;outline: none;}
+
+
+/* 分页 */
+.page1{max-width: 650px;margin: 20px auto;font-size: 13px;width: 100%;}
+.page1:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.pages1{float: left;width:30% ;color: #003F7E;}
+.pages1 li{float: left;width: 25%;text-align: center;cursor: pointer;}
+.pages1 li:hover{color: red;text-decoration: underline;}
+.show1{float: left;width: 66%;margin-left: 20px;}
+.show1 span{float: left;color: #000;padding: 0 5px;}
+.show1  input{width: 70px;display: inline-block;height: 18px;text-align: center;border: 1px solid #ccc;}
+/* 不可点击样式 */
+.page_active{color: #ccc;}
+
+/* 表格操作后的提示 */
+.option{width: 100%;height: 50px;background: #CCCCCC;}
+.option p{line-height: 50px;font-size: 18px;text-align: center;}
+
+
+
+
+/* 项目部检索 */
+.checkProject{position: relative;font-size: 13px;}
+.checkProject input{width: 350px;height: 28px;border: 1px solid #ccc;text-indent: 10px;border-radius: 3px;}
+.checkProject .blue{margin-left: 20px;width: 65px;line-height: 30px;background: rgba(25, 158, 216, 1);color: #fff;border-radius: 3px;text-align: center;font-size: 13px;cursor: pointer;}
+.checkProject .res{position: absolute;left: 0;top: 25px;background: #fff;width: 350px;border: 1px solid #ccc;max-height: 245px;overflow-y: auto;cursor: pointer;}
+.checkProject .res li{line-height: 30px;text-indent: 10px;border-bottom: 1px solid #ccc;margin: 0 5px;}
+.checkProject .res li:last-child{border-bottom: 0;}
+.checkProject .res li:hover{font-size: 16px;}
+/* 
+ <div class="checkProject clearfix">
+ 	<input type="text" placeholder="项目部名称" class="fl" ><!--搜索框-->
+ 	<ul class="res">
+ 		<li>11111</li><!--项目部列表-->
+ 	</ul>
+ </div>
+ */

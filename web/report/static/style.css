@@ -1,0 +1,136 @@
+.addreport {
+	width: calc(100% - 60px);
+	margin-left: 30px;
+	color: #333;
+}
+
+.addreport h3 {
+	font-size: 16px;
+	border-left: 5px solid #5493d1;
+	text-indent: 20px;
+	line-height: 30px;
+	margin: 20px 0;
+}
+
+.addreport .line {
+	line-height: 40px;
+	margin: 10px 0;
+	padding-left: 30px;
+}
+
+.addreport .line span:nth-child(1) {
+	color: red;
+	line-height: 45px;
+	height: 40px;
+}
+
+.addreport .line span:nth-child(2) {
+	font-size: 13px;
+	width: 100px;
+}
+
+.addreport .line .select {
+	width: 250px;
+	height: 30px;
+	line-height: 30px;
+	margin-top: 5px;
+	border-radius: 3px;
+	text-indent: 10px;
+	border: 1px solid rgb(169, 169, 169);
+}
+
+.addreport .line .input1 {
+	width: 160px;
+	height: 28px;
+	border: 1px solid rgb(169, 169, 169);
+	margin-top: 5px;
+	border-radius: 3px;
+	text-indent: 10px;
+}
+
+.addreport .line label {
+	width: 50px;
+	margin: 0 20px;
+}
+
+.addreport .line label .radio {
+	margin-right: 10px;
+	width: 16px;
+	height: 16px;
+	margin-top: 12px;
+}
+
+.addreport ul {
+	margin-left: 136px;
+	border: 1px solid rgb(169, 169, 169);
+	width: 650px;
+}
+
+.addreport ul label {
+	display: block;
+}
+
+.addreport ul label input {
+	width: 16px;
+	height: 16px;
+	margin-top: 7px;
+	margin-left: 15px;
+}
+
+.addreport ul label span {
+	font-size: 13px;
+	line-height: 30px;
+	margin-left: 10px;
+	width: 580px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.addreport ul label.border {
+	border-bottom: 1px solid rgb(169, 169, 169);
+}
+
+.addreport ol {
+	height: 300px;
+	overflow-y: scroll;
+}
+
+.submit {
+	margin-left: 420px;
+	width: 100px;
+	height: 30px;
+	line-height: 33px;
+	background: rgba(25, 158, 216, 1);
+	border: 0;
+	border-radius: 3px;
+	margin-top: 15px;
+	color: #fff;
+}
+
+/*报表列表 */
+.reportlist{width: calc(100% - 60px);margin-left: 30px;}
+.reportlist .top{margin: 20px 0;}
+.reportlist .top a {
+	width: 100px;
+	height: 30px;
+	line-height: 30px;
+	background: rgba(25, 158, 216, 1);
+	border: 0;
+	border-radius: 3px;
+	color: #fff;
+	text-align: center;
+}
+.reportlist .top select{width: 160px;height: 30px;line-height: 30px;margin-left: 30px;border-radius: 3px;text-indent: 5px;border: 1px solid #ccc;}
+.reportlist .top button{width: 80px;height: 30px;border-radius: 3px;border: 1px solid #ccc;background: #fff;outline: none;}
+.reportlist .top button.active{border:1px solid rgba(25, 158, 216, 1);color:rgba(25, 158, 216, 1);}
+
+.reportlist .contant{background: #f2f2f2;line-height: 40px;font-size: 13px;}
+.reportlist .contant li{float: left;width: 16%;text-align: center;font-weight: bold;text-indent: 20px;}
+.reportlist .contant li:first-child,.reportlist .contant li:nth-child(2){width: 25%;}
+
+.reportlist .contant .middle{border-bottom: 1px solid #F2F2F2;background: #fff;padding: 10px 0;}
+.reportlist .contant .middle li{line-height: 60px;font-weight: 400;}
+.reportlist .contant .middle li:first-child,.reportlist .contant .middle li:last-child{color: rgba(25, 158, 216, 1);}
+.reportlist .contant .middle li p{line-height: 20px;}
+.err{color: red;font-size: 12px;display: none;margin-left: 410px;line-height: 30px;}

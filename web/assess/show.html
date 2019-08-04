@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>劳务队展现</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/index.css" />
+	</head>
+	<body>
+		<!-- right -->
+		<div class="rightBox">
+
+			<!-- <div class="nav">
+				<span>当前所在位置：劳务队评价></span><span class="pointer">劳务队评价</span>
+			</div> -->
+			<div class="clearfix showcheck">
+				<a href="checklist.html" class="check fl btnBlue" id="checkTeam">选择参选队伍</a>
+				<div class="selectyear fl clearfix">
+					<a href="javascript:void(0)" class="btnOrange fl showT btnBlue"  id="delete" style="margin-right: 20px;">删除参评数据</a>
+					<a href="javascript:void(0)" class="allMod fl btnBlue" style="display: none;" id="allMod">修改参评队伍数量</a>
+					<a href="javascript:void(0)" class="allMod fl showT btnBlue" style="display: none;" id="upload">上报报表</a>
+					<span class="fl">请选择季度</span>
+					<select class="fl" id="selectYear">
+						<option value="">请选择</option>
+					</select>
+					<!-- <select class="fl showT" id="experTo" style="margin-left: 20px;">
+						<option value="">请选择下载文件</option>
+						<option value="1">信用评价评分汇总表</option>
+						<option value="5">信用评价结果汇总表</option>
+					</select> -->
+					
+					<!-- <a href="javascript:void(0)" class="allMod fl showT" style="display: none;" id="experTo5">导出表五</a> -->
+				</div>
+			</div>
+			<div class=" result1">
+
+				<table>
+					<thead>
+						<tr>
+							<th>排名</th>
+							<th>级别</th>
+							<th>劳务分包队伍</th>
+							<th>劳务队负责人</th>
+							<th>队伍类别</th>
+							<th>当期产值（万元）</th>
+							<th>施工难度得分</th>
+							
+							<th>队伍等级得分</th>
+							<th>队伍规模得分</th>
+							<!-- 	<th>参评个数</th> -->
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- <tr>
+							<td>12</td>
+							<td>11</td>
+							<td>11</td>
+							<td>11</td>
+							<td>11</td>
+							<td>12</td>
+							
+							<td>11</td>
+						
+							<td><a href="">修改评价</a><a href="detail.html">详情</a></td>
+						</tr> -->
+
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+		<input type="file" id="files" value="" style="display: none;" />
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		//判断是否能进队伍参选
+		DX.ajax_method({
+			'type': 'GET',
+			'url': '/eva/dlc/returnYear',
+			'param': {},
+			'callBack': function(res) {
+				console.log(res);
+				if (res.code == '200') {
+					if (res.data != 'SUCCESS') { 
+						$('#checkTeam').css('display', 'none');
+						// $('#delete').css('display', 'none');
+					} else {
+						// $('#upload').remove();
+					}
+				}
+			}
+		});
+		//初始化加载
+		ready();
+		// 上传文件
+		$('#upload').click(function() {
+			// $('#files').trigger('click');
+			// $('#files').click()
+			window.location.href = 'filelist.html?year='+$('#selectYear').val();
+		});
+		//删除参评数据
+		$('#delete').click(function(){
+			var conf = confirm('确认删除本季度参评数据');
+			if(!conf) return;
+			DX.ajax_method({
+				'url':'/eva/dlc/DeleteProjectAll',
+				// 'change':obj[0],
+				'callBack':function(res){
+					if(res.code == '200'){
+						location.reload();
+					}else{
+						alert(res.msg);
+					}
+				}
+			})
+		})
+		
+		//初始化加载季度
+		function ready(){
+			DX.ajax_method({
+				'type': 'POST',
+				'url': '/eva/dlc/backYear',
+				'param': {},
+				'callBack': function(res) {
+					/* console.log(res); */
+					var str = '<option value ="">请选择</option>';
+					if (res.code == '200') {
+						$.each(res.data, function(i, val) {
+							var arr = val.year_quarter.split('-');
+							str += '<option value ="' + val.year_quarter + '">' + arr[0] + '年第' + arr[1] + '季度</option>';
+						})
+						$('#selectYear').html(str);
+					}
+					select({}); //默认加载最新数据
+					//select改变取值
+					$('#selectYear').change(function() {
+						var value = $(this).val();
+						console.log(value);
+						if (value) {
+							select({
+								'year_quarter': value
+							});
+							// $('.allMod').show();
+						} else {
+							$('.showT').hide();
+							$('#allMod').hide();
+							$('.result1 tbody').html('');
+						}
+			
+					});
+				}
+			});
+		}
+
+		//全局修改
+		$('#allMod').click(function() {
+			var year = $('#selectYear').val();
+			if (year) {
+				window.location.href = 'checklist.html?year=' + year;
+			}
+		});
+
+		
+		//查找季度数据
+		function select(obj) {
+
+			DX.ajax_method({
+				'type': 'POST',
+				'url': '/eva/dlc/findAllByPid',
+				'param': obj,
+				'callBack': selectcall
+			});
+		}
+		// 回调渲染
+		function selectcall(res) {
+			console.log(res);
+			if (res.code == '200') {
+				var str = '';
+
+				$.each(res.data.list, function(i, val) {
+					str += '<tr>';
+					str += '<td>' + val.rownum + '</td>';
+					str += '<td>' + val.team_size_name + '</td>';
+					str += '<td>' + val.team_name + '</td>';
+					str += '<td>' + val.representative + '</td>';
+					str += '<td>';
+					//级别
+					var type = '';
+					$.each(val.teamCategories, function(i, val) {
+						type += val.cname + '，';
+					})
+					if (type) {
+						str += type.substring(type.length - 1, -1);
+					}
+					str += '</td>';
+					str += '<td>' + val.current_production + '</td>';
+					str += '<td>' + val.partid_score + '</td>';
+					str += '<td>' + val.level_id_score + '</td>';
+					str += '<td>' + val.team_size_score + '</td>';
+					str += '<td eid="' + val.eid + '">';
+					// str += '<a href="drap2.html?ids='+val.eid+'">修改评价</a><a href="detail.html?id='+val.eid+'">详情</a></td>';
+					if (val.is_update == 0) {
+						str += '<a href="drap2.html?ids=' + val.eid + '">修改评价</a>';
+					}
+
+					str += '</td>';
+					str += '</tr>'
+				})
+				$('.result1 tbody').html(str);
+				
+				$('.result1 tbody tr').click(function(){
+					DX.clickTr($(this))
+				})
+				
+				if (JSON.stringify(res.data.list) != '[]') { //有数据回显
+					$('#selectYear').val(res.data.list[0].year_quarter);
+					$('.showT').show();
+					if (res.data.list[0].is_update == 0) { //判断是否可以修改
+						$('#allMod').show();
+					}
+				} else {
+					$('.showT').hide();
+					$('#allMod').hide();
+				}
+				
+				if(res.data.isUpdate==""){
+					$('#allMod').hide();
+				}
+			}
+		}
+	})
+</script>
+

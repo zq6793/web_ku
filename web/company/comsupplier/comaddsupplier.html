@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加供应商</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/company.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <!-- 基本信息 -->
+        <ul class="entermes" style="border-bottom:1px solid #e3e3e3;padding-bottom:30px;">
+            <li class="addheader">请录入供应商信息</li>
+            <li class="basicmes">
+                <span class="sameAddSpan">请输入供方名称：</span><input type="text" class="sameAddInput">
+                <span class="sameAddSpan">供方性质：</span>
+                <select name="" id="" class="sameAddInput sameAddSelect">
+                    <option value="">请选择</option>
+                    <option value="">生产厂家</option>
+                    <option value="">流通领域</option>
+                </select>
+            </li>
+            <li>
+                <span class="sameAddSpan">联系人：</span><input type="text" class="sameAddInput">
+                <span class="sameAddSpan">联系电话：</span><input type="text" class="sameAddInput">
+            </li>
+            <li>
+                <span class="sameAddSpan">地址：</span><input type="text" class="sameAddInput">
+            </li>
+        </ul>
+        <!-- 上传资料 -->
+        <ul class="entermes">
+            <li class="addheader">上传相关资料</li>
+            <li class="upload">
+                <div class="uploadLeft">
+                    <p class="leftHeader">通过何种方式认证及认证编号</p>
+                    <p>
+                        <span class="leftSameSpan">认证方式：</span>
+                        <select name="" id="" class="entAddSelect">
+                            <option value="">请选择</option>
+                            <option value="">AAA</option>
+                            <option value="">AA+</option>
+                            <option value="">AA</option>
+                            <option value="">AA-</option>
+                            <option value="">A+</option>
+                            <option value="">A</option>
+                            <option value="">A-</option>
+                            <option value="">BBB</option>
+                            <option value="">BB</option>
+                            <option value="">B</option>
+                        </select>
+                    </p>
+                    <P style="margin-bottom:20px;">
+                        <span class="leftSameSpan">认证编号：</span>
+                        <input type="text" class="sameEntInput">
+                    </P>
+                    <p style="margin-bottom:20px;">
+                        <input type="file" name="" id="" class="uploadInput">
+                        <span class="checkfile">产看文件</span>
+                    </p>
+                    <p class="leftHeader">生产许可证</p>
+                    <p>
+                        <span class="leftSameSpan">生产许可证号：</span><input type="text" class="sameEntInput">
+                    </p>
+                    <p style="margin-bottom:20px;">
+                        <span class="leftSameSpan">有效期：</span><input type="text" class="sameEntInput">
+                    </p>
+                    <p style="margin-bottom:20px;">
+                        <input type="file" name="" id="" class="uploadInput">
+                        <span class="checkfile">产看文件</span>
+                    </p>
+                    <p style="margin-bottom:20px;">
+                        <span class="leftHeader">其他资料</span><span class="leftSameSpan">必要时提供相关资料</span>
+                    </p>
+                    <p>
+                        <input type="file" name="" id="" class="uploadInput">
+                        <span class="checkfile">产看文件</span>
+                    </p>
+                </div>
+                <div class="uploadRight">
+                    <p class="rightHeader">营业执照</p>
+                    <p>
+                        <span class="rightSameSpan">营业执照号：</span><input type="text" class="rightEntInput">
+                    </p>
+                    <p style="margin-bottom:20px;">
+                        <span class="rightSameSpan">到期日期：</span><input type="text" class="rightEntInput">
+                    </p>
+                    <p style="margin-bottom:20px;">
+                        <input type="file" name="" id="" class="uploadInput"><span class="checkfile">查看文件</span>
+                    </p>
+                    <p class="leftHeader">资信情况</p>
+                    <p style="margin-bottom:10px;">
+                        <span class="rightSameSpan">资信等级：</span><input type="text" class="rightEntInput">
+                    </p>
+                    <p>
+                        <input type="file" name="" id="" class="uploadInput"><span class="checkfile">查看文件</span>
+                    </p>
+                </div>
+            </li>
+            <button type="button" class="btn save" onclick="window.location.href='comsupplier.html'">保存</button>
+        </ul>
+    </div>
+</body>
+</html>

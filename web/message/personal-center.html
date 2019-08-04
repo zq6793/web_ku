@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<style>
+		.a {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+	</style>
+</head>
+<link rel="stylesheet" href="static/css/personal-center.css" />
+<link rel="stylesheet" href="../static/common.css" />
+
+<body>
+	<div class="rightBox">
+		<div class="person-center">
+			<div class="person-center-left">
+				<div class="img-wrapper">
+					<div class="img-wrapper-1">
+						<img src="static/img/imgs.png" width="80px" height="80px" />
+					</div>
+					<div class="img-footer">点击修改图像</div>
+				</div>
+			</div>
+			<div class="person-center-right">
+				<p>基本信息</p>
+				<ul class="person-center-ul">
+					<li><label>姓名&nbsp;&nbsp;:</label><span class="name"></span></li>
+					<li><label>部门&nbsp;&nbsp;:</label><span class="department"></span></li>
+					<li><label>职位&nbsp;&nbsp;:</label><span class="position"></span></li>
+					<li><label>是否主管&nbsp;&nbsp;:</label><span><input class="radio-1" value="1"
+								type="radio" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+								class="radio-2" value="0" type="radio" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否</span>
+					</li>
+					<li><label>电话&nbsp;&nbsp;:</label><span class="phone"></span></li>
+					<li><label style="position: absolute;top:25%">电子签名&nbsp;&nbsp;:</label>
+						<div class="img-content">
+							<img class="img-1" src="static/img/bd.png" style="width:20px;height: 20px;" />
+						</div>
+						<input style="display: none;" type="file" id="file" name="myfile" style="opacity: 0;" />
+						<span class="upload">点击上传图片<span class="tips">(最佳支持png、jpg)</span></span>
+					</li>
+				</ul>
+			</div>
+			<div class="person-footer">
+				<button class="btn-img btn btn-1" type="button" class="btn btn-1">保存资料</button>
+			</div>
+
+		</div>
+	</div>
+
+	<script type="text/javascript" src="../static/js/jquery-1.8.3.js"></script>
+	<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+</body>
+<script>
+	$(function () {
+		//传图片进行精确查找
+		$(".upload").click(function () {
+			$("#file").click();
+			var img = $(".upload").find('img').eq(0);
+		})
+		$(".img-content img").click(function () {
+			$("#file").click();
+			var img = $(".img-content").find('img').eq(0);
+		})
+		$("#file").on("change", function () {
+			objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+			if (objUrl) {
+				var config = ['png', 'jpg', 'jpeg', 'bmp'];
+				if ($("#file").val()) {
+					var type = $("#file").val().substring($("#file").val().lastIndexOf(".")).split(".");
+					var str = config.indexOf(type[1].toLocaleLowerCase());
+					if (str == -1) {
+						alert("暂不支持该格式")
+						return;
+					}
+				}
+				$(".img-content .img-1").remove();
+				$(".img-content .img-2").remove();
+				var imgs = '<img class="img-2" src="' + objUrl + '" style="width:126px;height: 40px;"/>'
+				$(".img-content").append(imgs);
+			}
+		});
+		//信息回填
+		DX.ajax_method({
+			'type': 'GET',
+			'url': '/user/emp/getPersonInfo',
+			'param': {},
+			'callBack': function (res) {
+				if (res.code == '200') {
+					$(".name").text(res.data.name)
+					$(".department").text(res.data.departName)
+					$(".position").text(res.data.jobName)
+					if (res.data.isSupervisor == 1) {
+						$(".radio-1").attr("checked", true);
+						$(".radio-2").attr("disabled", "disabled");
+					} else {
+						$(".radio-2").attr("checked", true)
+						$(".radio-1").attr("disabled", "disabled");
+					}
+					if(isEmpty(res.data.src)){
+						$(".img-1").attr("src","static/img/imgs.png").css("width", "126px").css(
+						"height", "40px")
+					}else{
+						$(".img-1").attr("src", DX.domain('user') + res.data.src).css("width", "126px").css(
+						"height", "40px");
+					}
+					$(".phone").text(res.data.phone)
+				}
+			}
+		});
+		$(".btn-img").click(function (event) {
+
+			if (!isEmpty($("#file").val())) {
+				DX.uplaodFile({
+					"id": "file",
+					"url": "/user/emp/addSignature",
+					'callBack': function (res) {
+						if (res.code == '200') {
+							$(".person-footer").before(
+								'<div class="tip" style="width:100%;display:flex;flex-direction: column;align-items: center;justify-content: center"><p style="display:inline-block;padding:5px 20px;color:red;font-size:14px;">保存成功</p></div>'
+							);
+							setTimeout(function () {
+								$(".tip").remove();
+							}, 3000);
+						}
+						$("#file").val("");
+					}
+				});
+			} else {
+				confirm("请选择文件")
+			}
+
+		});
+	})
+	/***
+	 * 图片上传
+	 * @param {Object} file
+	 */
+	function getObjectURL(file) {
+		var url = null;
+		if (!isEmpty(window.createObjectURL)) { // basic
+			url = window.createObjectURL(file);
+		} else if (!isEmpty(window.URL)) { // mozilla(firefox)
+			url = window.URL.createObjectURL(file);
+		} else if (!isEmpty(window.webkitURL)) { // webkit or chrome
+			url = window.webkitURL.createObjectURL(file);
+		}
+		return url;
+	}
+
+	function isEmpty(str) {
+		if ("" == str || null == str || "undefined" == str || "object" == str || "null" == str) {
+			return true;
+		}
+		return false;
+	}
+</script>
+
+</html>

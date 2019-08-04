@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>大西信息科技有限公司</title>
+		<link rel="icon" href="../static/img/favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="static/css/common.css">
+		<link rel="stylesheet" href="../static/common.css">
+		<link rel="stylesheet" href="static/css/login.css">
+	</head>
+
+	<body onkeydown="KeyDown()">
+		<div class="header">
+			<div class="ie">
+				<img src="static/img/logo @2x.png" alt="">
+				<p style="font-size: 22px;line-height: 35px;">大西信息科技有限公司</p>
+				<p style="font-size: 22px;line-height: 35px;">中铁十二局集团第一工程有限公司信息化系统</p>
+			</div>
+		</div>
+		<form action="" method="post" class="login">
+			<p class="name">登 录</p>
+			<p class="loginType">
+				<a href="login.html" id="psd"><span>密码登录</span></a>
+				<a href="messageLogin.html" id="mes"><span>短信登录</span></a>
+				<a href="qrcode.html" id="sao"><span>扫码登录</span></a>
+			</p>
+			<!-- <p class="move"></p> -->
+			<p class="username">
+				<span></span>
+				<span></span>
+				<input type="text" placeholder="请输入账号" autocomplete="off" id='phone'>
+			</p>
+			<!-- <span class="errPhone">手机号输入有误</span> -->
+			<p class="password">
+				<span></span>
+				<span></span>
+				<input type="password" placeholder="请输入密码" autocomplete="off" id="pass">
+			</p>
+			<p class="ver">
+				<input type="text" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请输入验证码" autocomplete="off" id="code" style="text-indent: 10px;" />
+				<img src="" id="imgCode" />
+			</p>
+			<!-- <span class="errCode">验证码有误</span> -->
+			<p class="err">
+				提示：密码输入错误
+			</p>
+			<div class="remeber">
+				<label class="check"><input type="checkbox" id="check" onclick="remember()"><span style="margin-left: 10px;"> 记住我</span></label>
+				<a href="getBack.html">忘记密码？</a>
+			</div>
+			<button type="button" class="sub" id='submit'>登 录</button>
+			<p class="center">
+				<a href="regist1.html">还没账号？<span style="color: #075A8F;">去注册</span></a>
+			</p>
+		</form>
+		<div class="footer">
+			<p class="dx">
+				<a href="https://www.daxiit.com" target="_blank">西安大西信息科技有限公司 ©2019 </a>
+				<a href="http://www.beian.miit.gov.cn" target="_blank" style="margin-left:10px;">陕ICP备15006746号</a>
+			</p>
+			<ul class="clearfix fr qrcode" id="qrcode">
+				<p class="fl"><img src="static/img/andriod.png" alt="" class="fl"><span class="fl">Android版下载</span></p>
+				<p class="fl"><img src="static/img/ios.png" alt="" class="fl"><span class="fl">ios版下载</span></p>
+				<img src="" alt="" class="android">
+				<img src="" alt="" class="ios">
+			</ul>
+		</div>
+		<!-- ie低版本提示 -->
+		<div class="moudle">
+			<div class="moudle-content">
+				<div class="moudle-wrapper">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您正在使用IE<span class="tips"></span>（或兼容模式）浏览器，无法愉悦的使用本系统。</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;强烈建议您更新您的浏览器，请使用IE9（及以上）、Chrome、Firefox，或最新版的360、搜狗、百度等浏览器的高速模式！</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若您正在使用浏览器的兼容模式，请切换至高速模式。</p>
+				</div>
+
+			</div>
+		</div>
+
+	</body>
+
+</html>
+<script src="../static/js/jquery-1.8.3.js"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/input.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var ie = DX.IETester();
+		if(ie<=9 && ie){
+			$(".tips").text(ie);
+			$(".moudle").css("visibility","visible");
+		}else{
+			$(".moudle").css("visibility","hidden");
+		}
+		
+		$('#qrcode p:nth-child(1)').mouseover(function() {
+			var src = DX.domain('user') + '/user/app/getAppQrCode?device=1';
+			$('.android').attr('src', src);
+			$('.android').show();
+		})
+		$('#qrcode p:nth-child(1)').mouseleave(function() {
+			// var src = DX.domain('user')+'/app/getAppQrCode?device=1';
+			// $('.android').attr('src','');
+			$('.android').hide();
+		})
+		$('#qrcode p:nth-child(2)').mouseover(function() {
+			var src = DX.domain('user') + '/user/app/getAppQrCode?device=2';
+			$('.ios').attr('src', src);
+			$('.ios').show();
+		})
+		$('#qrcode p:nth-child(2)').mouseleave(function() {
+			// var src = DX.domain('user')+'/app/getAppQrCode?device=2';
+			// $('.ios').attr('src','');
+			$('.ios').hide();
+		})
+
+		// 检测是否记住账号cookie
+		$(function() {
+			var user = DX.getCookie('user');
+			if(user == undefined || user == null || user == '') return;
+			$('#phone').val(user);
+		})
+		// 登录
+		$('#submit').click(function() {
+			login();
+		})
+		// 刷新验证码
+		$('#imgCode').click(function() {
+			var phone = $('#phone').val() + '&r=' + Math.random();
+			$(this).attr('src', DX.domain('user') + '/user/login/getImageCode?phone=' + phone);
+		})
+		// 点击选中
+		$("#phone").focus(function() {
+			$('.username').addClass('active');
+		})
+		$('#phone').blur(function() {
+			$('.username').removeClass('active');
+		})
+		$("#pass").focus(function() {
+			$('.password').addClass('active');
+		})
+		$('#pass').blur(function() {
+			$('.password').removeClass('active');
+		})
+
+	});
+
+	// 账号密码登录回调
+	function loginCall(res) {
+		$('.err').hide();
+		if(res.code == '200') {
+
+			DX.setCookie('token', res.data.Token);
+			if(res.data.unitOrProject == "unit") {
+				window.location.href = '../office.html';
+			} else {
+				window.location.href = '../index.html';
+			}
+		} else if(res.code == '403' || res.code == '408' || res.code == '409') {
+			//图片验证码
+			// var phone = $('#phone').val();
+			$('#imgCode').trigger('click');
+			// $('#imgCode').attr('src', DX.domain('user') + '/user/login/getImageCode?phone=' + phone);
+			$('.ver').css('display', 'block');
+			
+			magin_64();
+			$('.err').show();
+			// $('.err').html('');
+			$('.err').html(res.msg);
+		} else {
+			$('.err').show();
+			$('.err').html('');
+			$('.err').html(res.msg);
+			// alert(res.msg);
+		}
+
+	}
+	// 出现验证码调整边距
+	function magin_64() {
+		var bool = $('.ver').css('display');
+		if(bool == 'none') {
+			$('.sub').css("margin-top", "76px");
+		} else {
+			$('.sub').css("margin-top", "16px");
+			$('.remeber').css("margin-top", "85px");
+		}
+	}
+	// 记住账户存Cookie
+	function remember() {
+		var phone = $('#phone').val();
+		DX.setCookie('user', phone, 365);
+	}
+
+	// enter登录
+	function KeyDown() {
+		// console.log(event.keyCode);
+		if(event.keyCode == 13) {
+			event.returnValue = false;
+			event.cancel = true;
+			login();
+		}
+	}
+	// login
+	function login() {
+		$('.err').hide();
+		var phone = $('#phone').val();
+		var pass = $('#pass').val();
+		var isphone = DX.verPhone(phone);
+		if(!isphone) {
+			$('.err').show();
+			$('.err').html('请输入手机号');
+			return;
+		};
+		var ispNull = DX.isNull(pass);
+		if(ispNull) {
+			$('.err').show();
+			$('.err').html('密码不能为空');
+			return;
+		}
+		var rule = DX.verPassword(pass);
+		if(!rule) {
+			$('.err').show();
+			$('.err').html('密码格式不对');
+			return;
+		}
+		// 记住密码
+
+		if($('#check').prop("checked")) {
+			var phone = $('#phone').val();
+			DX.setCookie('user', phone, 1000);
+		}
+		var code = $('#code').val();
+		var needCode = false;
+		if($('.ver').css('display') != "none") {
+			needCode = true
+		};
+		if(needCode) {
+			var is = DX.isNull(code);
+			if(is) {
+				$('.err').show();
+				$('.err').html('验证码不能为空');
+				return;
+			}
+		}
+		var obj = {
+			'phone': phone,
+			'password': pass,
+			'verifyCode': code,
+			'needCode': needCode
+		};
+		// console.log(obj);return;
+		DX.ajax_method({
+			'type': 'POST',
+			'url': '/user/login/loginWithPassword',
+			'param': obj,
+			'callBack': loginCall
+		});
+	}
+</script>

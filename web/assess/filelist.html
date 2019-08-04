@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>附件列表</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/office.css"/>
+		<style type="text/css">
+			.files1 table tr th{width: 15%;}
+			.files1 table tr th:first-child{width: 70%;}
+		</style>
+	</head>
+	<body>
+		<div class="filelist" id="filelist" v-cloak>
+			<div class="people">
+				<h3 >一、上报劳务队</h3>
+				<ul>
+					<li v-for="val,index in list">{{val}}</li>
+				</ul>
+			</div>
+			<input type="file"  style="display: none;" id="uploadFile" @change="change($event)"/>
+			<div class="files1">
+				<h3>二、扫描件</h3>
+				<p>1、信用评价评分汇总表（表一）.xlsx <a href="javascript:void(0)" @click="experto(1)" class="listToDetail">下载</a> </p>
+				<p>2、信用评价结果汇总表（表五）.xlsx <a href="javascript:void(0)" @click="experto(5)" class="listToDetail">下载</a> </p>
+				<h3><button @click="upload" class="btnAct btnBlue">上报报表</button></h3>
+				<table class="table" style="max-width: 800px;">
+					<thead>
+						<tr><th>文件名称</th><th>上传时间</th><th>操作</th></tr>
+					</thead>
+					<tbody>
+						<tr v-for="val,index in filelist">
+							<td>{{val.name}}</td>
+							<td>{{val.uploadTime}}</td>
+							<td><a href="javascript:void(0)" class="listToDetail" @click="del(index)">删除</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- <ul class="clearfix" v-for="val,index in filelist">
+					<li>{{val.name}}</li>
+					<li>{{val.uploadTime}}</li>
+					<li><a href="javascript:void(0)">删除</a></li>
+				</ul> -->
+			</div>
+			
+		</div>
+		
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var year = DX.getParam('year');
+	var vm = new Vue({
+		el:'#filelist',
+		created:function() {
+			this.getData();
+		},
+		data:{
+			'filevalue':false,//file 上传的判定
+			'list':[],
+			'filelist':[],
+		},
+		methods:{
+			experto:function (type) {//下载文件
+				DX.DownLoadFile({
+					'url': '/eva/files/exportProject?year_quarter=' + year + '&flag=' + type,
+				});
+			},
+			upload:function(){//触发file
+				$('#uploadFile').trigger('click');
+				
+			},
+			change:function(e){//改变使其上传
+				console.log(e);
+				var config = ['png','jpg','jpeg','JPG'];
+				if(this.filelist.length >= 20){
+					alert('超出上传限制（最多20个）');return;
+				}
+				if(e.target.files[0].name){
+					var type = e.target.files[0].name.split('.');
+					// console.log(type.length-1);
+					var str = config.indexOf(type[type.length-1]);
+					if(str == -1){
+						alert('该格式不支持，请选择png或jpg的图片');
+					}else{
+						this.filevalue = true;
+					}
+				}
+				
+			},
+			getData:function(){//获取数据
+				var $this = this;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/files/fileManagement',
+					// 'change':values.target,
+					'param':{'year_quarter':year},
+					'callBack':function(res){
+						console.log(res);
+						if(res.code == '200'){
+							$this.list = res.data.list;
+							$this.filelist = res.data.fileList;
+						}
+					}
+				})
+			},
+			del:function(index){//删除文件
+				var $this=this;
+				var fid = $this.filelist[index].fid;
+				DX.ajax_method({
+					'type':'POST',
+					// 'change':values.target,
+					'param':{'year_quarter':year,'fileid':fid},
+					'url':'/eva/files/DeletefilePath',
+					'callBack':function(res){
+						if(res.code == '200'){
+							$this.getData();
+						}
+					}
+				})
+			}
+			
+		},
+		watch:{
+			filevalue:function(newVal,oldVal){//监听数据变化 上传文件
+				var $this = this;
+				if(newVal){
+					DX.uplaodFile({
+						'id': 'uploadFile',
+						'url': '/eva/file/upload',
+						'callBack': function(res) {
+							$this.filevalue = false;
+							if(res.code != '200') return;
+							
+							
+							DX.ajax_method({
+								'type': 'POST',
+								'url': '/eva/files/photoUpload',
+								'param': {'id': res.data,'year_quarter': year,},
+								'callBack': function(res) {
+									console.log(res);
+									if(res.code == '200'){
+										$this.getData();
+									}
+								}
+							})
+						}
+					})
+				}
+			},
+			
+		}
+	})
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

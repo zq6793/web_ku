@@ -1,0 +1,23 @@
+
+.message{width: calc(100% - 60px);background: #f8f8f8;margin-left: 30px;color: #333;min-height: 350px;box-sizing: border-box;padding: 30px;}
+.message .notice{line-height: 40px;}
+.message .notice li{float: left;margin-right: 40px;font-size: 16px;cursor: pointer;}
+.message .notice li.activew{color: #000;font-weight: bold;}
+.message .contant p{line-height: 40px;font-size: 13px;}
+.message .contant p .thead{font-weight: bold;margin-right: 10px;}
+
+/* 分页 */
+/* .page{max-width: 700px;margin: 20px auto;font-size: 13px;width: 100%;}
+.pages{float: left;width:30% ;color: #003F7E;}
+.pages li{float: left;width: 25%;text-align: center;cursor: pointer;}
+.show{float: left;width: 28%;}
+.select{width:42% ;float: left;}
+.show span{float: left;color: #000;padding: 0 5px;}
+.select .num,.select .tourl{width: 50%;float: left;text-align: center;}
+.select input{width: 40%;display: inline-block;height: 18px;text-align: center;}
+@media screen and (max-width:700px) {
+	.pages{float: none;margin: 0 auto;width: 300px;}
+	.show{float: none;margin: 0 auto;margin-top: 10px;width: 200px;}
+	.select{width: 300px;float: none;margin: 0 auto;margin-top: 10px;}
+}
+.page_active{color: #ccc;} */

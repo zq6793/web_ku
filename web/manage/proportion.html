@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="static/css/proportion.css" />
+	<link rel="stylesheet" href="../static/common.css" />
+	<style>
+		.tips {
+			width: 140px;
+			height: 100px;
+			position: absolute;
+			z-index: 1111;
+			right: -66%;
+			background-color: #ffffff;
+			display: none;
+		}
+		
+		.search-nore {
+			cursor: pointer;
+			position: relative;
+		}
+	</style>
+
+	<body id="proportion">
+		<!--配置配合比-->
+		<div class="rightBox">
+			<!-- <div class="head-title">当前所在位置:<span>需求管理</span>配置配合比</div> -->
+			<div class="choose-title">
+				<label>状态:</label>
+				<select class="choose-state select">
+					<option>请选择需求状态</option>
+					<option>请选择需求状态</option>
+					<option>请选择需求状态</option>
+					<option>请选择需求状态</option>
+				</select>
+				<label>部位:</label>
+				<select class="choose-state preject select">
+					<option>请选择单位工程/分部工程</option>
+					<option>请选择单位工程/分部工程</option>
+					<option>请选择单位工程/分部工程</option>
+					<option>请选择单位工程/分部工程</option>
+				</select>
+				<label>检索:</label>
+				<input class="search input" placeholder="请输入技术员/老板姓名/详细部位" />
+				<button type="button" class="btnBlue">查询</button>
+			</div>
+			<div class="message">
+				<div class="message-content">
+					<img width="20px" height="22px" src="static/img/message.png" />
+					<span class="message-count">10</span>
+					<label class="message-title">消息提醒:</label>
+					<span class="message-content-1">您有新的需求消息,请点击"立即刷新"查看,系统将在<span class="time"><span
+							class="minute">4</span><span class="minute-title">分</span><span class="second">59</span><span>秒</span></span>后自动刷新</span>
+					<button type="button" class="btnBlue fresh">立即刷新</button>
+				</div>
+			</div>
+
+			<div class="wrapper">
+				<!--<div class="proportion-content-wrapper">
+					<div class="proportion-content-wrapper-1">
+						<div class="proportion-content-wrapper-left">
+							<div><label>需求编号:</label><span class="num">1106</span><label>状态:</label><span class="proportion-state">等待配置配合比</span></div>
+							<div><label>联系人/电话:</label><span class="connect-name">张三</span><span class="connect-tel">15102368596</span><label>订单类别:</label><span class="order-type">营业线天窗施工</span></div>
+							<div><label>施工部位:</label><span class="adress">桥涵工程-临汾特大桥-基础工程-桩基- 1-1-1</span><span class="search-nore">查看更多</span></div>
+							<div class="proportion-wrapper-footer">
+								<div class="proportion-wrapper-footer-title">
+									<span>C30</span><span>C10</span><span>C14</span><span>C25</span><span>C40</span>
+								</div>
+								<div class="proportion-wrapper-footer-content">
+									<span>强度等级</span><span>设计放量</span><span>需求放量</span><span>补方方量</span><span>坍落度</span>
+								</div>
+							</div>
+						</div>
+						<div class="proportion-content-wrapper-right">
+							<div class="proportion-right">
+								<div class="proportion-right-head">
+									<label>强度等级:</label>
+									<select class="intensity select">
+										<option>C25</option>
+										<option>C30</option>
+										<option>C40</option>
+										<option>C50</option>
+									</select>
+									<button type="button" class="btns btn-1 newly-mix">新建配合比</button>
+									<button type="button" class="btnBlue">提交</button>
+								</div>
+								<table class="customize" width="800px" height='100px'>
+									<tr>
+										<td><span>水泥</span></td>
+										<td><input /></td>
+										<td><span>细砂</span></td>
+										<td><input /></td>
+										<td><span>细骨料</span></td>
+										<td><input /></td>
+										<td><span>水胶比</span></td>
+										<td><input /></td>
+										<td><span>粉末灰</span></td>
+										<td><input /></td>
+									</tr>
+									<tr>
+										<td><span>水</span></td>
+										<td><input /></td>
+										<td><span>粗砂</span></td>
+										<td><input /></td>
+										<td><span>粗骨料</span></td>
+										<td><input /></td>
+										<td><span>外加剂</span></td>
+										<td><input /></td>
+										<td><span>矿粉</span></td>
+										<td><input /></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="proportion-content-wrapper">
+					<div class="proportion-content-wrapper-1">
+						<div class="proportion-content-wrapper-left">
+							<div><label>需求编号:</label><span class="num">1106</span><label>状态:</label><span class="proportion-state">等待配置配合比</span></div>
+							<div><label>联系人/电话:</label><span class="connect-name">张三</span><span class="connect-tel">15102368596</span><label>订单类别:</label><span class="order-type">营业线天窗施工</span></div>
+							<div><label>施工部位:</label><span class="adress">桥涵工程-临汾特大桥-基础工程-桩基- 1-1-1</span><span class="search-nore">查看更多
+								<div class="tips">测试信息</div>
+							</span>
+							</div>
+							<div class="proportion-wrapper-footer">
+								<div class="proportion-wrapper-footer-title">
+									<span>C30</span><span>C10</span><span>C14</span><span>C25</span><span>C40</span>
+								</div>
+								<div class="proportion-wrapper-footer-content">
+									<span>强度等级</span><span>设计放量</span><span>需求放量</span><span>补方方量</span><span>坍落度</span>
+								</div>
+							</div>
+						</div>
+						<div class="proportion-content-wrapper-right">
+							<div class="proportion-right">
+								<div class="proportion-right-head">
+									<label>强度等级:</label>
+									<select class="intensity select">
+										<option>C25</option>
+										<option>C30</option>
+										<option>C40</option>
+										<option>C50</option>
+									</select>
+									<button type="button" class="btns btn-1 newly-mix">新建配合比</button>
+									<button type="button" class="btnBlue keep-in-reserve">保存</button>
+								</div>
+								<table class="customize" width="800px" height='100px'>
+									<tr>
+										<td><span>水泥</span></td>
+										<td><input /></td>
+										<td><span>细砂</span></td>
+										<td><input /></td>
+										<td><span>细骨料</span></td>
+										<td><input /></td>
+										<td><span>水胶比</span></td>
+										<td><input /></td>
+										<td><span>粉末灰</span></td>
+										<td><input /></td>
+									</tr>
+									<tr>
+										<td><span>水</span></td>
+										<td><input /></td>
+										<td><span>粗砂</span></td>
+										<td><input /></td>
+										<td><span>粗骨料</span></td>
+										<td><input /></td>
+										<td><span>外加剂</span></td>
+										<td><input /></td>
+										<td><span>矿粉</span></td>
+										<td><input /></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>-->
+			</div>
+
+		</div>
+
+		</div>
+	</body>
+	<script type="text/javascript" src="../static/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="../static/dx.js"></script>
+	<script src="static/js/proportion.js"></script>
+	<script>
+	</script>
+
+</html>

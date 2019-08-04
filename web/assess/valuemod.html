@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>临时修改</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<style type="text/css">
+			table tr td{width: 50%;}
+			table tr input{text-align: center;}
+			table tr:nth-child(2n){background:#E3E3E3 ;}
+			table tr:nth-child(2n) input{background:#E3E3E3;}
+			table tr td input{border: 0;display: block;width: 100%;height: 36px;line-height: 36px;}
+			
+			.contain{width: calc(100% - 68px);margin-left: 34px;margin-top: 20px;}
+			input[type=number] {  
+				-moz-appearance:textfield;  
+			}  
+			input[type=number]::-webkit-inner-spin-button,  
+			input[type=number]::-webkit-outer-spin-button {  
+				-webkit-appearance: none;  
+				margin: 0;  
+			} 
+			button{margin-right: 20px;margin-top: 30px;}
+		</style>
+	</head>
+	<body>
+		<div class="contain" id="contain">
+			<table class="table" style="width: 800px;">
+				
+				<tbody>
+					<tr>
+						<td>之前年份产值</td>
+						<td><input type="number"  value="" v-model="before" /></td>
+					</tr>
+					<tr>
+						<td>之前年份产值得分</td>
+						<td><input type="number"  value="" v-model="before_score" /></td>
+					</tr>
+					<tr>
+						<td>近三年产值</td>
+						<td><input type="number"  value="" v-model="three" /></td>
+					</tr>
+					<tr>
+						<td>近三年产值得分</td>
+						<td><input type="number"  value="" v-model="three_score" /></td>
+					</tr>
+					<tr>
+						<td>施工年限得分</td>
+						<td><input type="number"  value="" v-model="year_score" /></td>
+					</tr>
+					<tr>
+						<td>过渡分</td>
+						<td><input type="number"  value="" v-model="count" /></td>
+					</tr>
+					<!-- <tr>
+						<td>总分</td>
+						<td><input type="number"  value="" v-model="count_score" /></td>
+					</tr> -->
+				</tbody>
+			</table>
+			<div class="bottom">
+				<button type="button" class="btnBlue" style="margin-left: 600px;" @click="addData">保存</button>
+				<button type="button" class="btnBlue" @click="cancel">返回</button>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var eid = DX.getParam('id');
+	var vm = new Vue({
+		el:'#contain',
+		created:function(){
+			this.eid = eid;
+			this.getData();
+		},
+		data:{
+			'eid':'',
+			'before':'',//之前产值
+			'before_score':'',//之前产值得分
+			'three':'',//近三年产值	
+			'three_score':'',//近三年产值得分
+			'year_score':'',//施工年限得分
+			'count':'',//过渡分
+			// 'count_score':''//总分
+		},
+		methods:{
+			
+			getData:function(){//获取数据
+				var $this = this;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/dlc/FindOutptOffice',
+					'param':{'eid':$this.eid},
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$this.before = res.data.before_production;
+							$this.before_score =res.data.before_production_score;
+							$this.three = res.data.three_production;
+							$this.three_score =	res.data.three_production_score;
+							$this.year_score =res.data.construction_year_score ;
+							$this.count = res.data.count;
+						}
+					}
+				})
+			},
+			addData:function(values){
+				var obj = {
+					'eid':this.eid,
+					'before_production':this.before,
+					'before_production_score':this.before_score,
+					'three_production':this.three,
+					'three_production_score':this.three_score,
+					'count':this.count,
+					'construction_year_score':this.year_score
+				};
+				var $this = this;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/dlc/UpdateUnitBefore',
+					'param':obj,
+					'change':values.target,
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$this.cancel();
+						}
+					}
+				})
+			},
+			cancel:function(){
+				window.location.href = 'companyGrade.html';
+			}
+		},
+		watch:{
+			
+		}
+	})
+</script>

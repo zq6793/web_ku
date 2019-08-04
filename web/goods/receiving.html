@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>物资收料</title>
+    <link rel="stylesheet" type="text/css" href="../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/goods.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <div class="search">
+            <button type="button" class="btnOrange" onclick="window.location.href='recDetail.html'">收料</button>
+            <input type="text" placeholder="供应商名称、材料名称" class="input" style="width: 15%;margin-left: 30px;min-width: 278px;">
+        </div>
+        <div class="tableBox">
+            <table class="table tableHover" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>供应商</th>
+                        <th>车牌号</th>
+                        <th>材料名称</th>
+                        <th>规格型号</th>
+                        <th>计量单位</th>
+                        <th>收料数量</th>
+                        <th>收料时间</th>
+                        <th>毛重</th>
+                        <th>皮重</th>
+                        <th>净重</th>
+                        <th>扣重</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <th>山东东翰机械有限公司</th>
+                        <th>陕A251663</th>
+                        <th>浆片</th>
+                        <th>WCB600T</th>
+                        <th>片</th>
+                        <th>60</th>
+                        <th>2019/5/6</th>
+                        <th>25</th>
+                        <th>25</th>
+                        <th>25</th>
+                        <th>25</th>
+                        <th>已收，准备分料</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../static/jquery-1.8.3.js"></script>
+<script src="../static/dx.js"></script>
+<script src="../static/js/common.js"></script>
+<script src="../static/js/pages.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.table tbody tr').click(function(){
+        DX.clickTr($(this));  
+    })
+})
+</script>

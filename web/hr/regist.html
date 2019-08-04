@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大西信息科技有限公司</title>
+	<link rel="icon" href="../static/img/favicon.ico" type="image/x-icon" >
+	<link rel="stylesheet" href="../static/common.css">
+    <link rel="stylesheet" href="static/css/common.css">
+	<link rel="stylesheet" href="static/css/loginreg.css">
+
+</head>
+
+<body onkeydown="KeyDown()">
+    <div class="header">
+		<div class="ie">
+			<img src="static/img/logo @2x.png" alt="">
+			<p>中铁十二局集团第一工程有限公司</p>
+		</div>
+    </div>
+    <div class="content">
+        <div class="registMes" id="registMes" v-cloak>
+            <p class="writeMes">填写注册信息</p>
+            <div class="personalMes">
+                <p class="person" style="margin:20px 0 20px 0;">个人信息</p>
+                <p><span class="sameSpan">姓名：</span> <input type="text" class="sameInput" placeholder="请输入姓名" v-model="name"></p>
+                <label class="postre" v-if="states">
+					<span class="sameSpan">项目部：</span>
+					<input type="text" class="sameInput" placeholder="请输入所属项目部" v-model="projectContent"  @focus="getProject(1)" @blur="blusProject"> 
+					<ul class="projectpos" v-show="projectShow">
+						<li v-for="val,index in projectlist" @click="selctProject(index)" v-html="val.html"></li>
+					</ul>
+				</label>
+                <p><span class="sameSpan">部门：</span>
+					<select class="sameSelect" v-model="projet">
+						<option value="">请选择部门</option>
+						<option v-for='val,index in projects' :value="val.projectId">{{val.projectName}}</option>
+					</select>
+				</p>
+                <p>
+					<span class="sameSpan">职位：</span>
+					<select  class="sameSelect" v-model="worker">
+						<option value="">请选择职位</option>
+						<option v-for="val,index in workers" :value="val.jid">{{val.jobName}}</option>
+					</select>
+				</p>
+                <p v-if="isSurper">
+					<span class="sameSpan">是否主管：</span>
+					<label class=""><input type="radio" name="1" value="1"  @click="radioClick" /><span>是</span></label>
+					<label class="deny"><input type="radio"  name="1"  value="0" @click="radioClick" checked /><span >否</span></label>
+				</p>
+            </div>
+            <div class="passwordMes">
+                <p class="passwordSet" style="margin:20px 0 20px 0;">密码设置</p>
+                <p>
+					<span class="sameSpan">手机号：</span> 
+					<input type="text" class="sameInput" placeholder="请输入手机号" v-model="phone">
+				</p>
+				<p class="ver">
+					<span class="sameSpan" >图片码：</span>
+				    <input type="text" placeholder="请输入验证码" autocomplete="off" class="mobile" v-model="photocode" />
+				    <img :src="photosrc" class="mobile" style="float: right;margin-right: 5px;" @click="photoSrc" />
+				</p>
+                <p>
+					<span class="sameSpan">验证码：</span> 
+					<input type="text" placeholder="请输入验证码" class="mobile" v-model="code">
+					<button type="button" class="gettest" @click="getCode" :disabled="disabled">{{codeFont}}</button>
+				</p>
+                <p><span class="sameSpan">密码：</span> <input type="password" class="sameInput" placeholder="请输入6-11位密码" v-model="pass"></p>
+                <p><span class="sameSpan">确认密码：</span> <input type="password" class="sameInput" placeholder="请确认密码" v-model="pass1" @focus="focus" @blur="passCheck"></p> 
+                <p class="errl">{{errmesage}}</p>
+				<button type="button" class="finish" @click="addSub">完 成</button>
+            </div>
+            <div class="backLogin">
+                <p class="back1"><a href="javascript:void(0)" @click="goBack">返回上一步</a></p>
+                <p class="gotoLogin"><span>已有账号？</span><a href="login.html" style="color:#0675bc">去登录</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p class="dx">
+			<a href="https://www.daxiit.com" target="_blank">西安大西信息科技有限公司 ©2019 </a>
+			<a href="http://www.beian.miit.gov.cn" target="_blank" style="margin-left:10px;">陕ICP备15006746号</a>
+		</p>
+    </div>
+</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var state = DX.getParam('state');//机关 1 还是项目部 2 的标识
+	console.log(state);
+	var vm = new Vue({
+		el:'#registMes',
+		created:function () {
+			this.isshow();
+			this.getKey();
+			if(state == 1){
+				this.getProjects();
+			}
+		},
+		data:{
+			'isSurper':true,
+			'errmesage':'',//错误提示
+			'disabled':false,
+			'projectName':'',
+			'codeFont':'获取验证码',
+			'projectContent':'',//模糊查询
+			'flag':true,//是否可以调用接口 项目部
+			'states':'',//是否显示项目部
+			'projectShow':false,//项目部数组是否显示
+			
+			'photocode':'',//图片验证码的值
+			'key':'',//图片验证码 的key
+			'photosrc':'',//图片src
+			'projectid':"",//项目部id
+			'name':'',//姓名
+			'projet':'',//部门id
+			'worker':'',//职位id
+			'isSupervisor':0,//是否主管 1 是 0不是
+			'phone':'',//手机号
+			'code':'',//验证码
+			'pass':'',//密码1
+			'pass1':'',//确认密码
+			
+			'projectlist':[],//项目部数组
+			'projects':[],//部门数组
+			'workers':[],//职位数组
+			
+		},
+		methods:{
+			getKey:function(){//获取图形验证码的key
+				var $this = this;
+				DX.ajax_method({
+					'url':'/user/login/getRegisterKey',
+					'callBack':function(res){
+						if(res.code == '200'){
+							$this.key = res.data;
+							
+							$this.photoSrc();
+						}
+					}
+				})	
+			},
+			photoSrc:function(){//获取图片src
+				this.photosrc = DX.domain('user')+'/user/login/getImageCode?registerKey='+this.key+'&r='+Math.random();
+			},
+			isshow:function(){//控制隐藏 是否为项目部
+				this.states = state == 1 ? false : true;	
+			},
+			radioClick:function (event) {//单选 选择是否主管
+				console.log(event.target.value);
+				this.isSupervisor = event.target.value;
+			},
+			getCode:function(){ //获取验证码
+				this.errmesage = '';
+				var $this=this;
+				var isPhone = DX.verPhone(this.phone);
+				var isCode = DX.isNull($this.photocode);
+				if(isCode){
+					$this.errmesage = '请填写图片验证码';return;
+				}
+				if(isPhone){
+					
+					DX.ajax_method({
+						'param':{'phone':$this.phone,'registerKey':$this.key,'verifyCode':$this.photocode},
+						'url':'/user/login/registerSms',
+						'callBack':function(res){
+							if(res.code == '200'){
+								var second = 60;
+								var time =setInterval(function(){
+									if(second == 0){
+										$this.codeFont = "获取验证码";
+										$this.disabled=false;
+										clearInterval(time);
+									}else{
+										$this.codeFont = "重新发送(" + second + ")";
+										$this.disabled=true;
+										second--;
+									}
+									
+								},1000);
+							}else{
+								$this.getKey();
+								$this.errmesage = res.msg;
+							}
+						}
+					})
+				}else{
+					$this.errmesage = '请输入正确的手机号';
+				}
+				
+			},
+			passCheck:function(){//检查两次密码是否一致
+				this.errmesage = '';
+				if(this.pass != this.pass1){
+					this.errmesage = '两次密码不一致';
+				}
+			},
+			focus:function(){
+				this.errmesage = '';
+				if(this.pass==''){
+					this.errmesage = '请先输入密码';
+				}
+			},
+			getProject:function(param){//获取项目部
+				if(param == 1){ //得到焦点进入
+					if(this.projectContent != '') return;
+				}
+				var $this = this;
+				DX.ajax_method({
+					'type':"GET",
+					'param':{'content': $this.projectContent},
+					'url':'/user/project/getProjects',
+					'callBack':function(res){
+						if(res.code == '200'){
+							
+							var arr = res.data;
+							$.each(res.data,function(i,val){
+								arr[i].html = DX.replaceStr(val.abbreviation,$this.projectContent)+'('+DX.replaceStr(val.projectName,$this.projectContent)+')';
+							})
+							$this.projectlist = arr;
+							
+						}
+					}
+				})
+				
+			},
+			selctProject:function(index){//点击选取项目部
+				this.flag = false;
+				this.projectName = this.projectlist[index].abbreviation;
+				this.projectid = this.projectlist[index].projectId;
+				this.projectContent = this.projectlist[index].abbreviation;
+				this.projectlist = [];
+			},
+			blusProject:function(){//项目部输入框失去焦点
+				var $this = this;
+				var context = $this.projectContent;
+				setTimeout(function(){
+					if($this.projectid == ''){
+						// if(context == ){
+							$this.flag = false;
+						
+						$this.projectContent ='';
+						$this.projectlist = [];
+					}else{
+						if($this.projectName != $this.projectContent){
+							$this.flag = false;
+							$this.projectContent = $this.projectName;
+							$this.projectlist = [];
+						}
+					}
+				},200);
+			},
+			goBack:function(){
+				window.location.href = 'regist1.html?state='+state;
+			},
+			getProjects:function(){//获取部门 
+				var $this = this;
+				var url = '/user/project/anon/getSubProjects';
+				if(state == 1){
+					url = '/user/unit/anon/findUnitDepart'
+				}
+				DX.ajax_method({
+					'type':"GET",
+					'param':{},
+					'url':url,
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$this.projects = res.data;
+						}
+					}
+				})
+			},
+			getWorker:function(){//获取职位
+				var $this = this;
+				var prid = $this.projectid;
+				if(state == 1){
+					var prid = 0;
+				}
+				DX.ajax_method({
+					'type':"GET",
+					'param':{'proid':prid,'departId':$this.projet},
+					'url':'/user/job/anon/findJobsForRegister',
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$this.workers = res.data;
+						}
+					}
+				})
+			},
+			addSub:function(values){
+				
+				this.errmesage='';
+				var $this=this;
+				if(this.name == ''){
+					this.errmesage = '请输入姓名';return;
+				}
+				
+				var reg=/^[\u0391-\uFFE5]+$/;//Unicode编码中的汉字范围
+				console.log(this.name);
+				if(!reg.test(this.name)){
+				  this.errmesage = '姓名只能输入汉字';return;
+				}
+				
+				
+				if(this.phone == ''){
+					this.errmesage = '请输入手机号';return;
+				}
+				if(this.pass == ''){
+					this.errmesage = '密码不能为空';return;
+				}
+				if(!DX.verPassword(this.pass)){
+					this.errmesage = '密码必须为6到11位';return;
+				}
+				if(this.pass != this.pass1){
+					this.errmesage = '两次密码不一致';return;
+				}
+				if(this.projet == ''){
+					this.errmesage = '请选择部门';return;
+				}
+				if(this.worker == ''){
+					this.errmesage = '请选择职位';return;
+				}
+				
+				// if(this.isSupervisor == ''){
+				// 	this.errmesage = '请选择是否为主管';return;
+				// }
+				if(this.code == ''){
+					this.errmesage = '请输入验证码';return;
+				}
+				var obj = {
+					'name':$this.name,
+					'phone':$this.phone,
+					'password':$this.pass,
+					'jid':$this.worker,
+					'departId':$this.projet,
+					'isSupervisor':$this.isSupervisor,
+					'verifyCode':$this.code
+				}
+				if(state==2){
+					if(this.projectid == ''){
+						this.errmesage = '请选择项目部';return;
+					}
+					obj.proid=$this.projectid;
+				}else{
+					obj.proid=0;
+				}
+				
+				// 部门id=1 是否主管为-1
+				if($this.projet == 1){
+					obj.isSupervisor=-1;
+				}
+				console.log(obj);
+				DX.ajax_method({
+					'type':'POST',
+					'param':obj,
+					'change':values.target,
+					'url':'/user/login/register',
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							if(res.data.unitOrProject == 'project'){
+								window.location.href = 'prompt.html?name='+res.data.name;
+							}else{
+								window.location.href = 'prompt.html';
+							}
+						}else{
+							$this.errmesage = res.msg;
+						}
+					}
+				})
+			}
+			
+			
+			
+			
+		},
+		watch:{
+			projectlist:function(newval,oldval){//项目部数组
+				if(newval.length > 0){
+					this.projectShow = true;
+				}else{
+					this.projectShow = false;
+				}
+			},
+			projectContent:function(newval,oldval){//模糊搜索
+				console.log(this.flag);
+				if(this.flag){
+					this.getProject();
+				}else{
+					this.flag = true;
+				}
+				
+			},
+			projectid:function(newval,oldval){//项目部id
+				if(newval != ''){
+					this.getProjects();
+				}
+			},
+			projet:function(newval,oldval){//部门id
+				if(newval != ''){
+					this.getWorker();
+				}
+				if(newval == 1){
+					this.isSurper = false;
+				}else{
+					this.isSurper = true;
+				}
+			}
+			
+			
+		}
+	})
+	
+	// enter登录
+	function KeyDown() {
+		console.log(event.keyCode);
+		if(event.keyCode == 13) {
+			event.returnValue = false;
+			event.cancel = true;
+			vm.addSub();
+		}
+	}
+</script>

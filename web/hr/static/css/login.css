@@ -1,0 +1,262 @@
+ #psd{
+    color: #f46322;
+    border-bottom:2px solid #f46322;
+}
+#mes:hover{
+    border-bottom: 2px solid #f46322;
+}
+#sao:hover{
+    border-bottom: 2px solid #f46322;
+}
+.username{
+    width:286px;
+    height:40px;
+    border:1px solid rgba(230,230,230,1);
+    border-radius:4px;
+    margin-top: 25px;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+}
+.password{
+    width:286px;
+    height:40px;
+    border:1px solid rgba(230,230,230,1);
+    border-radius:4px;
+    margin-top: 20px;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.ver{
+    width:286px;
+    height:40px;
+    border:1px solid rgba(230,230,230,1);
+    border-radius:4px;
+    display: flex;
+    position: absolute;
+    top: 266px;
+    left: 30px;
+    display: none;
+}
+.ver img{
+    width:84px;
+    height:24px;
+    background:#E8EAEC;
+    position: absolute;
+    top: 8px;
+    right: 17px;
+}
+.err{
+    width:200px;
+    height:11px;
+    font-size:12px;
+    font-family:Microsoft-YaHei;
+    color:rgba(255,33,33,1);
+    position: absolute;
+    top: 249px;
+    left: 30px;
+    transform:scale(.9);
+    display: none;
+}
+
+.remeber{
+    width:286px;
+    height:17px;
+    margin-top: 25px;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;     
+}
+.check{
+    display: flex;
+}
+.check input{
+    width:18px;
+    height:17px;
+    background:#999999  ;
+    border:1px solid rgba(153,153,153,1);
+    border-radius:4px;
+
+}
+.check span{
+    width:40px;
+    height:12px;
+    font-size:12px;
+    font-family:MicrosoftYaHei;
+    color:rgba(102,102,102,1);
+}
+.remeber a{
+    width:70px;
+    text-align: right;
+    height:13px;
+    font-size:12px;
+    font-family:MicrosoftYaHei;
+    color:rgba(102,102,102,1);
+}
+.sub{
+    width:286px;
+    height:40px;
+    background:#0675bc;
+    border-radius:4px;
+    border: none;
+    margin-top: 66px;
+    margin-left: 30px;
+    font-size:15px;
+    font-family:Microsoft-YaHei;
+    color:rgba(255,255,255,1);
+    opacity:0.9;
+    cursor: pointer;
+} 
+.username span:nth-child(1){
+    display: inline-block;
+    background-image: url(../img/login-icon@2x.png);
+    background-position: -3px -3px;
+    width: 24px;
+    height: 26px;
+    margin-top: 2px;
+    margin-left: 13px;
+    background-color: #F8F8F8;
+    float: left;
+    transform: scale(.8);
+}
+.username span{
+    width: 2px;
+    height: 30px;
+    background: rgba(230,230,230,1);
+    border-radius: 1px;
+    margin-right: 9px;
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+}
+.password span:nth-child(1){
+    display: inline-block;
+    background-image: url(../img/login-icon@2x.png);
+    background-position: -3px -35px;
+    width: 24px;
+    height: 26px;
+    margin-top: 1px;
+    margin-left: 13px;
+    background-color: #F8F8F8;
+    float: left;
+    transform: scale(.8);
+}
+.password span{
+    width: 2px;
+    height: 30px;
+    background: rgba(230,230,230,1);
+    border-radius: 1px;
+    margin-right: 9px;
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+}
+.username input, .password input, .ver input{
+    width: 210px;
+    height: 36px;
+    border: none;
+    background: rgba(248,248,248,1);
+    outline: none;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+.check{
+    float: left;
+    height: 17px;
+}
+.check input{
+    float: left;
+    display: inline-block;
+    width: 16px;
+    height: 18px;
+    background: #999999;
+    border: 1px solid rgba(153, 153, 153, 1);
+    border-radius: 4px;
+    margin-top: 1px;
+}
+.check span{
+    width: 40px;
+    height: 12px;
+    font-size: 12px;
+    float: left;
+    font-family: Microsoft-YaHei;
+    color: rgba(102, 102, 102, 1);
+    margin-top: 2px;    
+}
+.remeber a{
+    width: 70px;
+    text-align: right;
+    height: 13px;
+    font-size: 12px;
+    font-family: Microsoft-YaHei;
+    color: rgba(102, 102, 102, 1);
+    float: right;
+}
+.loginType a:nth-child(2){
+    margin-left: 47px;
+}
+.center{text-align: center;color: #666;font-size: 14px;margin-top: 10px;}
+.center a{color: #666;}
+@media all and (min-width:0) {
+    .check input{
+        float: left;
+        display: inline-block;
+        width: 16px;
+        height: 18px;
+        background: #999999;
+        border: 1px solid rgba(153, 153, 153, 1);
+        border-radius: 4px;
+        margin-top: 0px\9;
+    }
+}
+body{
+	position: relative;
+}
+.moudle{
+	visibility: hidden;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+	top: 0;
+}
+
+.moudle-content{
+	background-image: url(../img/bdimg.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-color: #FFFFFF;
+	font-size: 14px;
+	position: absolute;
+	z-index:1111;
+	width: 667px;
+	height: 412px;
+	left: 50%;
+	top: 50%;
+	margin-left: -330px;
+	margin-top: -206px;
+	line-height: 1.9;
+	box-shadow: 4px ;
+}
+.moudle-wrapper{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	line-height: 2.4;
+	margin-left: -260px;
+	margin-top: -40px;
+	width: 520px;
+	height: 160px;
+	
+}
+
+/* 下载弹层 */
+.qrcode{margin-right: 100px;position: relative;}
+.qrcode p{cursor: pointer;padding: 0 10px;}
+.qrcode p span{color: #fff;font-size: 14px;margin-left: 5px;opacity: 0.7;}
+.qrcode p img{margin-top: 2px;}
+.qrcode .android{position: absolute;bottom: 34px;left: 13px;width: 100px;height: 100px;display: none;box-sizing: border-box;padding: 8px;background: #fff;}
+.qrcode .ios{position: absolute;bottom: 34px;left: 130px;width: 100px;height: 100px;display: none;box-sizing: border-box;padding: 8px;background: #fff;}

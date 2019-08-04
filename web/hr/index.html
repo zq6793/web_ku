@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>大西信息科技有限公司</title>
+	<link rel="stylesheet" href="../static/common.css">
+    <link rel="stylesheet" href="static/css/leftcommon.css">
+    <link rel="stylesheet" href="static/css/listSearch.css">
+	
+	<!--[if IE 9]>
+		<link rel="stylesheet" href="static/css/indexIE.css">
+
+	<![endif]--> 
+</head>
+<body>
+    <!-- 左边盒子为公共样式 -->
+    <div class="leftBox">
+        <!-- logo -->
+        <p class="logo"><img src="static/img/indexLogo.png" alt=""></p>
+        <!-- 每一个列表 -->
+        <a class="title order" href="#">
+            <span></span>
+            <span>程序操作</span>
+            <span></span>
+        </a>
+        <a class="title per" href="#">
+            <span></span>
+            <span>人员管理</span>
+            <span></span>
+        </a> 
+        <ul class="personList">
+            <li><span class="active"></span><a href="index.html">全员信息</a></li>
+            <li><span></span><a href="register.html">增员信息</a></li>
+			<li><span></span><a href="#">人员名片</a></li>
+            <li><span></span><a href="#">人员查找</a></li>
+            <li><span></span><a href="#">正式工分类</a></li>
+            <li><span></span><a href="#">非正式工分类</a></li>
+            <li><span></span><a href="#">人员变动情况</a></li>
+        </ul>
+        <a class="title mon" href="#">
+            <span></span>
+            <span>工资管理</span>
+            <span></span>
+        </a> 
+        <a class="title tex" href="#">
+            <span></span>
+            <span>文档管理</span>
+            <span></span>
+        </a> 
+        <a class="title report" href="#">
+            <span></span>
+            <span>报表管理</span>
+            <span></span>
+        </a> 
+        <a class="title pap" href="#">
+            <span></span>
+            <span>证件管理</span>
+            <span></span>
+        </a> 
+        <a class="title tool" href="#">
+            <span></span>
+            <span>常用工具</span>
+            <span></span>
+        </a> 
+        <a class="title win" href="#">
+            <span></span>
+            <span>窗口</span>
+            <span></span>
+        </a> 
+    </div>
+    <!-- 右侧表格盒子 -->
+    <div class="rightBox">
+		<!-- 右侧公共部分头部 -->
+		<ul class="quit none">
+			<li><a href="javascript:void(0)" id="loginout"><span></span>退出</a></li>
+			<li><a href="#"><span></span>帮助</a></li>
+		</ul>
+        <header>
+            <span>人力资源管理系统</span>
+            <p class="tx">
+                 <img src="static/img/tx.png" alt="">
+                <span class="more"></span>
+            </p>
+        </header>
+        <!-- 位置，搜索，时间 -->
+        <div class="nav">
+            <span>当前所在位置：人员管理></span><span class="pointer">人员变动情况</span>
+        </div>
+        <!-- 条件搜索 -->
+        <div class="search">
+            <div class="nameSearch">
+                <input type="text" placeholder="姓名、电话号码、身份证号码" id='condition' >
+				<!-- <span class="back" id="back">姓名、电话号码、身份证号码</span> -->
+                <button class="firSea" id='blurry'>查询</button>
+            </div>
+            <div class="timeSearch">
+                <select name="" id="selectTime" class="creatTime">
+					<option value="">请选择</option>
+					<option value="joinTime">加入时间</option>
+					<option value="join_job_Time">参加工作时间</option>
+					<option value="join_com_Time">进入企业时间</option> 
+                </select>
+                <span>-</span>
+                <div class="timeStart"><input type="text" name="" id="starttime" value="" /></div>
+                <span>-</span>
+                <div class="timeEnd"><input type="text" name="" id="endtime" value="" /></div>
+                <button class="endSea" id='timeCheck'>查询</button>
+            </div>
+        </div>
+        <div class="tableList">
+            <table id="list" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr id="outfit">
+                        <th><input type="checkbox" id="all"></th>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>身份</th>
+                        <th>社会保险号</th>
+                        <th>进入企业时间</th>
+                        <th>分支单位</th>
+                        <th>档案号</th>
+                        <th>单位</th>
+                        <th>民族</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+		<!-- 分页 -->
+        <div class="page clearfix">
+            <ul class="pages clearfix">
+                <li class="first">首页</li>
+                <li class="pre">上一页</li>
+                <li class="next">下一页</li>
+                <li class="last">尾页</li>
+            </ul>
+            <div class="show clearfix">
+                <span class="page_index">第1页</span>
+                <span class="page_count">/ 共0页</span>
+                <span class="page_count1">共0条</span>
+            </div>
+            <div class="select clearfix">
+                <div class="num">
+                    <span>每页</span>
+                    <input type="number"  id="page_number" value="2" min="1"/>
+                    <span>条</span>
+                </div>
+                <div class="tourl">
+                    <span>跳转到</span>
+                    <input type="number" value="1" min="1"/>
+                    <span id="page_tourl" style="cursor: pointer;">确认</span>
+                </div>
+            </div>
+            <!-- 当前页码 -->
+            <input type="hidden" name="" id="page_index" value="1">
+            <!-- 上一页 -->
+            <input type="hidden" name="" id="page_pre" value="1">
+            <!-- 下一页 -->
+            <input type="hidden" name="" id="page_next" value="1">
+            <!-- 共多少页 -->
+            <input type="hidden" name="" id="page_last" value="3" />
+        </div>
+	</div>
+	
+</body>	
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/input.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var btnUrl = true;
+		var page = {'currPage':$('#page_index').val(),'pageSize':$('#page_number').val()};
+		select(page,btnUrl);
+		
+		// input处理
+		$('#condition').focus(function(){
+			$(this).css('background','#fff');
+		})
+		$('#condition').blur(function(){
+			if(!$(this).val()){
+				$(this).css('background','url(static/img/back.png) no-repeat  5px 9px');
+			}
+		})
+		// 模糊查询
+		$('#blurry').click(function(){
+			btnUrl = true;
+			var obj = pageValue();
+			var page = {'currPage':1,'pageSize':obj.page_number};
+			select(page,btnUrl);
+		});
+		// 时间查询
+		$('#timeCheck').click(function(){
+			btnUrl = false;
+			var obj = pageValue();
+			var page = {'currPage':1,'pageSize':obj.page_number};
+			select(page,btnUrl);
+		})
+		// 切换选择类型,清空values
+		$('#selectTime').change(function(){
+			$('#starttime').val('');
+			$('#endtime').val('');
+		})
+		// 点击首页
+		$('.first').click(function(){
+			$('.pages li').removeClass('page_active');
+			var obj = pageValue();
+			if(Number(obj.page_index) < 2) {
+				$('.first').addClass('page_active').siblings().removeClass('page_active');return;
+			}
+			var page = {'currPage':1,'pageSize':obj.page_number};
+			select(page,btnUrl);
+		});
+		// 点击上一页
+		$('.pre').click(function(){
+			$('.pages li').removeClass('page_active');
+			var obj = pageValue();
+			if(Number(obj.page_index) < 2) {
+				$('.pre').addClass('page_active').siblings().removeClass('page_active');return;
+			}
+			var page = {'currPage':obj.page_pre,'pageSize':obj.page_number};
+			select(page,btnUrl);
+		})
+		// 点击下一页
+		$('.next').click(function(){
+			$('.pages li').removeClass('page_active');
+			var obj = pageValue();
+			if(Number(obj.page_index) > Number(obj.page_last)-1) {
+				$('.next').addClass('page_active').siblings().removeClass('page_active');return;
+			}
+			
+			var page = {'currPage':obj.page_next,'pageSize':obj.page_number};
+			select(page,btnUrl);
+		})
+		// 点击尾页
+		$('.last').click(function(){
+			$('.pages li').removeClass('page_active');
+			var obj = pageValue();
+			if(Number(obj.page_index) > Number(obj.page_last)-1) {
+				$('.last').addClass('page_active').siblings().removeClass('page_active');return;
+			}
+			var page = {'currPage':obj.page_last,'pageSize':obj.page_number};
+			select(page,btnUrl);
+		})
+		// 点击跳转指定页
+		$('#page_tourl').click(function(){
+			var obj = pageValue();
+			var toUrl = $('.tourl input').val();
+			if (Number(obj.page_index) == toUrl) return;
+			var page = {'currPage':toUrl,'pageSize':obj.page_number};
+			select(page,btnUrl);
+		})
+		// 时间选择器
+		var startTime = laydate.render({ 
+			elem: '#starttime',
+			// type: 'datetime',
+			done: function(value, date, endDate) { 
+				endTime.config.min = { 
+					year: date.year, 
+					month: date.month - 1,//重点！！！
+					date: date.date,
+					hours:date.hours, 
+					minutes:date.minutes, 
+					seconds:date.seconds
+				 };
+				var stime = new Date(Date.parse(value.replace("-", "/"))); 
+				var etime = new Date(Date.parse($("#endtime").val().replace("-", "/"))); 
+				if(stime>etime){ //开始时间若大于结束时间，则把开始时间的日期回填到结束时间 
+					$("#endtime").val(value); 
+				} 
+			 },
+		});
+		 var endTime = laydate.render({
+			 elem: '#endtime' ,
+			 min: $("#starttime").val() //可选择的最小日期为开始日期
+		});
+		
+
+		
+		$('.more').toggle(
+			function(){
+				$('.quit').removeClass('none');
+			},
+			function(){
+				$('.quit').addClass('none');
+			}
+		)
+ 
+
+
+
+		/* 获取分页value
+		* page_index 当前页码
+		* page_number 显示数量
+		* page_last 共多少页
+		* page_pre 上一页
+		* page_next 下一页
+		*/
+		function pageValue(){
+			var page_index = $('#page_index').val();
+			var page_number = $('#page_number').val();
+			var page_last = $('#page_last').val();
+			var page_pre = $('#page_pre').val();
+			var page_next = $('#page_next').val();
+			return obj = {"page_index":page_index,"page_number":page_number,"page_last":page_last,
+			'page_pre':page_pre,'page_next':page_next}
+		}
+		
+		//查询函数 
+		function select(obj,btnUrl){
+			if(btnUrl){//模糊
+				var url = '/emp/combinedQuery';
+				// console.log($('#condition').val());
+                if($('#condition').val()== '姓名、电话号码、身份证号码'){
+                    obj.condition='';
+                }else{
+                    obj.condition =$('#condition').val();
+                }
+
+			}else{
+				var url = '/emp/Bytimequery';
+				obj.timeConditions = $('#selectTime').val();
+				obj.startTime = $('#starttime').val();
+				obj.endTime = $('#endtime').val();
+			}
+			// console.log(obj);
+			
+			DX.ajax_method({
+				'type':'POST',
+				'url':url,
+				'param':obj,
+				'callBack':selectcall
+			});
+		}
+		//数据渲染回调
+		function selectcall(res){
+			// console.log(res);
+			$('.page_index').html('第'+res.data.pageNum+'页');
+			$('.page_count').html('总共'+res.data.pages+'页');
+			$('.page_count1').html('总共'+res.data.total+'条');
+			
+			$("#page_index").val(res.data.pageNum);
+			$("#page_last").val(res.data.pages);
+			$("#page_pre").val(res.data.prePage);
+			$("#page_next").val(res.data.nextPage);
+			
+			var html='';
+			for (var i=0;i<res.data.list.length;i++) {
+				html+='<tr id="detail"><td id="box"><input type="checkbox" name="box"></td>';
+				html+='<td>'+(i+1)+'</td>';
+				html+='<td>'+res.data.list[i].name+'</td>';
+				html+='<td>'+res.data.list[i].sex+'</td>';
+				html+='<td>'+res.data.list[i].admPosition+'</td>';
+				html+='<td>'+res.data.list[i].insurance+'</td>';
+				html+='<td>'+res.data.list[i].joinComTime+'</td>';
+				html+='<td>'+res.data.list[i].companyName+'</td>';
+				html+='<td>'+res.data.list[i].fileNumber+'</td>';
+				html+='<td>'+res.data.list[i].companyName+'</td>';
+				html+='<td>'+res.data.list[i].nationality+'</td>';
+			}
+			$('#list tbody').html('');
+			$('#list tbody').append(html);
+		}
+	})
+</script>

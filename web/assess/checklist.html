@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<title>选择队伍</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+		
+	</head>
+	<body>
+		
+		<!-- right -->
+		<div class="rightBox">
+			
+			<!-- <div class="nav">
+			    <span>当前所在位置：劳务队评价></span><span class="pointer">选择队伍</span>
+				
+			</div> -->
+			<div class="clearfix">
+				
+				<!-- 查询 -->
+				<div class="query clearfix fl" style="width: 50%;">
+					<input type="text" placeholder="公司名称,劳务队负责人电话" id="checked" class="fl" style="width: 50%;" autocomplete="off">
+					<button type="button" class="fl btnBlue" id="subCheck">查询</button>
+					<span class="err fr index_err"></span>
+				</div>
+				<!-- 进入评分 -->
+				<div class="insert clearfix fr" style="width: 30%;margin-right: 34px;">
+					<a href="javascript:void(0)" class="fr btnBlue" id="gotopf">进入评分</a>
+					
+				</div>
+			</div>
+			<div class="table checklist" id="table">
+				<table>
+					<thead>
+						<tr>
+							<th style="width: 1%;"><input type="checkbox" id="allCheck"></th>
+							<th style="width: 2%;">序号</th>
+							<th style="width: 15%;">公司名称</th>
+							<th>劳务队负责人</th>
+							<th>身份证号</th>
+							<th>劳务队负责人电话</th>	
+							
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+		<!-- 全局修改 ids -->
+		<input type="hidden" name="" id="allTeamids" value=""  />
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	var ids = DX.getParam('ids');
+	var year = DX.getParam('year');//如果存在 全局修改
+	$(document).ready(function(){
+		select();
+		
+		
+		// var page = {'curPage':1,'pageSize':};
+
+		//查询 
+		$('#subCheck').click(function(){
+			// var obj = {'curPage':1,'pageSize':$('#page_number').val()};
+			select();
+		});
+		//回车查询
+		$('#checked').keydown(function(event){
+			if (event.keyCode == 13){
+				event.returnValue=false;
+				event.cancel = true;
+				$('#subCheck').trigger('click');
+			}
+		});
+		// 全选
+		$('#allCheck').click(function(){
+			var check = $(this).prop('checked');
+			$('.checklist table tbody tr td input[type="checkbox"]').prop('checked',check);
+		})
+		//进入评分
+		$('#gotopf').click(function(){
+			var str = '';
+			var arr = [];
+			$.each($('.checklist table tbody tr td input[type="checkbox"]'),function(i,val){
+				if($(this).prop('checked')){
+					str += $(this).parents('tr').attr('ctid')+',';
+					arr.push(Number($(this).parents('tr').attr('ctid')));
+				}
+			})
+			var param =str.substring(str.length-1,-1);
+			if(param.length <= 0){
+				$('.err').show();
+				$('.err').html('请勾选参赛队伍');return;
+			}
+			
+			if(year){//全局修改
+				var old = JSON.parse($('#allTeamids').val());
+				var insert = '';
+				var del = '';
+				$.each(old,function(i,val){//删除的id
+					if(arr.indexOf(old[i]) == -1){
+						del += old[i]+',';
+					}
+				})
+				
+				$.each(arr,function(i,val){//新增的id
+					if(old.indexOf(arr[i]) == -1){
+						insert += arr[i]+',';
+					}
+				})
+				
+				if(insert.length > 0){
+					insert = insert.substring(insert.length-1,-1);
+				}
+				if(del.length > 0){
+					del = del.substring(del.length-1,-1);
+				}
+				
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/dlc/GlobalchangesTWO',
+					'change':$(this)[0],
+					'param':{'param':insert,'delete':del,'returnYear':year},
+					'callBack':function(res){
+						if(res.code == '200'){
+							// console.log(res);
+							window.location.href = 'checklist2.html?ids='+param+'&year='+year;
+						}
+					}
+				})
+			}else{//正常流程
+				window.location.href = 'checklist2.html?ids='+param;
+			}
+			
+			
+		})
+		// // input处理背景处理
+		// $('#checked').focus(function(){
+		//     $(this).css('background','#f8f8f8');
+		// })
+		// $('#checked').blur(function(){
+		//     if(!$(this).val()){
+		//         $(this).css('background','url(/web/assess/static/img/inputback.png) no-repeat  3px 9px');
+		//     }
+		// })
+
+		
+		//查询函数 
+		function select(){
+			var checked = $('#checked').val();//公司名称,劳务队负责人名称或电话
+			var obj = {};
+			if(checked == $('#checked').attr('placeholder')){
+				obj.checked = '';
+			}else{
+				obj.checked = checked;
+			}
+
+
+		    DX.ajax_method({
+		        'type':'GET',
+		        'url':'/eva/eva/findTeamBychecked',
+		        'param':obj,
+		        'callBack':selectcall
+		    });
+		}
+		// 回调渲染
+		function selectcall(res){
+			$('.err').hide();
+			console.log(res);
+			if(res.code !='200'){
+				console.log('数据错误');return;
+			}
+			// $('.page_index').html('第'+res.data.pageNum+'页');
+			// $('.page_count').html('总共'+res.data.pages+'页');
+			// $('.page_count1').html('总共'+res.data.total+'条');
+			// 
+			// $("#page_index").val(res.data.pageNum);
+			// $("#page_last").val(res.data.pages);
+			// $("#page_pre").val(res.data.prePage);
+			// $("#page_next").val(res.data.nextPage);				
+			var html = '';
+			
+			$.each(res.data.list,function(i,val){
+				html += '<tr ctid="'+val.ctid+'">'
+				html += '<td><label><input type="checkbox"></label></td>';
+				html += '<td>'+(i+1)+'</td>';
+				html += '<td>'+val.team_name+'</td>';
+				html += '<td>'+val.contractor+'</td>';
+				html += '<td>'+val.cardid+'</td>';
+				html += '<td>'+val.principal_phone+'</td>';
+				html += '</tr>';
+			})
+			
+			
+			$('#table table tbody').html('');
+			$('#table table tbody').append(html);
+			
+			$('#table table tbody tr label').click(function(e){
+				e.stopPropagation();
+			})
+			
+			$('#table table tbody tr').click(function(){
+				DX.clickTr($(this))
+			})
+			
+			if(year && ids==null){
+				allYearMod(year)
+			}
+			if(ids){//重新选取队伍
+				preShow();	
+			}
+			
+		}
+		
+	
+	})
+	//全局修改回显
+	function allYearMod(year){
+		
+			DX.ajax_method({
+				'type':'GET',
+				'param':{'returnYear':year},
+				'url':'/eva/dlc/GlobalchangesONE',
+				'callBack':function(res){
+					if(res.code == '200'){
+						console.log(res.data);
+						$.each(res.data,function(i,val){
+							$.each($('#table tbody tr').find('input'),function(index,value){
+								if($(this).parents('tr').attr('ctid') == val){
+									
+									$(this).prop('checked',true);
+								}
+							})
+						})
+						//存储
+						$('#allTeamids').val(JSON.stringify(res.data));
+					}
+				}
+			})
+	
+	}
+	//返回上一步的回显
+	function preShow(){
+		
+		DX.ajax_method({//拿取旧数据
+			'type':'GET',
+			'param':{'returnYear':year},
+			'url':'/eva/dlc/GlobalchangesONE',
+			'callBack':function(res){
+				if(res.code == '200'){
+					//存储
+					$('#allTeamids').val(JSON.stringify(res.data));
+					
+					var idsArr = ids.split(',');//回显队伍
+					$.each(idsArr,function(i,val){
+						$.each($('#table tbody tr').find('input'),function(index,value){
+							if(Number($(this).parents('tr').attr('ctid')) == val){
+								$(this).prop('checked',true);
+							}
+						})
+					})
+				}
+			}
+		})
+		
+	}
+</script>

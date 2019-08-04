@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>库存发料</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/goods.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <div class="search">
+            <input type="text" placeholder="材料名称" class="input" style="width: 15%;margin-right: 30px;">
+            <button type="button" class="btnOrange">查询</button>
+        </div>
+        <div class="tableBox">
+            <table class="table tableHover" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width:3.6%;">Id</th>
+                        <th rowspan="2" style="width:13.7%;">材料名称</th>
+                        <th rowspan="2" style="width:19.4%;">规格型号</th>
+                        <th rowspan="2" style="width:13.7%;">计量单位</th>
+                        <th colspan="4" style="width:28%;">实际数量</th>
+                        <th colspan="2" style="width:14%;">料单数量</th>
+                        <th rowspan="2" style="width:7.6%;">操作</th>
+                    </tr>
+                    <tr>
+                        <th style="width:7%;">入库</th>
+                        <th style="width:7%;">发料</th>
+                        <th style="width:7%;">退料</th>
+                        <th style="width:7%;">库存</th>
+                        <th style="width:7%;">点验</th>
+                        <th style="width:7%;">开单</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>水泥</td>
+                        <td>袋装PO.32.5</td>
+                        <td>吨</td>
+                        <td>144</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>144</td>
+                        <td>5</td>
+                        <td>0</td>
+                        <td><span class="listToDetail">发料</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../static/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../../static/js/common.js"></script>
+<script src="../../static/js/pages.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.table tbody tr').click(function(){
+        DX.clickTr($(this));  
+    })
+})
+</script>

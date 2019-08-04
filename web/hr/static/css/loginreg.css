@@ -1,0 +1,139 @@
+/*html,body{background: #F8F8F8;}*/
+[v-cloak] {
+    display: none;
+}
+.none1{display: none;}
+/* .reg{width: 445px;margin: 20px auto;background: #fff;box-sizing: border-box;padding: 30px 20px; */
+	/* color:#333333;font-size: 16px} */
+/* .reg h3{line-height: 60px;font-size: 18px;font-weight: bold;text-align: center;} */
+input::-webkit-input-placeholder{
+  font-size: 12px;
+}
+input::-moz-input-placeholder{
+  font-size: 12px;
+}
+input::-ms-input-placeholder{
+  font-size: 12px;
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.fl {float: left;}  
+.fr {float: right;}
+
+.reg .label{display: block;width: 285px;line-height: 30px;padding: 8px 0;margin: 0 auto;font-size: 14px}
+.reg .label span:first-child{width: 80px;text-align: right;line-height: 30px;}
+.reg .label input,.reg .label select{width: 200px;height: 30px;outline: none;text-indent: 10px;
+	border:1px solid rgba(230,230,230,1);border-radius: 2px;background: none;}
+.reg .label input.min{width: 90px;}
+.reg .label button.btn{
+    width: 100px;
+    background: #0675bc;
+    border: 0;
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 31px;
+    margin-left: 10px;
+    color: #fff;
+}
+.reg .label input.radio{width: 16px;height: 16px;margin: 8px 5px;}
+.reg .label .projectpos{position: absolute;width: 200px;height: 150px;z-index: 100;background: #fff;overflow-y: scroll;top: 40px;left: 84px;display: none;}
+.reg .label .projectpos li{line-height: 25px;font-size: 14px;color: #333;text-indent: 5px;}
+.reg .label .projectpos li:hover{background:#3696E0 ;}
+/*.uoload button{width: 80px;line-height: 30px;margin: 0 30px;}*/
+.reg .submit{margin-top: 20px}
+.reg .submit button{width: 80%;line-height: 30px;background: #075A8F;border: 0;border-radius:4px;color: #fff;font-size: 16px;margin: 0 auto;display: block;}
+.min40{width: 30% !important;}
+.ml20{margin-left: 20px;}
+.reg .goback{text-indent: 25px;line-height: 75px;font-size: 14px;color: #075A8F;}
+.reg .goback span{cursor: pointer;padding: 5px 20px;}
+.reg .submit .err{display: block;text-align: center;color: red;font-size: 12px;display: none;}
+.reg .add{position: absolute;left: 430px;top: 288px;}
+.reg .add button{width: 80px;line-height: 22px;background: #075A8F;border: 0;border-radius:4px;color: #fff;font-size: 12px;}
+.postre{position: relative;}
+.project{position: absolute;left: 80px;top: 42px;box-shadow:0px 6px 18px 0px rgba(33,53,82,0.14);border-radius: 6px;
+width: 230px;height: 100px;background:rgba(248,248,248,1);overflow-y: scroll;font-size: 14px;background: #fff;z-index: 200;}
+.reg .label .project p span{margin: 0 5px;font-size: 14px;width: 50px !important;line-height: 22px;background: #f46322;
+border-radius: 5px;color: #fff;text-align: center;cursor: pointer;}
+.project li{float: left;width: 45%;line-height: 24px;box-sizing: border-box;margin: 3px 2%;
+cursor: pointer;text-align: center;font-size: 12px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.project li.actives{color: #0675BC;border-radius: 5px;}
+.reg .label input.active{border: 1px solid #DD6B4D !important;}
+.reg span.remove1{width: 20px;margin-left: 15px;height: 20px;margin-top: 10px;background: url('../img/remove.png');}
+.center{text-align: center;color: #666;font-size: 14px;margin-top: 10px;}
+.center a{color: #666;}
+.err{
+    width:350px;
+    height:11px;
+    font-size:12px;
+    font-family:MicrosoftYaHei;
+    color:rgba(255,33,33,1);
+    transform:scale(.9);
+    display: none;
+	text-align: center;
+}
+.sub{
+    width:286px;
+    height:40px;
+    background:#0675bc;
+    border-radius:4px;
+    border: none;
+    margin-top: 15px;
+    margin-left: 30px;
+    font-size:15px;
+    font-family:MicrosoftYaHei;
+    color:rgba(255,255,255,1);
+    
+    cursor: pointer;
+	outline: none;
+} 
+
+
+
+/* 注册 he */
+
+.contentbox{width:300px;margin:0 auto;margin-top: 67px;}
+.contentbox h3{font-size: 22px;color: #333333;margin: 0 auto;text-align: center;}
+.unit h4{width:120px;height:15px;font-size:14px;color:#333333;margin-top:45px;}
+.unit span{display: inline-block;margin-top: 38px;}
+/* .unit .com {width:108px;height:108px;background:#0675bc;color:#fff;border-radius:4px;text-align: center;line-height:108px;margin-right:70px;} */
+.unit .obj,.unit .obj1{width:108px;height:108px;border:1px solid #cccccc;border-radius:4px;text-align: center;line-height:108px;cursor: pointer;}
+/* .unit .obj1:hover{background: #f46322;color: #fff;border: 1px solid #f46322;}
+.unit .obj:hover{background: #0675bc;color: #fff;border: 1px solid #0675bc;} */
+.unit .act{background: #0675bc;color: #fff;border: 1px solid #0675bc;}
+.unit .act1{background: #f46322;color: #fff;border: 1px solid #f46322;}
+.account{margin-top: 30px;}
+.account p {lin-height:28px;font-size:14px;font-size:14px;}
+.account p a{text-decoration: none;}
+
+.registMes{width: 340px;margin: 47px auto;}
+.writeMes{width:108px;font-size:18px;font-weight:bold;color:#333333;}
+.personalMes{width: 100%;}
+.passwordMes{width: 100%;}
+.passwordMes p{margin-left: 43px;margin-bottom: 12px;}
+.personalMes p,.personalMes label.postre{margin-left: 43px;margin-bottom: 12px;display: block;}
+.personalMes p input[type=radio]{margin-right: 10px;}
+.person{font-size:16px;color:#666666;margin-top: 30px;border-left: 5px solid #0675bc;text-indent: 10px;line-height: 16px;}
+.passwordSet{font-size:16px;color:#666666;border-left: 5px solid #0675bc;text-indent: 10px;line-height: 16px;}
+.sameSpan{display: inline-block;width: 71px;height: 30px;line-height: 30px;font-size: 14px;text-align: right;}
+.sameInput{width:214px;height:30px;border:1px solid #e6e6e6;border-radius:2px;text-indent: 3px;font-size: 12px;}
+.sameSelect{width:216px;height:32px;border:1px solid #e6e6e6;border-radius:2px;font-size: 12px;text-indent: 3px;}
+.deny{margin-left: 20px;}
+.mobile{width:98px;height:30px;border:1px solid #e6e6e6;border-radius:2px;text-indent: 3px;}
+.gettest{width:110px;height:30px;background:#0675bc;border-radius:2px;font-size: 14px;color: #fff;border: none;margin-left: 5px;cursor: pointer;text-align: center;}
+.finish{width:286px;height:35px;background:#0675bc;border-radius:4px;margin-left: 43px;border: none;font-size: 16px;color: #fff;margin-top: 20px;cursor: pointer;}
+.backLogin{width: 100%;margin-top: 12px;padding-bottom: 50px;}
+.back1{width:75px;height:13px;font-size:14px;opacity:0.9;margin-left: 43px;float: left;}
+.back1 a{color:#0675bc;}
+.gotoLogin{width: 122px;height: 12px;font-size:14px;float: right;}
+
+/* 弹层 项目部列表 */
+.postre .projectpos{position: absolute;width: 450px;height: 250px;z-index: 100;background: #fff;overflow: scroll;top: 32px;left: 78px;}
+.postre .projectpos li{line-height: 25px;font-size: 14px;color: #333;text-indent: 5px;width: 760px;}
+.postre .projectpos li:hover{background:#3696E0 ;}
+
+.errl{padding: 0;font-size: 12px;color: red;margin: 0 !important;text-align: center;}

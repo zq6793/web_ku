@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>劳务队编辑</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/index.css" />
+	</head>
+	<body>
+
+		<!-- right -->
+		<div class="rightBox">
+
+			<!-- <div class="nav clearfix">
+				<span style="float: left;">当前所在位置：劳务队></span><span class="pointer fl" style="width: 120px;">劳务队编辑</span>	
+			</div> -->
+			
+			<!-- 修改 -->
+			<div class="mod">
+				
+				<form class="clearfix">
+					<label class="fl">公司名称：</label>
+					<input class="fl" type="text" value="" style="width: 90%;" autocomplete="off" id="teamName" />
+					<label class="fl">法定代表人：</label>
+					<label class="fl">合同签订人：</label>
+					<input class="fl" type="text" value="" autocomplete="off" id="name" />
+					<input class="fl ml10" type="text" value="" autocomplete="off" id="pname" />
+
+					<hr style="width: 100%;height: 0;float: left;border: 0;padding: 5px 0;">
+					<label class="fl clearfix"><span class="fl">劳务队负责人：</span><span class="helpFont fl" id="helpFont" title="点击查看说明及帮助" ></span></label>
+					<label class="fl">劳务队负责人电话：</label>
+					<input class="fl" type="text" value="" autocomplete="off" id="contractor" />
+					<input class="fl ml10" type="text" value="" autocomplete="off" id="phone" />
+					<!-- 帮助说明 -->
+					<div id="helpContext" class="helpContext fl" style="width: 100%">
+						<p>劳务队负责人俗称“老板”，所有评价的信息及提取的身份证号都是这个人。</p>
+					</div>
+					<label class="fl">劳务队负责人身份证号：</label>
+					<input class="fl" type="text" value="" style="width: 90%;" autocomplete="off" id="idCar" />
+					
+					<hr style="width: 100%;height: 0;float: left;border: 0;padding: 5px 0;">
+					<label class="fl" style="width: 100%;" id="state">入场时间：</label>
+					<label class="fl" style="display: none;" id="end">退场时间：</label>
+					<input class="fl" type="text" value="" autocomplete="off" id="starttime" />
+					<input class="fl ml10" type="text" value="" autocomplete="off" id="endtime" style="display: none;" />
+					<!-- <label class="fl">劳务队人数：</label>
+					<label class="fl">劳务队年限：</label>
+					<input class="fl" type="number" value="" autocomplete="off" id="number"/>
+					<input class="fl ml10" type="number" value="" autocomplete="off" id="year"/> -->
+
+					<span class="fl err"></span>
+
+				</form>
+				<a href="index.html" class="getback btnBlue inline-block">返 回</a>
+				<button type="button" class="pointer btnBlue" id="submit">保 存</button>
+			</div>
+			<input type="hidden" value="" id="operator_id">
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script src="../static/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var ctid = DX.getParam('ctid'); //修改和新建的依据
+		if (ctid != null) {
+			$('#state').css('width', '50%');
+			$('#end').css('display', 'block');
+			$('#endtime').css('display', 'block');
+			DX.ajax_method({
+				'type': 'GET',
+				'url': '/eva/eva/findById',
+				'param': {
+					'ctid': ctid
+				},
+				'callBack': callBack
+			})
+		}else{
+			var endTime = laydate.render({
+				elem: '#endtime',
+				min: $("#starttime").val(), //可选择的最小日期为开始日期
+			});
+		}
+
+		// 时间选择器
+		var startTime = laydate.render({
+			elem: '#starttime',
+			// type: 'datetime',
+			done: function(value, date, endDate) {
+				endTime.config.min = {
+					year: date.year,
+					month: date.month - 1, //重点！！！
+					date: date.date,
+					hours: date.hours,
+					minutes: date.minutes,
+					seconds: date.seconds
+				};
+			        
+				var stime = new Date(Date.parse(value.replace("-", "/")));
+				var etime = new Date(Date.parse($("#endtime").val().replace("-", "/")));
+				if (stime > etime) { //开始时间若大于结束时间，则把开始时间的日期回填到结束时间 
+					$("#endtime").val(value);
+				}
+			
+			},
+	
+		});
+		
+		// var a = $("#starttime").val();
+		
+
+		// 验证身份证号
+		$('#idCar').blur(function() {
+
+			if (ctid == null) {
+				verIdCar($(this).val());
+			}
+
+		})
+		// 回调函数
+		function callBack(res) {
+			if (res.code == '200') {
+				if (res.data.isUpdate == 'false') {
+					$('#idCar').prop('readonly', true);
+					$('#idCar').css('background', '#ccc');
+				}
+				$('#operator_id').val(res.data.list.operator_id)
+				$('#teamName').val(res.data.list.team_name);
+				$('#name').val(res.data.list.principal);
+				$('#phone').val(res.data.list.principal_phone);
+				$('#idCar').val(res.data.list.cardid);
+				// $('#number').val(res.data.people_size);
+				// $('#year').val(res.data.team_year);
+				$('#contractor').val(res.data.list.contractor);
+				$('#starttime').val(res.data.list.approach_time);
+				$('#endtime').val(res.data.list.out_of_time);
+				$("#pname").val(res.data.list.principaltwo);
+				
+				var endTime = laydate.render({
+					elem: '#endtime',
+					min: $("#starttime").val(), //可选择的最小日期为开始日期
+				});	
+			}
+		}
+		// 提交
+		$('#submit').click(function() {
+			$('.err').hide();
+			var obj = getInput();
+			console.log(obj);
+			var that = $(this);
+			if (obj == undefined) return;
+			var endtime = $('#endtime').val();
+			// console.log(ctid);
+			var url = '/eva/eva/insert';
+			if (ctid != null) {
+				obj.ctid = ctid;
+				url = '/eva/eva/update';
+				obj.out_of_time = endtime;
+			}
+			
+			obj.operator_id = $('#operator_id').val();
+
+			DX.ajax_method({
+				'type': 'POST',
+				'url': url,
+				'param': obj,
+				'change':that[0],
+				'callBack': function(res) {
+					if (res.code == '200') {
+						window.location.href = 'index.html';
+					} else {
+						$('.err').show();
+						$('.err').html(res.msg);
+					}
+				}
+			})
+		})
+
+		// 获取input的值
+		function getInput() {
+			var cardid = $('#idCar').val();
+			if (cardid == '') {
+				$('.err').show();
+				$('.err').html('请输入身份证号');
+				return;
+			}
+
+			var read = $('#idCar').prop('readonly');
+			console.log(read);
+			if (!read) {
+				var isC = DX.verIdCard(cardid);
+				if (!isC) {
+					$('.err').show().text('请输入正确的身份证号');
+					return;
+				}
+			}
+
+
+			var principaltwo = $('#pname').val();
+			var isNp = DX.isNull(principaltwo);
+			if (isNp) {
+				$('.err').show().text('合同签订人不能为空');
+				return;
+			}
+
+			var startTime = $('#starttime').val();
+			var isstarttime = DX.isNull(startTime);
+			if (isstarttime) {
+				$('.err').show();
+				$('.err').html('请选择入场时间');
+				return;
+			}
+
+			var team_name = $('#teamName').val();
+			var isteam_name = DX.isNull(team_name);
+			if (isteam_name) {
+				$('.err').show();
+				$('.err').html('劳务队名称不能为空');
+				return;
+			}
+			var isStr = DX.checkStr(team_name);
+			if (isStr) {
+				$('.err').show();
+				$('.err').html('公司名称不能有特殊字符');
+				return;
+			}
+			var principal = $('#name').val();
+			var isprincipal = DX.isNull(principal);
+			if (isprincipal) {
+				$('.err').show();
+				$('.err').html('法定代表人不能为空');
+				return;
+			}
+			var principal_phone = $('#phone').val();
+			var isprincipal_phone = DX.isNull(principal_phone);
+			if (isprincipal_phone) {
+				$('.err').show();
+				$('.err').html('法定代表人电话不能为空');
+				return;
+			}
+			var isphone = DX.verPhone(principal_phone);
+			if (!isphone) {
+				$('.err').show();
+				$('.err').html('请输入手机号');
+				return;
+			}
+
+			var contractor = $('#contractor').val();
+			var iscontractor = DX.isNull(contractor);
+			if (iscontractor) {
+				$('.err').show();
+				$('.err').html('劳务队负责人不能为空');
+				return;
+			}
+			return obj = {
+				'team_name': team_name,
+				'principal': principal,
+				'principal_phone': principal_phone,
+				'contractor': contractor,
+				'cardid': cardid,
+				'approach_time': startTime,
+				'principaltwo': principaltwo
+			};
+		}
+	})
+	/* 
+	 *验证身份证号，保证库里的唯一性
+	 */
+	function verIdCar(value) {
+		$('.err').hide();
+		var isC = DX.verIdCard(value);
+		var read = $('#idCar').prop('readonly');
+		console.log(read);
+		if (read) return;
+		// 		if (isC) {
+		// 			DX.ajax_method({
+		// 				'type': 'GET',
+		// 				'url': '/eva/eva/isInsertByCardId',
+		// 				'param': {
+		// 					'cardid': value
+		// 				},
+		// 				'callBack': function(res) {
+		// 					if (res.code != '200') {
+		// 						$('.err').show().text(res.msg);
+		// 						// $('#idCar').val('');
+		// 					}
+		// 
+		// 				}
+		// 			});
+		// 
+		// 		} else {
+		// 			$('.err').show().text('请输入正确的身份证号');
+		// 			// $('#idCar').val('');
+		// 		}
+
+		if (!isC) {
+			$('.err').show().text('请输入正确的身份证号');
+		}
+	}
+</script>

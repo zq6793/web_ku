@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>物资类别</title>
+	<link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+	<link rel="stylesheet" type="text/css" href="../static/css/parameter.css" />
+</head>
+<body>
+    <div class="rightBox" id="contact">
+		<nav class="nav clearfix">
+			<li @click="toUrl">项目部分划分</li>
+			<li class="active">物资类别</li>
+		</nav>
+		<div class="contant clearfix" >
+			<div class="cont_left fl">
+				<h3>物资类别</h3>
+				<p class="add" id="addClass" >新增类别</p>
+				<ul class="list" id="leftL">
+					<li v-for="val,index in leftList" :key="index"  :class="{'active':val.active}" @click="check(index)">{{val.name}}</li>
+							
+				</ul>
+				<!-- 新增大类 -->
+				<div class="showNewRole none"  id="bigClass">
+				    <p>
+				        <span>大类名称:</span>
+				        <input type="text" class="writeIn" placeholder="大类名称" v-model="typeName">
+				    </p>
+					
+				    <p style="float:right;">
+				        <button type="button" class="noBtn">取 消</button>
+				        <button type="button" class="saveBtn" @click="subType($event)">保 存</button>
+				    </p>
+				    
+				</div>
+			</div>
+			<!-- right -->
+			<div class="cont_right fr">
+				<div class="right_top clearfix">
+					<p class="fl btn" id="addMaterial">添加物资</p>
+					<!-- <p class="fl" style="margin-left: 30px;">批量移除</p> -->
+					<span class="err fl">11</span>
+					
+					<!-- 新增物资类别 -->
+					<div class="showNewRole none" style="left: 0;" id="material">
+					    <p>
+					        <span>材料名称:</span>
+					        <input type="text" class="writeIn" placeholder="物资类别" v-model="type">
+					    </p>
+						<p>
+						    <span>选择分类:</span>
+						    <select id="" class="choosePart" v-model="sort">
+						        <option value="A">A类</option>
+								<option value="B">B类</option>
+								<option value="C">C类</option>
+						    </select>
+						</p>
+						 <p>
+						    <span>计量单位:</span>
+						   <input type="text" class="writeIn" placeholder="计量单位" v-model="unit">
+						</p>
+						
+					    <p style="float:right;">
+					        <button type="button" class="noBtn">取 消</button>
+					        <button type="button" class="saveBtn" @click="addMaterial($event)">保 存</button>
+					    </p>
+					    
+					</div>
+				</div>
+				<div class="list_wuzi">
+					<ul class="clearfix">
+						<h4 style="text-align: center;">材料名称</h4>
+						<li v-for="value,index in rigtList">{{value.name}} <em style="font-size: 12px;"> ({{value.classify}}类- {{value.unit}})</em> <span @click="del(index)"></span></li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="../../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#contact',
+		mounted:function(){
+			this.getLeft();
+		},
+		data:{
+			'leftList':[],//左边菜单栏
+			'rigtList':[],//右边查询结果列表
+			'leftId':'',//左侧菜单选中id
+			'typeName':'',//大类名称
+			'sort':'A',//分类
+			'type':'',//物资类别
+			'unit':'',//计量单位
+		},
+		methods:{
+			getLeft:function(){//获取左边列表
+				var $this = this;
+				DX.ajax_method({
+					'type':'GET',
+					'url':'/materials/supply/product/findProductType',
+					'param':{},
+					'callBack':function(res){
+						console.log(res);
+						if(res.code == '200'){
+							$this.leftList = res.data;
+							$this.selectFirst();
+						}
+					}
+				});
+			},
+			selectFirst:function(){//默认第一个选中
+				this.leftList[0].active = true;
+				this.selectRight(this.leftList[0].id);
+				this.leftId = this.leftList[0].id;
+			},
+			check:function(b){//点击left菜单栏
+				var $this = this;
+				console.log(b);
+				for(var i = 0;i < $this.leftList.length;i++){
+					$this.leftList[i].active = false;
+				}
+				$this.leftList[b].active = true;
+				var tmp = $this.leftList;
+				$this.leftList = [];
+				$this.leftList = tmp;
+				
+				this.selectRight($this.leftList[b].id);
+				this.leftId = $this.leftList[b].id;
+			},
+			selectRight:function(id){//调用物资列表数据
+				var $this = this;
+				DX.ajax_method({
+					'url':'/materials/supply/product/findAllProduct',
+					'type':'GET',
+					'param':{'tid':id},
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$this.rigtList = res.data;
+						}
+					}
+				});
+			},
+			subType:function(values){//新增大类
+			
+				$('.err').hide();
+				var $this = this;
+				var name = this.typeName
+				var isName =DX.isNull(name);
+				if(isName){
+					$('.err').show().text('大类名称不能为空');return;
+				}
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/materials/supply/product/addProductType',
+					'param':{'name':name},
+					'change':values.target,
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$('#bigClass').addClass('none');
+							$this.getLeft();
+							// location.reload();
+						}
+					}
+				})
+				
+			},
+			addMaterial:function(value){//添加物资
+				
+				var $this = this;
+				var name = this.type;
+				var isName =DX.isNull(name);
+				if(isName){
+					$('.err').show().text('物资类别不能为空');return;
+				}
+				var unit = this.unit;
+				var isUnit =DX.isNull(unit);
+				if(isUnit){
+					$('.err').show().text('计量单位不能为空');return;
+				}
+				var id = this.leftId;
+				var sort = this.sort;
+				console.log({'name':name,'unit':unit,'tid':id,'classify':sort});
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/materials/supply/product/addProduct',
+					'param':{'name':name,'unit':unit,'tid':id,'classify':sort},
+					'change':value.target,
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);
+							$('#material').addClass('none');
+							$this.selectRight($this.leftId);
+						}
+					}
+				})
+			},
+			toUrl:function(){
+				var val = 'parameter.html';				
+				
+				window.location.href = val;
+			},
+			del:function(index,value){
+				var $this = this;
+				var id = $this.rigtList[index].id
+				var lid = $this.leftId;
+				var value = confirm('确认删除');
+				if(value){
+					DX.ajax_method({
+						'type':'POST',
+						'param':{'id':id},
+						'url':'/materials/supply/product/delete',
+						'change':value.target,
+						'callBack':function (res) {
+							if(res.code == '200'){
+								$this.selectRight(lid);
+							}
+						}
+					})
+				}
+				
+			}
+		}
+	})
+	$(document).ready(function(){
+		
+		//添加大类
+		$('#addClass').click(function(){
+			if($('#bigClass').hasClass('none')){
+				$('#bigClass').removeClass('none');
+			}else{
+				$('#bigClass').addClass('none');
+			}
+		})
+		//添加物资
+		$('#addMaterial').click(function(){
+			if($('#material').hasClass('none')){
+				$('#material').removeClass('none');
+			}else{
+				$('#material').addClass('none');
+			}
+		})
+		//弹层取消
+		$('.noBtn').click(function(){
+			$(this).parents('.showNewRole').addClass('none');
+		})
+	})
+</script>

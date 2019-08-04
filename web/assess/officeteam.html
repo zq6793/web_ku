@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改产值</title>
+</head>
+<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+<!--<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>-->
+<link rel="stylesheet" type="text/css" href="static/css/office.css"/>
+<style>
+    html,body{width: 100%;height: 100%;}
+    .rightBox{width:calc(100% - 60px);margin-left: 30px;}
+    .search{width: calc(100% - 34px);height: 50px;margin-top: 10px;}
+    .tableList{width: 100%;min-height:350px;margin:5px 0 0;}
+    .tableList > #list > thead > tr > th{font-size: 13px;height:32px;}
+    .tableList > #list > tbody > tr > td{font-size: 13px;height:32px;}
+    @media screen and (max-width: 1285px){
+        .isShow{min-width: 1080px !important;}
+    }
+</style>
+<body>
+    <div class="rightBox">
+        <div class="search">
+            <input type="text" placeholder="劳务队负责人，身份证号" class="input" id="condition" style="width: 13%;margin-right: 30px;">
+            <span class="btnBlue refer" style="display: inline-block;">查询</span>
+        </div>
+        <div class="tableList">
+            <table class="table" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">劳务队名称</th>
+                        <th style="width: 25%;">劳务队负责人</th>
+                        <th style="width: 25%;">身份证号</th>
+                        <th style="width: 20%;">入公司时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+    <!--                <tr>-->
+    <!--                    <td></td>-->
+    <!--                    <td></td>-->
+    <!--                </tr>-->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 分页 -->
+        <div class="page1">
+
+        </div>
+    </div>
+</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js"></script>
+<!--<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>-->
+<script type="text/javascript">
+$(document).ready(function(){
+    // 分页
+    var condition = $('#condition').val();
+    pages.init({
+        'key':['condition'],
+        'value':[condition],
+        'url':'/eva/dlc/findAllTeamByOutPut',
+        'callBack':function(res){
+            // console.log(res.data);
+			if(res.code == 200){	
+				randerDetail(res.data);
+			}
+            
+        }
+    })
+
+    //查询
+    $('.refer').click(function(){
+        var condition = $('#condition').val();
+		 pages.init({
+		    'key':['condition'],
+		    'value':[condition],
+		    'url':'/eva/dlc/findAllTeamByOutPut',
+		    'callBack':function(res){
+		        console.log(res.data);
+				if(res.code == 200){
+					randerDetail(res.data);
+				}
+		        
+		    }
+		})
+		
+    })
+	
+	// 回车
+	$('#condition').keydown(function(e){
+		if (event.keyCode == 13){
+			event.returnValue=false;
+			event.cancel = true;
+			$('.refer').trigger('click');
+		}
+	})
+})
+
+    function randerDetail(data){
+        // var data = res.data;
+		console.log(data);
+        var html = '';
+        for(var i= 0;i < data.list.length;i++){
+            var node = data.list[i];
+            html+='<tr>';
+            html+='<td>'+'<span class="listToDetail" id="detailShow" ctid="'+node.ctid+'">'+node.team_name+'</span>'+'</td>';
+            html+='<td>'+node.contractor+'</td>';
+            html+='<td>'+node.cardid+'</td>';
+            html+='<td>'+node.team_year+'</td>';
+            html+='</tr>';
+        }
+        // console.log(html)
+        $('.table tbody').empty().append(html);
+		// tr点击
+        $('.table tbody tr').click(function(){
+            DX.clickTr($(this));
+        })
+		// 点击详情
+		$('.listToDetail').click(function(){
+            var obj = $(this);
+			var ctid = $(this).attr('ctid');
+            if($(this).parents().parents('tr').next('td').hasClass('isShow')){
+                $(this).parents().parents('tr').next().children('div').slideUp('normal',function(){
+                    obj.parents().parents('tr').next().remove();
+                });
+
+            }else{
+                callDeatil($(this),ctid);
+            }
+
+		})
+    }
+	
+	// 渲染喊数 详情
+	function callDeatil(objs,ctid){
+        var that = this;
+		DX.ajax_method({
+			'url':"/eva/dlc/findTeamAllOutput",
+			'param':{'id':ctid},
+			'callBack':function(res){
+                console.log(res);
+                // 渲染
+                var html = '<td colspan="4" class="isShow" style="border: 1px solid #e3e3e3;padding:10px;">';
+                if(res.code == 200){
+                    html+='<div  style="width: 100%;">'
+
+                    $.each(res.data,function (i,val) {
+						html+='<ul class="clearfix">';
+                        html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                        html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">年份：</span>';
+                        html+='<select name="" id="" class="select year" style="width: 100px;" disabled="disabled" value="'+val.year+'">';
+                        html+='<option value="'+val.year+'">'+val.year+'</option><option value="">2019</option><option value="">2018</option><option value="">2017</option><option value="">2016</option><option value="">2015</option>';
+                        html+='<option value="">2014</option><option value="">2013</option>\<option value="">2012</option>\<option value="">2011</option>\<option value="">2010</option>';
+                        html+='<option value="">2009</option>\<option value="">2008</option>\<option value="">2007</option>\<option value="">2006</option>\<option value="">2005</option>';
+                        html+='<option value="">2004</option><option value="">2003</option><option value="">2002</option><option value="">2001</option><option value="">2000</option></select>';
+                        html+='</p>';
+                        html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                        html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">一季度产值：</span><input type="text" class="input quarter1" style="width: 100px;" value="'+val.quarter1+'">';
+                        html+='</p>';
+                        html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                        html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">二季度产值：</span><input type="text" class="input quarter2" style="width: 100px;" value="'+val.quarter2+'">';
+                        html+='</p>';
+                        html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                        html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">三季度产值：</span><input type="text" class="input quarter3" style="width: 100px;" value="'+val.quarter3+'">';
+                        html+='</p>';
+                        html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                        html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">四季度产值：</span><input type="text" class="input quarter4" style="width: 100px;" value="'+val.quarter4+'">';
+                        html+='</p>';
+                        html+='<p class="fl" style="height: 32px; padding-top: 10px;padding-left: 10px;">';
+                        html+='<span class="listToDetail mod" style="line-height: 32px;margin-right: 15px;" oid="'+val.oid+'">修改</span>';
+                        html+='<span class="listToDetail del">删除</span>';
+                        html+='</p>';
+						html+='</ul>';
+                    })
+                    html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                    html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">年份：</span>';
+                    html+='<select name="" id="" class="select addyear" style="width: 100px;" value="">';
+                    html+='<option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option>';
+                    html+='<option value="2014">2014</option><option value="2013">2013</option>\<option value="2012">2012</option>\<option value="2011">2011</option>\<option value="2010">2010</option>';
+                    html+='<option value="2009">2009</option>\<option value="2008">2008</option>\<option value="2007">2007</option>\<option value="2006">2006</option>\<option value="2005">2005</option>';
+                    html+='<option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option></select>';
+                    html+='</p>';
+                    html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                    html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">一季度产值：</span><input type="text" class="input addquarter1" style="width: 100px;" value="">';
+                    html+='</p>';
+                    html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                    html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">二季度产值：</span><input type="text" class="input addquarter2" style="width: 100px;" value="">';
+                    html+='</p>';
+                    html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                    html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">三季度产值：</span><input type="text" class="input addquarter3" style="width: 100px;" value="">';
+                    html+='</p>';
+                    html+='<p class="fl" style="height: 32px; padding-top: 10px;">';
+                    html+='<span style="display: inline-block;height: 32px;padding-left:20px;line-height: 32px;text-align: left;">四季度产值：</span><input type="text" class="input addquarter4" style="width: 100px;" value="">';
+                    html+='</p>';
+                    html+='<p class="fl" style="height: 32px; padding-top: 10px;padding-left: 10px;">';
+                    html+='<span class="listToDetail add" style="line-height: 32px;margin-right: 15px;" tid="'+res.data.tid+'">新增</span>';
+                    html+='</p>';
+                    html+='</div>'
+				}
+                html+='</td>';
+                // console.log(html)
+				objs.parents('tr').next('.isShow').remove();
+                objs.parents('tr').after(html);
+                // objs.parents('tr').next('td').children('div').slideDown();
+				// 删除
+                $('.del').click(function(){
+                    var _that = $(this).parents('td').prev('tr').find('span').attr('ctid');
+                    var that = $(this).parents('td').prev('tr').find('span');
+                    var oid = $(this).siblings().attr('oid');
+                    var obj = $(this);
+                    DX.ajax_method({
+                        'type':'GET',
+                        'param':{'id':oid},
+                        'url':"/eva/dlc/deleteTeamByOutPut",
+                        'callBack':function(res){
+                            if(res.code==200){
+                                // 刷新 加载
+                                var ctid = _that;
+                                // callDeatil(that,ctid);
+								obj.parents('ul').remove();
+                            }
+                        }
+                    })
+                })
+
+                //添加
+                $('.add').click(function(){
+                    // var tid,year,quarter1,quarter2,quarter3,quarter4;
+                   
+                    var year = $(this).parent().siblings().find('.addyear').val();
+                    var quarter1 = $(this).parent().siblings().find('.addquarter1').val();
+                    var quarter2 = $(this).parent().siblings().find('.addquarter2').val();
+                    var quarter3 = $(this).parent().siblings().find('.addquarter3').val();
+                    var quarter4 = $(this).parent().siblings().find('.addquarter4').val();
+					
+					var isNull1 = DX.isNull(quarter1);
+					if(!isNull1){
+						var isquarter1 = DX.floatTwo(quarter1);
+						if(!isquarter1){
+							alert("一季度产值必须为非负数");return;
+						}
+					}
+						
+					var isNull2 = DX.isNull(quarter2);
+					if(!isNull2){
+						var isquarter2 = DX.floatTwo(quarter2);
+						if(!isquarter2){
+							alert("二季度产值必须为非负数");return;
+						}
+					}	
+					var isNull3 = DX.isNull(quarter3);
+					if(!isNull3){
+						var isquarter3 = DX.floatTwo(quarter3);
+						if(!isquarter3){
+							alert("三季度产值必须为非负数");return;
+						}
+					}	
+					var isNull4 = DX.isNull(quarter4);
+					if(!isNull4){
+						var isquarter4 = DX.floatTwo(quarter4);
+						if(!isquarter4){
+							alert("四季度产值必须为非负数");return;
+						}
+					}
+					
+					
+					var ctid = $(this).parents('td').prev('tr').find('span').attr('ctid');
+					var obj = $(this).parents('td').prev('tr').find('span');
+                    DX.ajax_method({
+                        'type':'POST',
+                        'param':{'tid':ctid,'year':year,'quarter1':quarter1,'quarter2':quarter2,'quarter3':quarter3,'quarter4':quarter4},
+                        'url':"/eva/dlc/insertOutPut",
+                        'callBack':function(res){
+                            if(res.code==200){
+                                // 刷新 加载
+                                
+                                callDeatil(obj,ctid);
+                            }else{
+								alert(res.msg);
+							}
+                        }
+                    })
+                })
+				// 修改
+				$('.mod').click(function(){
+					// var oid,year,quarter1,quarter2,quarter3,quarter4;
+					var year = $(this).parent().siblings().find('.select').val();
+					var quarter1 = $(this).parent().siblings().find('.quarter1').val();
+					var quarter2 = $(this).parent().siblings().find('.quarter2').val();
+					var quarter3 = $(this).parent().siblings().find('.quarter3').val();
+					var quarter4 = $(this).parent().siblings().find('.quarter4').val();
+					var oid = $(this).attr('oid');
+					
+					var isNull1 = DX.isNull(quarter1);
+					if(!isNull1){
+						var isquarter1 = DX.floatTwo(quarter1);
+						if(!isquarter1){
+							alert("一季度产值必须为非负数");return;
+						}
+					}
+						
+					var isNull2 = DX.isNull(quarter2);
+					if(!isNull2){
+						var isquarter2 = DX.floatTwo(quarter2);
+						if(!isquarter2){
+							alert("二季度产值必须为非负数");return;
+						}
+					}	
+					var isNull3 = DX.isNull(quarter3);
+					if(!isNull3){
+						var isquarter3 = DX.floatTwo(quarter3);
+						if(!isquarter3){
+							alert("三季度产值必须为非负数");return;
+						}
+					}	
+					var isNull4 = DX.isNull(quarter4);
+					if(!isNull4){
+						var isquarter4 = DX.floatTwo(quarter4);
+						if(!isquarter4){
+							alert("四季度产值必须为非负数");return;
+						}
+					}
+					var ctid = $(this).parents('td').prev('tr').find('span').attr('ctid');
+					var obj = $(this).parents('td').prev('tr').find('span');
+					DX.ajax_method({
+						'type':'POST',
+						'param':{'oid':oid,'year':year,'quarter1':quarter1,'quarter2':quarter2,'quarter3':quarter3,'quarter4':quarter4},
+						'url':"/eva/dlc/updateOutPut ",
+						'callBack':function(res){
+							if(res.code==200){
+								// 刷新 加载
+								callDeatil(obj,ctid);
+							}else{
+								alert(res.msg);
+							}
+						}
+					})
+				})
+				
+			}
+		})
+	}
+   
+	
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

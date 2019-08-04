@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="static/css/demandManagement.css" />
+	<link rel="stylesheet" href="../static/common.css" />
+	<style>
+		table tbody tr:hover {
+			background-color: #f4fb87;
+		}
+	</style>
+
+	<body>
+		<!--配合比管理-->
+		<div class="rightBox">
+			<div class="demand-head">
+				<label>状态:</label>
+				<select class="choosed-state select">
+					<option>选择需求状态</option>
+				</select>
+				<label>部门:</label>
+				<input class="input-1 input" placeholder="请选择单位工程/分部工程" />
+				<label>检索:</label>
+				<input class="input-1 input" placeholder="请输入技术员/老板姓名/详细部位" />
+				<button type="button" class="btnOrange keep-in-reserve">查询</button>
+				<a href="addDemand.html"><button type="button" class="btnOrange">新增需求</button></a>
+			</div>
+			<table class="table checklist" id="table">
+				<thead>
+					<tr>
+						<th>需求编号</th>
+						<th>施工部位</th>
+						<th>紧急程度</th>
+						<th>设计方量</th>
+						<th>需求方量</th>
+						<th>补方方量</th>
+						<th>强度等级</th>
+						<th>坍落度</th>
+						<th>技术员</th>
+						<th>新增时间</th>
+						<th>状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--<tr class="demand-manage-message">
+						<td>1106</td>
+						<td>白鹿原隧道/ZK57+101-113二村</td>
+						<td>1#砥柱</td>
+						<td>332</td>
+						<td>332</td>
+						<td>0</td>
+						<td>C30</td>
+						<td>C30</td>
+						<td>张三</td>
+						<td>2019/4/5 15:34</td>
+						<td>等待配置配合比</td>
+						<td><span>补方</span><span>修改</span><span class='delete'>删除</span></td>
+					</tr>
+					<tr class="demand-manage-message">
+						<td>1106</td>
+						<td>白鹿原隧道/ZK57+101-113二村</td>
+						<td>1#砥柱</td>
+						<td>332</td>
+						<td>332</td>
+						<td>0</td>
+						<td>C30</td>
+						<td>C30</td>
+						<td>张三</td>
+						<td>2019/4/5 15:34</td>
+						<td>等待配置配合比</td>
+						<td><span>补方</span><span>修改</span><span class='delete'>删除</span></td>
+					</tr>
+					<tr class="demand-manage-message">
+						<td>1106</td>
+						<td>白鹿原隧道/ZK57+101-113二村</td>
+						<td>1#砥柱</td>
+						<td>332</td>
+						<td>332</td>
+						<td>0</td>
+						<td>C30</td>
+						<td>C30</td>
+						<td>张三</td>
+						<td>2019/4/5 15:34</td>
+						<td>等待配置配合比</td>
+						<td><span>补方</span><span>修改</span><span class='delete'>删除</span></td>
+					</tr>
+					<tr class="demand-manage-message">
+						<td>1106</td>
+						<td>白鹿原隧道/ZK57+101-113二村</td>
+						<td>1#砥柱</td>
+						<td>332</td>
+						<td>332</td>
+						<td>0</td>
+						<td>C30</td>
+						<td>C30</td>
+						<td>张三</td>
+						<td>2019/4/5 15:34</td>
+						<td>等待配置配合比</td>
+						<td><span>补方</span><span>修改</span><span class='delete'>删除</span></td>
+					</tr>-->
+					<!--<tr class="slide-content">
+						<td colspan="12">
+							<div class="demand-message">
+								<div class="demand-message-title">
+									<div class="demand-message-title-left"><span>单位名称:<span>中国建筑一公司</span></span>
+									</div>
+									<div class="demand-message-title-right"><span class="mixing-plant">搅拌站信息:</span><input type="checkbox" /><span>咸阳京霸拌合站</span><input type="checkbox" /><span>咸阳京霸拌合站</span></div>
+								</div>
+								<div class="mix-message-title">
+									<div>施工部位</div>
+									<div>混凝土信息</div>
+									<div>浇筑信息</div>
+								</div>
+								<div class="mix-message">
+									<div class="construction-site">
+										<div class="construction-site-left">
+											<span><label>*</label>浇筑部位</span>
+											<select class="select">
+												<option>选择订单类别</option>
+											</select>
+											<span><label>*</label>位置坐标</span><input class="input" placeholder="输入详细施工位置" />
+										</div>
+										<div class="construction-site-left">
+											<span><label>*</label>详细部位</span><input class="input detailed-location" placeholder="输入详细施工位置" />
+											<span><label>*</label>下单员</span><input class="input" placeholder="输入详细施工位置" />
+										</div>
+									</div>
+									
+									<div class="concrete-Information">
+										<div class="construction-site-left">
+											<span><label>*</label>混凝土标号</span>
+											<select class="select">
+												<option>选择混凝土标号</option>
+											</select>
+											<span><label>*</label>计划方量</span><input class="input" placeholder="请输入计划方量" />
+											<span><label></label>坍落度</span><input class="input" placeholder="请输入坍落度" />
+										</div>
+										<div class="construction-site-left">
+											<span><label>*</label>设计方量</span><input class="input detailed-location" placeholder="请输入设计方量" />
+											<span><label></label>环境等级</span><input class="input" placeholder="请输入环境等级" />
+											<span><label></label>里程</span><input class="input" placeholder="请输入里程" />
+										</div>
+									</div>''
+									<div class="pouring-information">
+										<div class="construction-site-left">
+											<span><label>*</label>浇筑方式</span>
+											<select class="select">
+												<option>选择浇筑方式</option>
+											</select>
+											<span><label>*</label>紧急程度</span>
+											<select class="select">
+												<option>选择紧急程度</option>
+											</select>
+											<span><label>*</label>是否计划</span><span style="width: 20px;">是</span><input style="width: 12px;min-width: 12px;" type="checkbox" /><span style="width: 20px;">否</span><input style="width: 12px;min-width: 12px;" type="checkbox" />
+											<span style="text-align: center;"><label>*</label>是否商品</span><span style="width: 20px;">是</span><input style="width: 12px;min-width: 12px;" type="checkbox" /><span style="width: 20px;">否</span><input style="width: 12px;min-width: 12px;" type="checkbox" />
+										</div>
+										<div class="construction-site-left">
+											<span><label>*</label>运输方式</span>
+											<select class="select">
+												<option>选择运输方式</option>
+											</select>
+											<span><label>*</label>预计卸料时间</span>
+											<select class="select">
+												<option>选择卸料时间</option>
+											</select>
+											<span><label>*</label>计划时间</span>
+											<select class="select">
+												<option>选择计划时间</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>-->
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script type="text/javascript" src="../static/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="../static/dx.js"></script>
+	<script src="static/js/demandManagement.js"></script>
+	<script>
+	</script>
+
+</html>

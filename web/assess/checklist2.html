@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<title>信用评价扣分</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+		<style type="text/css">
+			table tbody tr .detailn span{color: red;cursor: pointer;}
+		</style>
+	</head>
+	<body>
+		
+		<!-- right -->
+		<div class="rightBox">
+			
+			<div class="clearfix">
+				
+				<!-- 进入评分 -->
+				<div class="insert clearfix fr" style="margin-right: 34px;">
+					<a href="javascript:void(0)" class="fl btnBlue" id="gotoBack">上一步</a>
+					<a href="javascript:void(0)" class="fl btnBlue" id="gotopf">进入评分</a>
+					
+				</div>
+			</div>
+			<div class="table checklist" id="table">
+				<table>
+					<thead>
+						<tr>
+							
+							<th>序号</th>
+							<th style="width: 15%;">公司名称</th>
+							<th>劳务队负责人</th>
+							<th>身份证号</th>
+							<th>劳务队负责人电话</th>	
+							<th>扣分</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+	
+		<!-- 全局修改 ids -->
+		<input type="hidden" name="" id="allTeamids" value=""  />
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	var ids = DX.getParam('ids');
+	var year = DX.getParam('year');//如果存在 全局修改
+	var years = '';
+	if(year){
+		years = '&year='+year;
+	}
+	
+	
+	$(document).ready(function(){
+		// select();
+		var flag = 1;
+		if(year == null){
+			flag = 0;
+		}
+		// 返回上一步
+		$('#gotoBack').click(function(){
+			window.location.href = 'checklist.html?ids='+ids+years;
+		})
+		
+		// 请求数据
+		DX.ajax_method({
+			'type':'POST',
+			'param':{'ids':ids,'flag':flag},
+			'url':'/eva/dlc/findTeamBycheckedNew',
+			'callBack':select1
+		});
+
+		
+		// 渲染函数
+		function select1(res){
+			if(res.code == '200'){
+				var html = '';
+				console.log(res);
+				$.each(res.data,function(i,val){
+					html += '<tr id="'+val.ctid+'">'
+				
+					html += '<td>'+(i+1)+'</td>';
+					html += '<td>'+val.team_name+'</td>';
+					html += '<td>'+val.contractor+'</td>';
+					html += '<td>'+val.cardid+'</td>';
+					html += '<td>'+val.principal_phone+'</td>';
+					var score = val.score ==0 ? 0 : "-"+val.score;
+					html += '<td class="score">'+score+'</td>';
+					html += '<td class="detailn"><span>扣分明细</span></td>';
+					html += '</tr>';
+				})
+				
+				$('#table table tbody').html(html);
+				
+				$('#table table tbody tr').click(function(){
+					DX.clickTr($(this))
+				})
+				
+				// 查看详情
+				$('.detailn span').click(function(){
+					var that = $(this);
+					if($(this).parents('tr').next().hasClass('tds')){
+						$(this).parents('tr').next().find('iframe').slideUp(500,function(){
+							that.parents('tr').next().remove()
+						})
+						// $(this).parents('tr').next().remove();
+					}else{
+						var tid = $(this).parents('tr').attr('id');
+						$(this).parents('tr').after('<td class="tds" colspan="7" ><iframe src="deduction.html?tid='+tid+years+'" width="100%" height="390px" style="border:0;display:none"></iframe></td>');
+						$(this).parents('tr').next().find('iframe').slideDown(500);
+					}
+				
+				})
+			}
+		}
+		
+		//进入评分
+		$('#gotopf').click(function(){
+
+			window.location.href = 'drap.html?ids='+ids+years;
+
+		})
+	})
+</script>

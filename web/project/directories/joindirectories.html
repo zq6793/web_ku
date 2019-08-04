@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加供应商</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/project.css"/>
+</head>
+<body>
+    <div class="rightBox">
+         <div class="searchsupplier">
+            <span>请根据供应商名称、供应商联系人、联系电话搜索：</span>
+        </div>
+        <div class="searchcolumn">
+            <p class="suppliersearch">
+                <input type="text" placeholder="供应商名称、联系人、联系电话">
+                <button type="button" class="btnBlue" onclick="window.location.href='addsurvey.html'">添加调查</button>
+            </p>
+            <p class="searchback">
+                <span class="none">暂无该供应商，请添加</span>
+            </p>
+        </div>
+    <!-- 公司详细信息 -->
+        <div class="supplierlist">
+            <!-- 需要填写打印的表格 -->
+            <table id="List" cellspacing="0" cellpadding="0">
+                <thead></thead>
+                <tbody>
+                    <!-- 第一行 -->
+                    <tr id="rowHeight">
+                        <td>供方名称</td>
+                        <td>
+                            <input type="text" class="sameInput" placeholder="西安京霸科技有限公司">
+                        </td>
+                        <td>供方性质</td>
+                        <td id="radio">
+                            <label for="sc"><input type="radio" name="dan" id="sc">生产厂家</label>
+                            <label for="lt"><input type="radio" name="dan" id="lt">流通领域</label>
+                        </td>
+                    </tr>
+                    <!-- 第二行 -->
+                    <tr id="rowHeight">
+                        <td>主要产品</td>
+                        <td><input type="text" id="par" class="sameInput" autocomplete="off"></td>
+                        <td>物资类别</td>
+                        <td id="second"></td>
+                    </tr>
+                    <!-- 弹窗 -->
+                    <!-- <div class="openWin">
+                        <ul class="firNav">
+                            
+                        </ul>
+                        <div class="secNav">
+                            
+                        </div>
+                        <button type="button" id="btnS" style="position: absolute;right: 10px;bottom: 10px;">确认</button>
+                    </div> -->
+                        <!-- 部门id -->
+                    <!-- <input type="hidden"  id="parentId" value="" />
+                    <input type="hidden"  id="subId" value="" /> -->
+                    <!-- 第三行 -->
+                    <tr id="rowHeight">
+                        <td>地    址：</td>
+                        <td><input type="text" id="address" class="sameInput"></td>
+                        <td>电话</td>
+                        <td style="min-width:185px;"><input type="text" id="mobile" class="sameInput"></td>
+                    </tr>
+                    <!-- 第四行 -->
+                    <tr id="rowHeight">
+                        <td>供方环境及安全内容</td>
+                        <td colspan="3"> 环境及安全符合国家标准</td>
+                    </tr>
+                    <!-- 第五行 -->
+                    <tr id="rowHeight">
+                        <td>通过何种认证及证书编号</td>
+                        <td colspan="2"><span>编号：</span><input type="text" style="width:92%;" id="approve" class="sameInput"></td>
+                        <td>
+                            <button type="button">预览</button>
+                        </td>
+                    </tr>
+                    <!-- 第六行 -->
+                    <tr id="rowHeight">
+                        <td>营业执照</td>
+                        <td><span>注册号：</span><input type="text" id="businessLicense" style="width:80%;" class="sameInput"></td>
+                        <td><span>有效期：</span> <input type="text" id="businessExpireDate" class="sameInput" autocomplete="off" style="width:80%;"></td>
+                        <td>
+                            <button type="button">预览</button>
+                        </td>
+                    </tr>
+                    <!-- 第七行 -->
+                    <tr id="rowHeight">
+                        <td>生产许可证</td>
+                        <td><span>生产许可证号：</span><input type="text" style="width:70%;" id="productLicence" class="sameInput"></td>
+                        <td><span>有效期：</span><input type="text" id="productExpireDate" class="sameInput" autocomplete="off" style="width:80%;"></td>
+                        <td>
+                            <button type="button">预览</button>
+                        </td>
+                    </tr id="rowHeight">
+                    <!-- 第八行 -->
+                    <tr id="rowHeight">
+                        <td>资信等级</td>
+                        <td class="level" colspan="2" style="text-align:left;">
+                            <label for="aaa"><input type="radio" name="lev" id="aaa">AAA</label>
+                            <label for="aa1"><input type="radio" name="lev" id="aa1">AA+</label>
+                            <label for="aa"><input type="radio" name="lev" id="aa">AA</label>
+                            <label for="aa2"><input type="radio" name="lev" id="aa2">AA-</label>
+                            <label for="a1"><input type="radio" name="lev" id="a1">A+</label>
+                            <label for="a"><input type="radio" name="lev" id="a">A</label>
+                            <label for="a2"><input type="radio" name="lev" id="a2">A-</label>
+                            <label for="bbb"><input type="radio" name="lev" id="bbb">BBB</label>
+                            <label for="bb"><input type="radio" name="lev" id="bb">BB</label>
+                            <label for="b"><input type="radio" name="lev" id="b">B</label>
+                        </td>
+                        <td>
+                            <button type="button">预览</button>
+                        </td>
+                    </tr>
+                    <!-- 第九行 -->
+                    <tr id="rowHeight">
+                        <td>生产能力/销售能力</td>
+                        <td colspan="3"><span>年产量（年销售额）：</span><input type="text"id="produceCapacity" class="sameInput" style="width:86%;"></td>
+                    </tr>
+                    <!-- 第十行 -->
+                    <tr id="rowHeight">
+                        <td>同类产品中的价格比较</td>
+                        <td colspan="3" style="text-align:left;" id="radios">
+                            <label for="high"><input type="radio" name="bet" id="high" class="space">较高</label>
+                            <label for="mid"><input type="radio" name="bet" id="mid" class="space">居中</label>
+                            <label for="low"><input type="radio" name="bet" id="low" class="space">较低</label>
+                        </td>
+                    </tr>
+                    <!-- 第十一行 -->
+                    <tr id="rowHeight">
+                        <td>应急供应能力</td>
+                        <td colspan="3" style="text-align:left;" id="radioTwo">
+                            <label for="strong"><input type="radio" name="beet" id="strong" class="space">较强</label>
+                            <label for="yiban"><input type="radio" name="beet" id="yiban" class="space">一般</label>
+                            <label for="cha"><input type="radio" name="beet" id="cha" class="space">较差</label>
+                        </td>
+                    </tr>
+                    <!-- 第十二行 -->
+                    <tr id="rowHeight">
+                        <td>代办运输能力</td>
+                        <td colspan="3" style="text-align:left;" id="radiosThree">
+                            <label for="have"><input type="radio" name="has" id="have" class="space">有</label>
+                            <label for="nothing"><input type="radio" name="has" id="nothing" class="space">无</label>
+                        </td>
+                    </tr>
+                    <!-- 第十三行 -->
+                    <tr id="rowHeight">
+                        <td>售后服务项目</td>
+                        <td colspan="3">
+                            <input type="text" id="afterSale" class="sameInput">
+                        </td>
+                    </tr>
+                    <!-- 第十四行 -->
+                    <tr id="rowHeight">
+                        <td>其他资料</td>
+                        <td colspan="3">
+                            <input type="text" id="otherInfo" class="sameInput">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

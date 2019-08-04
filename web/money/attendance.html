@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>考勤详情</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+	</head>
+	<body>
+		<div class="attendance" id="addattendance" v-cloak>
+			<div style="margin-bottom: 10px;">
+				<span class="btnOrange inline-block" @click="toUrl">返回</span>
+			</div>
+			<table class="table tableHover">
+				<thead>
+					<tr>
+						<th>姓名</th>
+						<th>出勤天数</th>
+						<th>未出勤天数</th>
+						<th>出勤率</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+			
+				<tbody>
+					<tr v-for="val,index in list">
+						<td>{{val.userName}}</td>
+						<td>{{val.successDays}}</td>
+						<td>{{val.errorDays}}</td>
+						<td>{{val.attendance}}</td>
+						<td><a :href="'modattendance.html?id='+val.id" class="listToDetail">编辑</a><a href="javascript:void(0)" class="listToDetail" @click="delData(index)">删除</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var year = DX.getParam('year') ? DX.getParam('year') :'';
+	var vm = new Vue({
+		el:'#addattendance',
+		mounted:function(){
+			this.getData();
+		},
+		data:{
+			'year':year,//年份
+			'list':[]
+		},
+		methods:{
+			getData:function(){//获取数据
+				var $this = this;
+				DX.ajax_method({
+					'param':{'attendance_year':year},
+					'url':'/finance/att/findAttendanceDetails',
+					'callBack':function(res){
+						if(res.code == 200){
+							console.log(res);
+							$this.list = res.data;
+							clickTr();
+						}
+					}
+				})
+			},
+			delData:function(index){//删除记录
+				var $this = this;
+				var id =this.list[index].id;
+				DX.ajax_method({
+					'type':'POST',
+					'param':{'id':id},
+					'url':'/finance/att/delete',
+					'callBack':function(res){
+						if(res.code == 200){
+							console.log(res);
+							$this.getData();
+						}
+					}
+				})
+			},
+			toUrl:function(){
+				window.location.href='index.html';
+			}
+		}
+	})
+	
+	function clickTr(){
+		setTimeout(function(){
+			$('table tbody tr').click(function(){
+				DX.clickTr($(this));
+			})
+		},100)
+	}
+</script>

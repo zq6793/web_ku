@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加供应商</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/project.css"/>
+</head>
+<style type="text/css">
+    @media screen and (max-width:900px){
+        /* .sameAddInput,.sameEntInput{width: 239px;} */
+        .sameAddSelect{width: 243px;}
+        .addressSuffix{width: 340px;}
+    }
+</style>
+<body>
+    <div class="rightBox">
+        <div class="documentName">供 应 商 信 息 录 入</div>
+        <!-- 基本信息 -->
+        <ul class="entermes" style="margin-top: 20px;">
+            <li class="addheader">请录入供应商信息</li>
+            <li class="basicmes">
+                <span style="color:red;">*</span><span class="sameAddSpan">供应商名称：</span><input type="text" class="sameAddInput name">
+                <span style="color:red;margin-left:40px;">*</span><span class="sameAddSpan">供方性质：</span><select name="" id="" class="sameAddInput sameAddSelect type">
+                    <option value="0">生产厂家</option>
+                    <option value="1">流通领域</option>
+                </select>
+            </li>
+            <li>
+                <span style="color:red;margin-left: 7px;" class="star"></span><span class="sameAddSpan">营业执照号：</span><input type="text" class="sameAddInput businessLicense ">
+                <span style="color:red;margin-left:47px;" class="star starmoney"></span><span class="sameAddSpan">注册资金：</span><input type="text" class="sameAddInput businessRegisterMoney"><span style="line-height: 40px;font-size: 14px;">(万元)</span>
+            </li>
+            <li>
+                <span style="color:red;margin-left: 7px;" class="star"></span><span class="sameAddSpan">营业执照地址：</span><input type="text" id="addressPrefix" readonly="readonly" class="sameAddInput" style="width:144.5px;margin-right:10px;">
+                <input type="text" class="sameAddInput addressSuffix"><span id="remark" style="font-size: 14px;font-weight:600;margin-left:20px;color:#1296db;"></span>
+            </li>
+            <li style="height: 40px;">
+                <span style="color:red;margin-left: 7px;margin-top:7px;" class="star fl"></span><span id="longTimeDate" class="sameAddSpan fl" style="margin-left: 5px;">到期日期：</span>
+                <label for="long1" style="font-size: 14px;margin-top: 9px;margin-right: 20px;" class="fl"><input type="radio" name="longTime" id="long1" class="fl" style="margin-top: 4px;margin-right: 5px;">长期</label>
+                <label for="long2" style="font-size: 14px;margin-top: 9px;" class="fl"><input type="radio" name="longTime" id="long2" class="fl" style="margin-top: 4px;margin-right: 5px;" checked>非长期</label>
+                <input type="text" id="busLongTime" class="sameAddInput businessExpireDate fl" style="margin-top: 5px;margin-left: 37px;">
+            </li>
+            <li style="height:40px;position: relative;">
+                <span style="color:red;margin-left: 7px;" class="star"></span><span class="sameAddSpan">证书文件：</span>
+                <input type="file" name="" id="busupload" class="uploadInput none">
+                <button type="button" class="busup">上传文件</button>
+                <input type="text" id="bus" disabled="disabled" style="border:none;outline: none;background: none;margin-left: 70px;" autocomplete="off">
+                <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top: 12px;left: 224px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                <span style="width: 92px;position: absolute;top:11px;left: 243px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+            </li>
+            <div class="orsurvey" style="border-bottom:1px solid #e3e3e3;padding-bottom:30px;margin-top: 20px;color: #1296db;font-size: 14px;font-weight: 600;">
+                <label for="or"><input type="checkbox" name="" id="or" class="ltinput">是否添加调查评价</label>
+            </div>
+        </ul>
+        <!-- 上传资料 -->
+        <ul class="surveyshow none" style="width:52%;;min-width: 960px;">
+            <li class="addheader">上传相关资料</li>
+            <li>
+                <div>
+                    <p class="leftHeader">通过何种方式认证及认证编号</p>
+                    <p style="font-size: 14px;">
+                        <span style="color:red">*</span><span class="sameAddSpan" >认证方式：</span>
+                        <label for="a1"><input type="checkbox" value="1" name="appro" id="a1" style="position: relative;top: 2px;margin-right: 5px;">质量管理体系认证</label>
+                        <label for="a2" style="margin-left: 20px;"><input type="checkbox" value="2" name="appro" id="a2" style="position: relative;top: 2px;margin-right: 5px;">安全管理体系认证</label>
+                        <label for="a3" style="margin-left: 20px;"><input type="checkbox" value="3" name="appro" id="a3" style="position: relative;top: 2px;margin-right: 5px;">环境管理体系认证</label>
+                        <label for="a4" style="margin-left: 20px;"><input type="checkbox" value="4" name="appro" id="a4" style="position: relative;top: 2px;margin-right: 5px;">职业健康安全管理体系认证</label>
+                    </p>
+                    <p class="qualityUp none" style="position: relative;">
+                        <span style="color:red">*</span><span class="sameAddSpan" style="min-width: 155px;">质量管理体系认证编号：</span>
+                        <input type="text" class="quaapprove_no sameEntInput">
+                        <input type="file" name="" id="quaautupload" class="uploadInput none">
+                        <span style="color:red;margin-left: 40px;">*</span><button type="button" class="quaautup autup">上传文件</button>
+                        <input type="text" id="quaaut" disabled="disabled" style="border:none;outline: none; background: none;margin-left: 70px;" autocomplete="off">
+                        <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top: 12px;right:328px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                        <span style="width: 92px;position: absolute;top:11px;right: 233px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+                    </p>
+                    <p class="safetyUp none" style="position: relative;">
+                        <span style="color:red">*</span><span class="sameAddSpan" style="min-width: 155px;">安全管理体系认证编号：</span>
+                        <input type="text" class="safeapprove_no sameEntInput">
+                        <input type="file" name="" id="safeautupload" class="uploadInput none">
+                        <span style="color:red;margin-left: 40px;">*</span><button type="button" class="safeautup autup">上传文件</button>
+                        <input type="text" id="safeaut" disabled="disabled" style="border:none;outline: none; background: none;margin-left: 70px;" autocomplete="off">
+                        <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top:12px;right:328px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                        <span style="width: 92px;position: absolute;top:11px;right: 233px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+                    </p>
+                    <p class="envirUp none" style="position: relative;">
+                        <span style="color:red">*</span><span class="sameAddSpan" style="min-width: 155px;">环境管理体系认证编号：</span>
+                        <input type="text" class="envapprove_no sameEntInput">
+                        <input type="file" name="" id="envautupload" class="uploadInput none">
+                        <span style="color:red;margin-left: 40px;">*</span><button type="button" class="envautup autup">上传文件</button>
+                        <input type="text" id="envaut" disabled="disabled" style="border:none;outline: none; background: none;margin-left: 70px;" autocomplete="off">
+                        <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top: 12px;right:328px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                        <span style="width: 92px;position: absolute;top:11px;right: 233px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+                    </p>
+                    <p class="healthUp none" style="position: relative;">
+                        <span style="color:red">*</span><span class="sameAddSpan" style="min-width: 155px;">职业健康认证编号：</span>
+                        <input type="text" class="heaapprove_no sameEntInput">
+                        <input type="file" name="" id="heaautupload" class="uploadInput none">
+                        <span style="color:red;margin-left: 40px;">*</span><button type="button" class="heaautup autup">上传文件</button>
+                        <input type="text" id="heaaut" disabled="disabled" style="border:none;outline: none; background: none;margin-left: 70px;" autocomplete="off">
+                        <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top: 12px;right:328px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                        <span style="width: 92px;position: absolute;top:11px;right: 233px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+                    </p>
+                    <p class="leftHeader">生产许可证</p>
+                    <p style="position: relative;">
+                        <span style="color:red"> </span><span class="sameAddSpan" style="margin-left: 11px;">许可证号：</span>
+                        <input type="text" class="sameEntInput productLicence ">
+                        <input type="file" name="" id="proupload" class="uploadInput none">
+                        <span style="color:red;margin-left: 40px;"> </span><button type="button" class="proup " style="margin-left: 5px;">上传文件</button>
+                        <input type="text" id="pro" disabled="disabled" style="border:none;outline: none;background: none;margin-left: 70px;" autocomplete="off">
+                        <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top: 12px;right:378px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                        <span style="width: 92px;position: absolute;top:11px;right: 278px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+                    </p>
+                    <p style="margin-bottom:20px;">
+                        <span style="color:red;"> </span><span class="sameAddSpan" style="margin-left:11px;">有效日期：</span>
+                        <input type="text" class="sameEntInput productExpireDate ">
+                    </p>
+                </div>
+                <div class="uploadRight">
+                    <p class="leftHeader">资信情况</p>
+                    <p style="margin-bottom:10px;position: relative;">
+                        <span style="color:red;margin-left: 7px;""></span><span class="sameAddSpan">资信等级：</span>
+                        <select name="" id="" class="sameAddSelect creditLevel">
+                            <option value="">请选择</option>
+                            <option value="3">AAA</option>
+                            <option value="2">AA</option>
+                            <option value="1">A</option>
+                        </select>
+                        <input type="file" name="" id="creupload" class="uploadInput none">
+                        <span style="color:red;margin-left: 47px;"></span><button type="button" class="creup">上传文件</button>
+                        <input type="text" id="cre" value="" disabled="disabled" style="border:none;outline: none;background: none;margin-left: 70px;" autocomplete="off">
+                        <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top: 12px;right:376px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                        <span style="width: 92px;position: absolute;top:11px;right: 278px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+                    </p>
+                    <p>
+                    </p>
+                    <p style="margin-bottom:20px;position: relative;">
+                        <span class="sameAddSpan" style="margin-left:13px;">其他资料：</span>
+                        <input type="text" class="sameEntInput otherInfo"/>
+                        <input type="file" name="" id="otherupload" class="uploadInput none">
+                        <button type="button" class="otherup" style="margin-left: 47px;">上传文件</button>
+                        <input type="text" id="other" value="" disabled="disabled" style="border:none;outline: none;background: none;margin-left: 70px;" autocomplete="off">
+                        <span style="background:#999;position: absolute;display: inline-block;width: 15px;height: 15px;top: 12px;right:376px;border-radius: 50%;color: #fff;text-align: center;line-height: 15px;" class="help pointer">?</span>
+                        <span style="width: 92px;position: absolute;top:11px;right: 278px;color: #199ED8;opacity: 0;" class="helpTitle">多文件打包上传</span>
+                    </p>
+                </div>
+            </li>
+        </ul>
+        <div class="entermes" style="text-align: center;">
+            <button type="button" class="btnBlue save">提 交</button>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../static/js/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../../static/laydate/laydate.js"></script>
+<script src="../static/js/region.js"></script>
+<script src="../static/js/tip.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var name = decodeURI(DX.getParam('name')) || '';
+    $('.name').val(name);
+
+    $('input[name=longTime]').change(function(){
+        var longTime = $('#long1').is(':checked');
+        var noLongTime = $('#long2').is(':checked');
+        if(longTime){
+            $('#busLongTime').hide(100);
+            $('.businessExpireDate').val('9999-12-31');
+            // if(DX.isNull(obj.businessExpireDate)){$('.proup').tip({msg:'不可为空'});flag = false;}
+        }
+        if(noLongTime){
+            $('#busLongTime').show(100);
+            $('.businessExpireDate').val('');
+        }
+    })
+
+
+    $('.save').click(function(){
+        var obj = {};
+        obj.name = $('.name').val();
+        obj.type = $('.type option:selected').val();
+        // obj.liaison = $('.liaison').val();
+        // obj.mobile = $('.mobile').val();
+        // obj.productId = $('#subId').val();
+        // obj.productType = $('.productType').val();
+        obj.addressPrefix =   $('#addressPrefix').attr('prefixId');
+        obj.addressSuffix = $('.addressSuffix').val();
+        obj.productLicence = $('.productLicence').val();
+        obj.productExpireDate = $('.productExpireDate').val();
+        obj.otherInfo = $('.otherInfo').val();
+        obj.businessLicense = $('.businessLicense').val();
+        obj.businessExpireDate = $('.businessExpireDate').val();
+        obj.creditLevel = $('.creditLevel option:selected').val();
+        // obj.productAbility = $('.productAbility').val();
+        obj.priceCompare = $('.priceCompare option:selected').val();
+        // obj.approveNo = $('.approve_no').val();
+        obj.otherInfo = $('.otherInfo').val();
+        obj.businessRegisterMoney = $('.businessRegisterMoney').val();
+        // obj.supportAbility = $('.supportAbility option:selected').val();
+        // obj.transportAbility = $('.transportAbility option:selected').val();
+        // obj.afterSale = $('.afterSale').val();
+        obj.businessLicenseFile = $('.busup').attr('oid');
+        obj.productLicenceFile = $('.proup').attr('oid');
+        obj.otherInfoFile =  $('#other').attr('oid');
+        obj.creditLevelFile =  $('.creup').attr('oid');
+        var check = $('#or').is(':checked');
+        if(check){
+            obj.checkSurvey = true;
+        }else{
+            obj.checkSurvey = false;
+        }
+        // obj.approveFile = $('.autup').attr('oid');
+        var approve = [];
+        var approveObj = {};
+        approveObj.type = $('input:checkbox[id="a1"]:checked').val();
+        approveObj.no = $('.quaapprove_no').val();
+        approveObj.file = $('.quaautup').attr('oid');
+        if(approveObj.type && approveObj.no && approveObj.file){
+            approve.push(approveObj);
+        }
+        var safeObj = {};
+        safeObj.type = $('input:checkbox[id="a2"]:checked').val();
+        safeObj.no = $('.safeapprove_no').val();
+        safeObj.file = $('.safeautup').attr('oid');
+        if(safeObj.type && safeObj.no && safeObj.file){
+            approve.push(safeObj);
+        }
+        var envappObj = {};
+        envappObj.type = $('input:checkbox[id="a3"]:checked').val();
+        envappObj.no = $('.envapprove_no').val();
+        envappObj.file = $('.envautup').attr('oid');
+        if(envappObj.type && envappObj.no && envappObj.file){
+            approve.push(envappObj);
+        }
+        var heaappObj = {};
+        heaappObj.type = $('input:checkbox[id="a4"]:checked').val();
+        heaappObj.no = $('.heaapprove_no').val();
+        heaappObj.file = $('.heaautup').attr('oid');
+        if(heaappObj.type && heaappObj.no && heaappObj.file){
+            approve.push(heaappObj);
+        }
+        obj.approve = JSON.stringify(approve);
+        console.log(approve)
+        
+        var flag = true;
+       
+        if(DX.isNull(obj.name)){$('.name').tip({msg:'不可为空'});flag = false;}
+        
+        var flage = $("#or").is(":checked");
+        if(flage){
+            if(!approve || approve.length == 0){
+                $('#a4').tip({msg:'不可为空'});
+                flag = false;
+            }
+            if(DX.isNull(obj.addressSuffix)){$('.addressSuffix').tip({msg:'不可为空'});flag = false;}
+            if(DX.isNull(obj.businessLicense)){$('.businessLicense').tip({msg:'不可为空'});flag = false;}
+            if(DX.isNull(obj.businessRegisterMoney)){$('.businessRegisterMoney').tip({msg:'不可为空'});flag = false;}
+            if(DX.isNull(obj.businessExpireDate)){$('.businessExpireDate').tip({msg:'不可为空'});flag = false;}
+            // if(DX.isNull(obj.productLicence)){$('.productLicence').tip({msg:'不可为空'});flag = false;}
+            // if(DX.isNull(obj.productExpireDate)){$('.productExpireDate').tip({msg:'不可为空'});flag = false;}
+            // if(DX.isNull(obj.creditLevel)){$('.creditLevel').tip({msg:'不可为空'});flag = false;}
+            if(DX.isNull(obj.businessLicenseFile)){$('.busup').tip({msg:'不可为空'});flag = false;}
+            // if(DX.isNull(obj.productLicenceFile)){$('.proup').tip({msg:'不可为空'});flag = false;}
+            // if(DX.isNull(obj.creditLevelFile)){$('.creup').tip({msg:'不可为空'});flag = false;}
+        }
+        if(!flag){return false;}
+
+        for(var i in obj){obj[i] === undefined ? obj[i] = '' : obj[i] = obj[i]}
+        // console.log(obj);
+        var that = $(this);
+        DX.ajax_method({
+            'type':'POST',
+            'url':'/materials/supply/supplier/insert',
+            'param':obj,
+            'change':that[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == 200){
+                    window.location.href='supplier.html';
+                }else{
+                    alert(res.msg);
+                }
+            }
+        })
+    })
+
+
+
+    // 时间选择器
+    var businessExpireDate = laydate.render({ 
+    elem: '.businessExpireDate',
+    // type: 'datetime',
+    done: function(value, date, endDate) { 
+        // endTime.config.min = { 
+        // 	year: date.year, 
+        // 	month: date.month - 1,//重点！！！
+        // 	date: date.date,
+        // 	hours:date.hours, 
+        // 	minutes:date.minutes, 
+        // 	seconds:date.seconds
+        //  };
+        var stime = new Date(Date.parse(value.replace("-", "/"))); 
+            $(".businessExpireDate").val(value); 
+        },
+    });
+    var productExpireDate = laydate.render({ 
+    elem: '.productExpireDate',
+    // type: 'datetime',
+    done: function(value, date, endDate) { 
+        // endTime.config.min = { 
+        // 	year: date.year, 
+        // 	month: date.month - 1,//重点！！！
+        // 	date: date.date,
+        // 	hours:date.hours, 
+        // 	minutes:date.minutes, 
+        // 	seconds:date.seconds
+        //  };
+        var stime = new Date(Date.parse(value.replace("-", "/"))); 
+            $(".productExpireDate").val(value); 
+        },
+    });
+
+
+    //弹窗显示
+    // $('.productId').focus(function(){
+    //     console.log(111);
+    //     if($(this).val()){
+    //         $('.openWin').show();
+    //         return;
+    //     }
+    //     DX.ajax_method({
+    //         'type':'GET',
+    //         'url' :'/materials/product/findProductType',
+    //         'param':{},
+    //         'callBack':function(res){
+    //             console.log(res);
+    //             var html = '';
+    //             if(res.code == '200'){
+    //                 console.log(res);
+    //                 $.each(res.data,function(i,val){
+    //                     html += '<li id="'+ val.id +'" class="item" name="'+val.name+'">'+val.name+'</li>';
+    //                 })
+    //             }
+    //             $('.firNav').html(html);
+    //             console.log(html);  
+    //             $('.openWin').show();
+    //             //点击一级菜单出现二级菜单
+    //             $('.item').click(function(){
+    //                 if($(this).hasClass('active')){  //选中重置
+    //                     $('.secNav').html('');
+    //                     $('#subId').val('');
+    //                     $('#.product').val('');
+    //                     $(this).removeClass('active');
+    //                     $('#parentId').val('');
+    //                     $('#parentId').attr('name','');return;
+    //                 }
+    //                 showEr($(this).attr('id'));
+    //                 $('.productType').val($(this).text());
+    //                 $(this).addClass('active').siblings().removeClass('active');
+    //                 $('#parentId').val($(this).attr('id'));
+    //                 $('#parentId').attr('name',$(this).attr('name'));
+    //             })
+
+    //             //点击确认弹层
+    //             $('#btnS').click(function(){
+    //                 $('.openWin').hide();
+    //             })
+    //         }
+    //     })
+    // })
+
+    // //点击一级菜单获取二级菜单
+    // function showEr(id){
+    //     DX.ajax_method({
+    //         'type':'GET',
+    //         'url':'/materials/product/findAllProduct',
+    //         'param':{'tid':id},
+    //         'callBack':function(res){
+    //             console.log(res)
+    //             var html = '';
+    //             if(res.code == 200){
+    //                 $.each(res.data,function(i,val){
+    //                     html += '<li id="'+val.id+'" class="item1">'+val.name+'</li>';
+    //                 })
+    //             }
+    //             $('.secNav').html(html);
+    //             $('.item1').click(function(){
+    //                 if($(this).hasClass('active')){  //再次选中重置
+    //                     $('#subId').val('');
+    //                     $(this).removeClass('active');
+    //                     var t = $('#parentId').attr('name');
+    //                     $('.product').val(t);return;
+    //                 }
+    //                 $('#subId').val($(this).attr('id'));
+    //                 $(this).addClass('active').siblings().removeClass('active');
+    //                 var t =$(this).text();
+    //                 $('.productId').val(t);
+    //             })
+    //         }
+    //     })
+    // }
+
+    //选中添加调查评价出现下面必填内容   
+
+    $("#or").click(function(){
+
+        var flage = $(this).is(":checked");
+        if(flage){
+            $('.surveyshow').slideDown(500);
+            $('.star').empty().text('*').css('margin-left','0');
+            $('.starmoney').css('margin-left','40px');
+            $('#longTimeDate').css('margin-left','5px');
+            
+        }else{
+            $('.surveyshow').slideUp(500);
+            $('.star').empty().text('').css('margin-left','7px');
+            $('.starmoney').css('margin-left','47px');
+            $('#longTimeDate').css('margin-left','5px');
+        }
+    })
+
+    $('#a1').click(function(){
+        var quality = $(this).is(":checked");
+        if(quality){
+            $(".qualityUp").slideDown(300);
+        }else{
+            $(".qualityUp").slideUp(300);
+        }
+    })
+    $('#a2').click(function(){
+        var safety = $(this).is(":checked");
+        if(safety){
+            $(".safetyUp").slideDown(300);
+        }else{
+            $(".safetyUp").slideUp(300);
+        }
+
+    })
+    $('#a3').click(function(){
+        var envir = $(this).is(":checked");
+        if(envir){
+            $(".envirUp").slideDown(300);
+        }else{
+            $(".envirUp").slideUp(300);
+        }
+
+    })
+    $('#a4').click(function(){
+        var health = $(this).is(":checked");
+        if(health){
+            $(".healthUp").slideDown(300);
+        }else{
+            $(".healthUp").slideUp(300);
+        }
+
+    })
+
+    // 认证上传
+    $('.quaautup').click(function(){
+        $('#quaautupload').click();
+    })
+    $('#quaautupload').change(function(){
+        $('#quaaut').val($(this).val());
+        DX.uplaodFile({
+            'id':'quaautupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('.quaautup').attr('oid',res.data);
+                }
+            }
+        })
+    })
+    $('.safeautup').click(function(){
+        $('#safeautupload').click();
+    })
+    $('#safeautupload').change(function(){
+        $('#safeaut').val($(this).val());
+        DX.uplaodFile({
+            'id':'safeautupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('.safeautup').attr('oid',res.data);
+                }
+            }
+        })
+    })
+    $('.envautup').click(function(){
+        $('#envautupload').click();
+    })
+    $('#envautupload').change(function(){
+        $('#envaut').val($(this).val());
+        DX.uplaodFile({
+            'id':'envautupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('.envautup').attr('oid',res.data);
+                }
+            }
+        })
+    })
+    $('.heaautup').click(function(){
+        $('#heaautupload').click();
+    })
+    $('#heaautupload').change(function(){
+        $('#heaaut').val($(this).val());
+        DX.uplaodFile({
+            'id':'heaautupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('.heaautup').attr('oid',res.data);
+                }
+            }
+        })
+    })
+   
+    // 生产上传
+    $('.proup').click(function(){
+        $('#proupload').click();
+    })
+    $('#proupload').change(function(){
+        $('#pro').val($(this).val());
+        DX.uplaodFile({
+            'id':'proupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('.proup').attr('oid',res.data);
+                }
+            }
+        })
+    })
+   
+    // 其他资料上传、、
+    $('.otherup').click(function(){
+        $('#otherupload').click();
+    })
+    $('#otherupload').change(function(){
+        $('#other').val($(this).val());
+        DX.uplaodFile({
+            'id':'otherupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('#other').attr('oid',res.data);
+                }
+            }
+        })
+    })
+    // 营业执照上传
+    $('.busup').click(function(){
+        $('#busupload').click();
+    })
+    $('#busupload').change(function(){
+        $('#bus').val($(this).val());
+        DX.uplaodFile({
+            'id':'busupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('.busup').attr('oid',res.data);
+                }
+            }
+        })
+    })
+
+    // 资信情况上传
+    $('.creup').click(function(){
+        $('#creupload').click();
+    })
+    $('#creupload').change(function(){
+        $('#cre').val($(this).val());
+        DX.uplaodFile({
+            'id':'creupload',
+            'url':'/materials/file/upload',
+            'change':$(this)[0],
+            'callBack':function(res){
+                console.log(res)
+                if(res.code == '200'){
+                    $('.creup').attr('oid',res.data);
+                }
+            }
+        })
+    })
+    
+
+    $('#addressPrefix').region({
+        callback: function(node) {
+            // console.log(id, province, city, country)
+            $('#addressPrefix').val(node.name);
+            $('#addressPrefix').attr('prefixId',node.id)
+            $('#remark').text(node.remark);
+        }
+    })
+
+    //帮助提示
+    $('.help').on('mouseenter',function(){
+        $(this).css({'background':'#199ED8'});
+        $(this).next('span').css({'opacity':'1'});
+    })
+    $('.help').on('mouseleave',function(){
+        $(this).css({'background':'#999'});
+        $(this).next('span').css({'opacity':'0'});
+    })
+
+})
+</script>

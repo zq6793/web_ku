@@ -1,0 +1,34 @@
+#sao{
+    color: #DD6B4D;
+    border-bottom:2px solid #DD6B4D;
+}
+#mes:hover{
+    border-bottom: 2px solid #DD6B4D;
+}
+#psd:hover{
+    border-bottom: 2px solid #DD6B4D;
+}
+.code{
+    width:188px;
+    height:188px;
+    background-image: url(../img/11@2x.png);
+    /* background-size: 188px 188px; */
+    margin: 33px auto;
+}
+.code img{
+    width:174px;
+    height:174px;
+    margin: 7px;
+}
+.scan{
+    width:346px;
+    height:12px;
+    font-size:14px;
+    font-family:MicrosoftYaHei;
+    color:rgba(51,51,51,1);
+    opacity:0.9;
+    text-align: center;
+}
+.loginType a:nth-child(2){
+    margin-left: 47px;
+}

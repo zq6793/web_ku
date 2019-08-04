@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>添加报表</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/style.css" />
+	</head>
+	<body>
+		<div class="addreport" id="addreport" v-cloak>
+			<h3>填写报表信息</h3>
+			<p class="line clearfix">
+				<span class="fl">*</span>
+				<span class="fl">业务名称：</span>
+				<select class="select fl" v-model="type" @change="getYear">
+					<option v-for="value,index in typelist" :value="value.tag">{{value.name}}</option>
+				</select>
+			</p>
+			<p class="line clearfix">
+				<span class="fl">*</span>
+				<span class="fl">填报时间：</span>
+				<input type="text" class="fl input1" id="starttime" readonly />
+				<span class="fl" style="margin: 0 20px;">至</span>
+				<input type="text" class="fl input1" id="endtime" readonly />
+			</p>
+			<p class="line clearfix">
+				<span class="fl">*</span>
+				<span class="fl">限制截至时间：</span>
+				<label class="fl clearfix"><input type="radio" class="radio fl" name="1" value="0" @click="getRadio" /><em class="fl">是</em></label>
+				<label class="fl clearfix"><input type="radio" class="radio fl" name="1" value="1" @click="getRadio" checked="true" /><em
+					 class="fl">否</em></label>
+			</p>
+			<p class="line clearfix">
+				<span class="fl">*</span>
+				<span class="fl">填报周期：</span>
+				<select class="input1 fl" v-model="cycle">
+					<option v-for="v,index in cyclelist">{{v}}</option>
+				</select>
+			</p>
+			<p class="line clearfix">
+				<span class="fl">*</span>
+				<span class="fl">周期开始时间：</span>
+				<select class="input1 fl" v-model="startcycle">
+					<option value="">请选择</option>
+					<option v-for="v,index in startcyclelist" :value="v">{{v}}</option>
+				</select>
+			</p>
+			<!-- <p class="line clearfix">
+				<span class="fl">*</span>
+				<span class="fl">填报范围：</span>
+				<select class="select fl" v-model="ranges" @change="getProject">
+					<option value="">全部</option>
+					<option value="1">在建</option>
+					<option value="0">完工</option>
+				</select>
+			</p>
+			<ul>
+				<label class="clearfix border" ><input type="checkbox" @click="allSelect" class="fl" checked><span class="fl" style="text-align: center;">项目部</span></label>
+				<ol id="proidS">
+					<label class="clearfix" v-for="val,index in projectList"><input type="checkbox" class="fl" :checked="allSelects" :oid="val.projectId"><span class="fl">{{val.projectName}}</span></label>
+				</ol>
+			</ul> -->
+			<p class="err"></p>
+			<button type="button" class="submit" @click="submit">提交</button>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	var vm = new Vue({
+		el: '#addreport',
+		created: function() {
+			this.getData();
+		},
+		data: {
+			'type': '', //业务类型
+			'limit': '', //是否限制截至时间
+			'cycle': '', //填报周期
+			'startcycle': '', //周期开始时间
+			'ranges': '', //填报范围
+			'typelist': [],
+			'cyclelist': [],
+			'startcyclelist': [],
+			'projectList': [],//项目部信息
+			'allSelects':true,//全选的控制
+			'radio':1,//单选的值
+		},
+		methods: {
+			getRadio: function(event) {//单选处理
+				var radioVal = event.target.value;
+				// console.log(radioVal);
+				this.radio =radioVal;
+			},
+			getData: function() {//默认获取类型
+				var $this = this;
+				DX.ajax_method({
+					'type': 'GET',
+					'param': {},
+					'url': '/eva/report/getReportConfig',
+					'callBack': function(res) {
+						if (res.code == '200') {
+
+							$this.typelist = res.data.reportList;
+							$this.type = res.data.reportList.length > 0 ? res.data.reportList[0].tag : '';
+							$this.getYear();
+							
+						}
+					}
+				})
+			},
+			getYear: function() {//根据类型获取项目部数据类型数据
+				var $this = this;
+				DX.ajax_method({
+					'type': 'GET',
+					'param': {
+						'type': $this.type
+					},
+					'url': '/eva/report/getReportConfig',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							// console.log(res);
+							$this.cyclelist = res.data.type;
+							$this.cycle = res.data.type.length > 0 ? res.data.type[0] : '';
+							$this.startcyclelist = res.data.year;
+							$this.projectList = res.data.projectList;
+							console.log($this.projectList);
+						}
+					}
+				})
+			},
+			getProject: function() {//筛选项目部
+				var $this = this;
+				DX.ajax_method({
+					'type': 'GET',
+					'param': {
+						'type': $this.type,
+						'status': $this.ranges
+					},
+					'url': '/eva/report/getReportConfig',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							// console.log(res);
+							$this.projectList = [];
+							$this.projectList = res.data.projectList;
+						}
+					}
+				})
+			},
+			allSelect:function(){//全选
+				this.allSelects=!this.allSelects;	
+			},
+			submit:function(values){
+				$('.err').hide();
+				var starttime = $('#starttime').val(); //填报时间
+				var endtime = $('#endtime').val(); //结束时间
+				if(starttime.length <1){
+					$('.err').show().text('填报开始时间不能为空');return;
+				}
+				if(endtime.length<1){
+					$('.err').show().text('填报结束时间不能为空');return;
+				}
+				if(this.startcycle==''){
+					$('.err').show().text('请选择周期开始时间');return;
+				}
+				var obj = {'business_type':this.type,'start_time':starttime,'end_time':endtime,'reporting_period':this.startcycle,'isdeadline':this.radio,
+				};
+				// var ids = [];
+				// $.each($('#proidS input'),function(i,val){
+				// 	if($(this).prop('checked')){
+				// 		ids.push($(this).attr('oid'));
+				// 	}
+				// })
+				// obj.ids = ids;
+				// console.log(obj);
+				DX.ajax_method({
+					'type':'POST',
+					'param':obj,
+					'change':values.target,
+					'url':'/eva/report/savaReport',
+					'callBack':function(res){
+						if(res.code == '200'){
+							window.location.href = 'list.html';
+						}
+					}
+				})
+
+			}
+
+		},
+		watch: {
+
+		} 
+
+	})
+	
+	// 时间选择器
+	var startTime = laydate.render({
+		elem: '#starttime',
+		// type: 'datetime',
+		done: function(value, date, endDate) {
+			endTime.config.min = {
+				year: date.year,
+				month: date.month - 1, //重点！！！
+				date: date.date,
+				hours: date.hours,
+				minutes: date.minutes,
+				seconds: date.seconds
+			};
+			var stime = new Date(Date.parse(value.replace("-", "/")));
+			var etime = new Date(Date.parse($("#endtime").val().replace("-", "/")));
+			if (stime > etime) { //开始时间若大于结束时间，则把开始时间的日期回填到结束时间 
+				$("#endtime").val(value);
+			}
+		},
+	});
+	var endTime = laydate.render({
+		elem: '#endtime',
+		min: $("#starttime").val() //可选择的最小日期为开始日期
+	});
+</script>

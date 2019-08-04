@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<title>计划部临时审核</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+	</head>
+	<body>
+		<div class="rightBox">
+			
+			<!-- <div class="nav">
+			    <span>当前所在位置：用户权限管理></span><span class="pointer">用户审核</span>
+			</div> -->
+			<div class="check">
+				<h3 class="title1">审核申请名单</h3>
+				<!-- <ul class="clearfix" id="slect">
+					<li class="active" state='1'>待我审核的</li>
+					<li state='2'>我已审核的</li>
+				</ul> -->
+				<table>
+					<thead>
+						<tr>
+							<!-- <th>登录账号</th> -->
+							<th>姓名</th>
+							<th>单位</th>
+							<th>部门</th>
+							<th>职位</th>
+							<th>时间</th>
+							<th>是否主管</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- <tr>
+							<td>1122</td>
+							<td>1122</td>
+							<td>1122</td>
+							<td>1122</td>
+							<td>1122</td>
+							<td><span class="yes">同意</span><span class="no">拒绝</span></td>
+						</tr>	 -->		
+						
+					</tbody>
+				</table>
+			</div>
+			<!-- 分页 -->
+			<div class="page1"></div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		pages.init({
+			'key':['departIds[]'],
+			'value':[[5]],
+			'url':'/user/emp/findAllAppliers',
+			'callBack':selectcall
+		})
+		
+		//加载需要审核的数据
+		// var page = {'curPage':$('#page_index').val(),'pageSize':$('#page_number').val()};
+		// select(page);
+		
+		 // 点击首页
+		// $('.first').click(function(){
+		//     $('.pages li').removeClass('page_active');
+		//     var obj = pageValue();
+		//     if(Number(obj.page_index) < 2) {
+		//         $('.first').addClass('page_active').siblings().removeClass('page_active');return;
+		//     }
+		//     var page = {'curPage':1,'pageSize':obj.page_number};
+		//     select(page);
+		// });
+		// 点击上一页
+		// $('.pre').click(function(){
+		//     $('.pages li').removeClass('page_active');
+		//     var obj = pageValue();
+		//     if(Number(obj.page_index) < 2) {
+		//         $('.pre').addClass('page_active').siblings().removeClass('page_active');return;
+		//     }
+		//     var page = {'curPage':obj.page_pre,'pageSize':obj.page_number};
+		//     select(page);
+		// })
+		// 点击下一页
+		// $('.next').click(function(){
+		//     $('.pages li').removeClass('page_active');
+		//     var obj = pageValue();
+		//     if(Number(obj.page_index) > Number(obj.page_last)-1) {
+		//         $('.next').addClass('page_active').siblings().removeClass('page_active');return;
+		//     }
+		//     
+		//     var page = {'curPage':obj.page_next,'pageSize':obj.page_number};
+		//     select(page);
+		// })
+		// 点击尾页
+		// $('.last').click(function(){
+		//     $('.pages li').removeClass('page_active');
+		//     var obj = pageValue();
+		//     if(Number(obj.page_index) > Number(obj.page_last)-1) {
+		//         $('.last').addClass('page_active').siblings().removeClass('page_active');return;
+		//     }
+		//     var page = {'curPage':obj.page_last,'pageSize':obj.page_number};
+		//     select(page);
+		// })
+		// 点击跳转指定页
+		// $('#page_tourl').click(function(){
+		//     var obj = pageValue();
+		//     var toUrl = $('.tourl input').val();
+		//     if (Number(obj.page_index) == toUrl) return;
+		//     var page = {'curPage':toUrl,'pageSize':obj.page_number};
+		//     select(page);
+		// })
+		
+		/* 获取分页value
+		* page_index 当前页码
+		* page_number 显示数量
+		* page_last 共多少页
+		*/
+		// function pageValue(){
+		//     var page_index = $('#page_index').val();
+		//     var page_number = $('#page_number').val();
+		//     var page_last = $('#page_last').val();
+		//     var page_pre = $('#page_pre').val();
+		//     var page_next = $('#page_next').val();
+		//     return obj = {"page_index":page_index,"page_number":page_number,"page_last":page_last,
+		//     'page_pre':page_pre,'page_next':page_next}
+		// }
+		
+		
+		
+	})
+	//查询函数 
+	// function select(obj){
+	// 	// var state = $('#slect li.active').attr('state');
+	// 	// obj.state = state;
+	// 	obj.departId = 5;
+	// 	// console.log(state);
+	//     DX.ajax_method({
+	//         'type':'GET',
+	//         'url':'/emp/findAllAppliers',
+	//         'param':obj,
+	//         'callBack':selectcall
+	//     });
+	// }
+	//回调渲染
+	function selectcall(res){
+		console.log(res);
+		if(res.code != '200') return;
+		//分页数据
+		// $('.page_index').html('第'+res.data.pageNum+'页');
+		// $('.page_count').html('总共'+res.data.pages+'页');
+		// $('.page_count1').html('总共'+res.data.total+'条');
+		// 
+		// $("#page_index").val(res.data.pageNum);
+		// $("#page_last").val(res.data.pages);
+		// $("#page_pre").val(res.data.prePage);
+		// $("#page_next").val(res.data.nextPage);
+		
+		//页面渲染
+		var html = '';	
+		$.each(res.data.users,function(i,val){
+			// $.each(val.roles,function(index,value){
+				html += '<tr ujpid="'+val.ujpid+'" >';
+				// html += '<td>'+val.phone+'</td>';
+				html += '<td>'+val.name+'</td>';
+				html += '<td>'+val.abbreviation+'</td>';
+				html += '<td>'+val.departName+'</td>';
+				html += '<td>'+val.roleName+'</td>';
+				html += '<td>'+val.applyTime+'</td>';
+				var as =val.isSupervisor==1 ? '是' : '否';
+				html += '<td>'+as+'</td>';
+				html += '<td><span class="yes">同意</span><span class="no">拒绝</span></td>';
+				html+='</tr>';
+			// })
+		})
+		$('.check table tbody').html(html);
+
+		//同意
+		$('.yes').click(function(){
+			
+			yesNo($(this),1);
+		})
+		//拒绝
+		$('.no').click(function(){
+			yesNo($(this),-1);
+		})
+			
+	}
+	//同意和拒绝 value(1同意，-1拒绝)
+	function yesNo(obj,value){
+		// var rid = obj.parents('tr').attr('rid');
+		// var projectId = obj.parents('tr').attr('projectId');
+		// var unid = obj.parents('tr').attr('unid');
+		// var uid = obj.parents('tr').attr('uid');
+		var ujpid = obj.parents('tr').attr('ujpid');
+		var res = {'ujpid':ujpid,'reviewStatus':value};
+		// if(projectId != "null"){
+		// 	res.projectId = projectId;
+		// }
+		// if(unid != "null"){
+		// 	res.unid = unid;
+		// }
+		DX.ajax_method({
+			'type':'POST',
+			'url':'/user/emp/updateUserRole0525',
+			'change':obj[0],
+			'param':res,
+			'callBack':function(res){
+				if(res.code == '200'){
+					// var page = {'curPage':$('#page_index').val(),'pageSize':$('#page_number').val()};
+					pages.init({
+						'key':['departIds[]'],
+						'value':[[5]],
+						'url':'/user/emp/findAllAppliers',
+						'callBack':selectcall
+					})
+				}
+			}
+		})
+	}
+</script>

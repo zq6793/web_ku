@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>材料收料单</title>
+    <link rel="stylesheet" type="text/css" href="../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/goods.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <div class="search" style="border-bottom: 1px solid #ccc;">
+            <span style="font-size: 20px;font-weight:600;">材料收料单</span>
+            <button type="button" class="btnOrange fr" style="margin-left: 30px;">打印收料单</button>
+            <button type="button" class="btnOrange fr">确认收料</button>
+        </div>
+        <div class="content" style="min-width: 800px;">
+            <div class="unit" style="padding-top: 20px;">
+                <span style="font-size: 14px;font-weight:600;">供货单位：</span>
+                <input type="text" placeholder="供应商名称" class="input" style="min-width:278px;">
+                <span style="font-size: 14px;font-weight:600;margin-left: 39px;">日期：</span>
+                <input type="text" placeholder="选择收料日期" class="input" style="min-width:278px;">
+            </div>
+            <div class="tableBox" style="padding-top: 30px;">
+                <table class="table" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;"></th>
+                            <th style="width: 10%;">序号</th>
+                            <th style="width: 10%;">材料名称</th>
+                            <th style="width: 15%;">规格</th>
+                            <th style="width: 15%;">单位</th>
+                            <th style="width: 15%;">数量</th>
+                            <th style="width: 15%;">备注</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="initTr">
+                            <td><span class="listToDetail add">增加</span><span class="listToDetail del" style="margin-left: 20px;">删除</span></td>
+                            <td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>
+                            <td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>
+                            <td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>
+                            <td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>
+                            <td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>
+                            <td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>
+                        </tr>
+                        <tr>
+                            <td>合计：</td>
+                            <td colspan="6"></td>
+                        </tr>
+                    </tbody>   
+                </table>
+            </div>
+            <div class="recPer" style="padding-top: 30px;">
+                <span style="font-size: 14px;font-weight:600;">收料单位：</span>
+                <span>中铁十二局集团沈客专辽宁端TJ-2标一工区项目部</span>
+                <span style="font-size: 14px;font-weight:600;margin-left: 30px;">收料人：</span>
+                <input type="text" placeholder="收料人签名" class="input" style="width:15%;min-width: 278px;">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../static/jquery-1.8.3.js"></script>
+<script src="../static/dx.js"></script>
+<script src="../static/js/common.js"></script>
+<script src="../static/js/pages.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('body').on('click','.add',function(){
+        var html = '';
+        html += '<tr>';
+        html += '<td><span class="listToDetail add">增加</span><span class="listToDetail del" style="margin-left: 20px;">删除</span></td>';
+        html += '<td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>';
+        html += '<td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>';
+        html += '<td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>';
+        html += '<td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>';
+        html += '<td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>';
+        html += '<td><input type="text" style="width: 99.5%;height: 99.5%;border: none;text-align: center;"></td>';
+        html += '</tr>';
+        $('#initTr').after(html);
+    })
+    $('body').on('click','.del',function(){
+        $(this).parent().parent().remove();
+    })
+
+})
+</script>

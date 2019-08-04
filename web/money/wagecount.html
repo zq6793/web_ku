@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>工资汇总列表</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/wage.css"/>
+	</head>
+	<body>
+		<div class="wage" id="wage" v-cloak>
+			<table class="table tableHover mt20" style="max-width: 1200px;">
+				<thead>
+					<tr>
+						<th>工资月份</th>
+						<th>总人数</th>
+						<th>应发合计</th>
+						<th>实发合计</th>
+						<th>财务主管</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="val,index in list">
+						<td>{{val.year}}</td>
+						<td>{{val.peopleSize}}</td>
+						<td>{{val.finalMoneyAll}}</td>
+						<td>{{val.shouldMoneyAll}}</td>
+						<td>{{val.financialExecutive}}</td>
+						<td><a :href="'peoplemoneylist.html?year='+val.year" class="listToDetail">详情</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#wage',
+		mounted:function(){
+			this.getList();
+
+		},
+		data:{
+			'list':[],
+		},
+		methods:{
+			getList:function(){//获取列表数据
+				var $this=this;
+				DX.ajax_method({
+					// 'type':'POST',
+					'url':"/finance/fin/findFinance",
+					'callBack':function(res){
+						if(res.code==200){
+							$this.list = res.data;
+							DX.vueClickTr();
+						}
+					}
+				})
+			}
+		}
+	})
+</script>

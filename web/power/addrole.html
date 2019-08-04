@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加角色</title>
+    <link rel="stylesheet" type="text/css" href="../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/powerallot.css"/>
+</head>
+<body>
+    <!-- right -->
+    <div class="rightBox">
+   
+        <!-- <div class="nav">
+            <span>当前所在位置：权限设置></span><span class="pointer">添加角色</span>
+        </div> -->
+        <!-- 权限分配总体 -->
+        <div class="allotBox">
+           
+           
+            <!-- 点击添加新角色出现弹窗 -->
+            <div class="showNewRole fl">
+                <p>
+                    <span>角色名称:</span>
+                    <input type="text" class="writeIn" placeholder="请输入角色名称" id="roleName">
+                </p>
+                <p>
+                    <span>选择部门:</span>
+                    <select name="" id="choosePart" class="choosePart">
+                        <option value="">请选择部门</option>
+                    </select>
+                </p>
+               <!-- <p style="float:right;">
+                    <button type="button" class="noBtn">取 消</button>
+                    <button type="button" class="saveBtn">保 存</button>
+                </p> -->
+                
+            </div>
+
+            <!-- 权限分配右侧 -->
+            <div class="allotRightBox fr" style="margin-left: 0;width: 50%;">
+               
+                <div class="limitsBox" style="min-height: 350px;position: initial;">
+                    <div class="limitsLeft" id="rolesBox" style="float: none;width: 100%;">
+                      
+                    </div>
+					
+            </div>
+			<span class="err"></span>
+			<button type="button" id="addRole" class=" subBtn" style="margin: 0 auto;display: block;">保存</button>
+			
+        </div>
+		
+    </div>
+</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+$(document).ready(function(){
+	domPerssion();
+	
+	//加載部門
+	DX.ajax_method({
+		'type':'GET',
+		'param':{},
+		'url':'/user/role/findRoleDepart',
+		'callBack':function(res){
+			console.log(res);
+			if(res.code == '200'){
+				var html = '<option value="">请选择部门</option>';
+				$.each(res.data,function(i,val){
+					html +=' <option value="'+val.rid+'">'+val.roleName+'</option>';
+				})
+				$('#choosePart').html(html);
+			}
+		}
+	})
+	
+	
+	//程序权限加载 自己有的
+	function domPerssion(){
+		DX.ajax_method({
+			'type':'GET',
+			'param':{},
+			'url':'/user/perm/findPerms',
+			'callBack':function(res){
+				if(res.code == '200'){
+					console.log(res);
+					var html = '';
+					$.each(res.data,function(i,val){
+						html += '<a class="clearfix  limitsList" href="javascript:void(0)"><span class="bg"></span>';
+		                html += '<span class="navName">'+val.name+'</span></a>';
+						html += '<ul class="personList1">';
+						$.each(val.subPerms,function(index,value){
+							
+							if(value.checked){
+								html += '<li pid="'+value.pid+'" class="selectback"><span></span><a href="javascript:void(0)">'+value.name+'</a></li>';
+							}else{
+								html += '<li pid="'+value.pid+'" class=""><a href="javascript:void(0)">'+value.name+'</a></li>';
+							}
+						})
+						html += ' </ul>';
+		
+					})
+					// $('#rolesBox p').siblings().remove();
+					$('#rolesBox').html(html);
+					
+					$('.limitsList').click(function(){//点击显示二级菜单
+						$('.limitsList .bg').css('backgroundImage','url(static/img/min-left.png)');
+						
+						if($(this).find('.bg').hasClass('bgactive')){
+							$(this).find('.bg').removeClass('bgactive');
+						}else{
+							$(this).find('.bg').addClass('bgactive');
+						}
+						checklist($(this),'.personList1');
+					})
+					//点击选中
+					$('.personList1 li').click(function(){
+						if($(this).hasClass('selectback')){
+							$(this).removeClass('selectback');
+						}else{
+							$(this).addClass('selectback');
+						}
+					})
+				}
+			}
+		})
+	}
+	
+	
+	// 点击保存
+	$('#addRole').click(function(){
+		$('.err').hide();
+		var name = $('#roleName').val();
+		var isName = DX.isNull(name);
+		if(isName){
+			$('.err').show().text('请输入角色名称');return;
+		}
+		var partId = $('#choosePart').val();
+		if(partId == ''){
+			$('.err').show().text('请选择部门');return;
+		}
+		var pids = [];
+		$.each($('.personList1 li'),function(i,val){
+			if($(this).hasClass('selectback')){
+				
+				pids.push($(this).attr('pid'));
+			}
+		})
+		var that = $(this);
+		if(pids.length < 1){
+			$('.err').show().text('请选择权限');return;
+		}
+		console.log({'roleName':name,'sid':partId,'pids[]':pids});
+		DX.ajax_method({
+			'type':'POST',
+			'url':'/user/role/saveRoleWithFundPerm',
+			'change':that[0],
+			'param':{'roleName':name,'sid':partId,'pids[]':pids},
+			'callBack':function(res){
+				if(res.code == '200'){
+					window.location.href = 'powerallot.html?id='+res.data.rid;
+				}
+			}
+		})
+	})
+	
+	
+
+    // obj当前操作元素 html被操作元素
+	function checklist(obj,html){
+		if(obj.hasClass('active')){
+		    obj.removeClass('active');
+		    // obj.css('background','none')
+		    obj.next(html).slideUp(100);return;
+		}
+		// $(this).css('background','#F0EFEF').siblings('.title').css('background','none');
+		// obj.css('background','#f5f5f5');
+		// $(this).addClass('active').siblings('.title').removeClass('active');
+		obj.addClass('active');
+		// $(this).next('.personList').slideDown(100).siblings('.personList').slideUp();
+		obj.next(html).slideDown(100);
+	}
+
+})
+</script>

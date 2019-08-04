@@ -1,0 +1,88 @@
+/* IE9+ */
+    
+.username span:nth-child(1){
+    display: inline-block;
+    background-image: url(../img/login-icon@2x.png);
+    background-position: -3px -3px;
+    width: 24px;
+    height: 26px;
+    margin-top: 6px;
+    margin-left: 15px;
+    background-color: #F8F8F8;
+    float: left;
+}
+.username span{
+    width: 2px;
+    height: 30px;
+    background: rgba(230,230,230,1);
+    border-radius: 1px;
+    margin-right: 9px;
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+}
+.password span:nth-child(1){
+    display: inline-block;
+    background-image: url(../img/login-icon@2x.png);
+    background-position: -3px -35px;
+    width: 24px;
+    height: 26px;
+    margin-top: 6px;
+    margin-left: 15px;
+    background-color: #F8F8F8;
+    float: left;
+}
+.password span{
+    width: 2px;
+    height: 30px;
+    background: rgba(230,230,230,1);
+    border-radius: 1px;
+    margin-right: 9px;
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+}
+.username input, .password input, .ver input{
+    width: 210px;
+    height: 36px;
+    border: none;
+    background: rgba(248,248,248,1);
+    outline: none;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+.check{
+    float: left;
+    height: 17px;
+}
+.check input{
+    float: left;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: #999999;
+    border: 1px solid rgba(153, 153, 153, 1);
+    border-radius: 4px;
+}
+.check span{
+    width: 40px;
+    height: 12px;
+    font-size: 12px;
+    float: left;
+    font-family: MicrosoftYaHei;
+    color: rgba(102, 102, 102, 1);
+    margin-top: 2px;    
+}
+.remeber a{
+    width: 70px;
+    text-align: right;
+    height: 13px;
+    font-size: 12px;
+    font-family: MicrosoftYaHei;
+    color: rgba(102, 102, 102, 1);
+    float: right;
+}
+.loginType a:nth-child(2){
+
+    margin-left: 47px;
+}

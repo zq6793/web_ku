@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	
+	
+	<link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+	<style>
+		.title-img {
+			display: inline-block;
+			width: 4px;
+			height: 12px;
+			background-color: #1A90EB;
+		}
+		
+		.rolling-title li {
+			list-style: none;
+		}
+		
+		.left-box {
+			width: 16%;
+			min-width: 200px;
+			min-height: 950px;
+		}
+		
+		ul li {
+			list-style: none;
+		}
+		
+		.tree ul {
+			padding: 20px 0px 20px 20px;
+		}
+		
+		.three li {
+			font-size: 14px;
+			padding: 0px 0px 20px 0px;
+		}
+		
+		ul li:last-child {
+			padding-bottom: 0px;
+		}
+		
+		.two {
+			padding-bottom: 0px!important;
+		}
+		
+		.content:after {
+			clear: both;
+			content: "";
+			display: block;
+		}
+		
+		.content>div {
+			float: left;
+		}
+		
+		.one {
+			padding-top: 0px;
+		}
+		.tree{
+			width: 516px;
+			height: 740px;
+			border: 1px solid gainsboro;
+		}
+		.title{
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			height: 40px;
+			border-bottom: 1px solid gainsboro;
+		}
+		.left-box{
+			border-right: 1px solid #E4E4E4;
+		}
+		.right-box{
+			margin-left: 20px;
+		}
+		.content{
+		}
+		.rolling-title li{
+			cursor: pointer;
+			border-radius: 4px;
+			background-color: #E4E4E4;
+			text-align: center;
+			padding: 10px 0px 10px 0px!important;
+		}
+		.rolling-title{
+			padding: 0px;
+			margin: 20px 20px 0px 20px;
+		}
+		.comfire{
+			margin-top: 20px;
+		}
+		.title span{
+			padding-left: 10px;
+			font-size: 15px;
+		}
+		.name{
+			font-size: 16px;
+			height: 40px;
+		}
+		.tree-content li{
+			border-radius: 4px;
+			text-align: left;
+			padding: 10px 0px 10px 0px!important;
+		}
+		.tree-content{
+			padding: 0px;
+			margin: 20px 20px 0px 20px;
+		}
+		.one >li>label{
+			color: #666666;
+			font-weight: 600;
+			font-size: 15px;
+		}
+		.rightBox{
+		    width: calc(100% - 60px);
+		    margin-left: 30px;
+		}
+		.tree-content .one{
+			margin-left: 10px;
+		}
+		.tree-content .two{
+			margin-left: 22px;
+		}
+		.tree-content .three{
+			margin-left: 22px;
+		}
+		.tree-content .two li{
+			padding: 0px!important;
+		}
+		.tree-content .three li{
+			padding: 0px!important;
+		}
+		.tree-content .one li{
+			padding: 0px!important;
+		}
+	</style>
+
+	<body>
+		<div class="rightBox">
+			<div class="content">
+				<div class="left-box">
+					<span class="title-img"></span><span class="name">工程计划</span>
+					<ul class="rolling-title">
+						<li>添加计划</li>
+					</ul>
+					
+					<ul class="tree-content">
+						<li style="font-size: 16px;"><img width="14px" height="14px" src="../static/img/down.png"/>桥涵工程</li>
+						<ul class="one">
+							<li>
+								<img width="14px" height="14px" src="../static/img/down.png"/>
+								<label>临建工程</label>
+								<ul class="two">
+									<li>
+										<img width="14px" height="14px" src="../static/img/down.png"/>
+										<label style="font-size: 15px;font-weight: 600;">基础工程</label>
+										<ul class="three">
+											<li>
+												<label>桩基</label>
+											</li>
+											<li>
+												<label>承台、明挖、沉井、系梁等</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<img width="14px" height="14px" src="../static/img/down.png"/>
+										<label style="font-size: 15px;font-weight: 600;">下部结构</label>
+										<ul class="three">
+											<li>
+												<label>桥墩、桥台</label>
+											</li>
+											<li>
+												<label>预制混凝土梁</label>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+	
+							<li>
+								<img width="14px" height="14px" src="../static/img/down.png"/>
+								<label>临建工程</label>
+								<ul class="two">
+									<li>
+										<img width="14px" height="14px" src="../static/img/down.png"/>
+										<label style="font-size: 15px;font-weight: 600;">基础工程</label>
+										<ul class="three">
+											<li>
+												<label>桩基</label>
+											</li>
+											<li>
+												<label>承台、明挖、沉井、系梁等</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<img width="14px" height="14px" src="../static/img/down.png"/>
+										<label style="font-size: 15px;font-weight: 600;">下部结构</label>
+										<ul class="three">
+											<li>
+												<label>桥墩、桥台</label>
+											</li>
+											<li>
+												<label>预制混凝土梁</label>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li>
+								<img width="14px" height="14px" src="../static/img/down.png"/>
+								<label>临建工程</label>
+								<ul class="two">
+									<li>
+										<img width="14px" height="14px" src="../static/img/down.png"/>
+										<label style="font-size: 15px;font-weight: 600;">基础工程</label>
+										<ul class="three">
+											<li>
+												<label>桩基</label>
+											</li>
+											<li>
+												<label>承台、明挖、沉井、系梁等</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<img width="14px" height="14px" src="../static/img/down.png"/>
+										<label style="font-size: 15px;font-weight: 600;">下部结构</label>
+										<ul class="three">
+											<li>
+												<label>桥墩、桥台</label>
+											</li>
+											<li>
+												<label>预制混凝土梁</label>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</ul>
+				</div>
+				<div class="right-box">
+					<p class="name">新建工程计划</p>
+					<div class="tree" style="overflow-y: scroll;">
+						<div class="title"><span>部位</span></div>
+						<ul class="one">
+							<li>
+								<input type="checkbox" />
+								<label>临建工程</label>
+								<ul class="two">
+									<li>
+										<input type="checkbox" />
+										<label style="font-size: 15px;font-weight: 600;">基础工程</label>
+										<ul class="three">
+											<li>
+												<input type="checkbox" />
+												<label>桩基</label>
+											</li>
+											<li>
+												<input type="checkbox" />
+												<label>承台、明挖、沉井、系梁等</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<input type="checkbox" />
+										<label style="font-size: 15px;font-weight: 600;">下部结构</label>
+										<ul class="three">
+											<li>
+												<input type="checkbox" />
+												<label>桥墩、桥台</label>
+											</li>
+											<li>
+												<input type="checkbox" />
+												<label>预制混凝土梁</label>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+	
+							<li>
+								<input type="checkbox" />
+								<label>临建工程</label>
+								<ul class="two">
+									<li>
+										<input type="checkbox" />
+										<label style="font-size: 15px;font-weight: 600;">基础工程</label>
+										<ul class="three">
+											<li>
+												<input type="checkbox" />
+												<label>桩基</label>
+											</li>
+											<li>
+												<input type="checkbox" />
+												<label>承台、明挖、沉井、系梁等</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<input type="checkbox" />
+										<label style="font-size: 15px;font-weight: 600;">下部结构</label>
+										<ul class="three">
+											<li>
+												<input type="checkbox" />
+												<label>桥墩、桥台</label>
+											</li>
+											<li>
+												<input type="checkbox" />
+												<label>预制混凝土梁</label>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							
+							<li>
+								<input type="checkbox" />
+								<label>临建工程</label>
+								<ul class="two">
+									<li>
+										<input type="checkbox" />
+										<label style="font-size: 15px;font-weight: 600;">基础工程</label>
+										<ul class="three">
+											<li>
+												<input type="checkbox" />
+												<label>桩基</label>
+											</li>
+											<li>
+												<input type="checkbox" />
+												<label>承台、明挖、沉井、系梁等</label>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<input type="checkbox" />
+										<label style="font-size: 15px;font-weight: 600;">下部结构</label>
+										<ul class="three">
+											<li>
+												<input type="checkbox" />
+												<label>桥墩、桥台</label>
+											</li>
+											<li>
+												<input type="checkbox" />
+												<label>预制混凝土梁</label>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<button class="comfire btnBlue">确认</button>
+				</div>
+			</div>	
+		</div>
+	</body>
+	<script src="../../static/jquery-1.8.3.js"></script>
+	<script>
+		$(function(){
+			$(".tree-content>li").click(function(){
+				if($(this).hasClass("click")){
+					$(this).removeClass("click");
+					$(this).children("img").attr("src","../static/img/down.png");
+				}else{
+					$(this).children("img").attr("src","../static/img/down1.png");
+					$(this).addClass("click")
+				}
+				$(this).next().stop().toggle(200)
+			})
+			$(".one>li>label").click(function(){
+				if($(this).hasClass("click")){
+					$(this).removeClass("click");
+					$(this).prev("img").attr("src","../static/img/down.png");
+				}else{
+					$(this).prev("img").attr("src","../static/img/down1.png");
+					$(this).addClass("click")
+				}
+				$(this).next(".two").stop().toggle(200);
+			})
+			$(".two>li>label").click(function(){
+				if($(this).hasClass("click")){
+					$(this).removeClass("click");
+					$(this).prev("img").attr("src","../static/img/down.png");
+				}else{
+					$(this).prev("img").attr("src","../static/img/down1.png");
+					$(this).addClass("click")
+				}
+				$(this).next(".three").stop().toggle(200)
+			})
+			$(".comfire").click(function(){
+				console.log($(this))
+				var arrJson=[];
+				var arrOne=[];
+				var arrTwo=[];
+				var arrThree=[];
+				$(".one input:checkbox:checked").not('.two input').each(function(){
+					if($(this).attr("checked")=="checked"){
+						
+					}
+					arrJson.push({
+						"one":$(this).next().text()
+					});
+				})
+				$(".two input:checkbox:checked").not('.three input').each(function(){
+					arrTwo.push($(this).next().text());
+				})
+				$(".three input:checkbox:checked").each(function(){
+					arrThree.push($(this).next().text());
+				})
+				console.log(arrJson)
+			})
+			
+		})
+	</script>
+</html>

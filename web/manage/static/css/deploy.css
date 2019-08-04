@@ -1,0 +1,120 @@
+.personList{
+    display: none;
+}
+.needDetail{
+    width: calc(100% - 68px);
+    margin-left: 34px;
+    height: 100px;
+    margin-top: 53px;
+}
+.needDetail h3{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 22px;
+    color: #333333;
+    background-color: #ffffff;
+}
+.num{
+    width:calc(100% - 20px);
+    margin-left: 20px;
+    height: 60px;
+    background-color: #E6E6E6;
+}
+.num span{
+    margin-left: 20px;
+    width: 15%;
+    float: left;
+    height: 60px;
+    line-height: 60px;
+}
+.num span:nth-child(3)，span:nth-child(4){
+    width: 20%;
+}
+.num span:nth-child(2){
+    width: 25%;
+}
+.num span:nth-child(3){
+    margin-left: 75px;
+}
+.deployMes{
+    width: calc(100% - 68px);
+    margin-left: 34px;
+    height: 100px;
+    margin-top: 53px;
+}
+.deployMes h3{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 22px;
+    color: #333333;
+    background-color: #ffffff;
+}
+.ratio{
+    width:calc(100% - 20px);
+    margin-left: 20px;
+    height: 60px;
+    background-color: #E6E6E6; 
+}
+.ratio span{
+    width: 10%;
+    height: 60px;
+    float: left;
+    text-align: center;
+    line-height: 60px;
+}
+.ratio select{
+    height: 30px;
+    width: 18%;
+    margin-top: 15px;
+}
+.ratio a{
+    width: 9%;
+    display: inline-block;
+    height: 25px;
+    text-align: center;
+    background: #6e6e6e;
+    color: #ffffff;
+    margin-left: 15px;
+}
+.recipe{
+    width:calc(100% - 20px);
+    margin-left: 20px;
+    height: 60px;
+    background-color: #E6E6E6; 
+}
+.everyRecipe{
+    float: left;
+    width: 20%;
+}
+.everyRecipe span{
+    display: inline-block;
+    width: 20%;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 20px;
+    margin-left: 5px;
+}
+.everyRecipe span:nth-child(1){
+    margin-left: 23px;
+}
+.everyRecipe input{
+    width: 60%;
+    height: 25px;
+}
+.sub{
+    width: calc(100% - 60px);
+    margin-left: 25px;
+    height: 60px;
+    margin-top: 200px;
+}
+.sub a{
+    width: 70px;
+    height: 30px;
+    float: right;
+    text-align: center;
+    color: #ffffff;
+    line-height: 30px;
+    background: #075A8F;
+}

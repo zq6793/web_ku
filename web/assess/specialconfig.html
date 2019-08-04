@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>特殊项目设置</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+
+	</head>
+	<body>
+		
+		<!-- right -->
+		<div class="rightBox">
+			<div class="nav1 clearfix">
+				<a href="gradeconfig.html" class="btnAct1" >等级分数</a>
+				<a href="valueconfig.html" class="btnAct1">产值系数</a>
+				<a href="scaleconfig.html"  class="btnAct1">规模分数</a>
+				<a href="numberconfig.html" class="btnAct1" >参评个数</a>
+				<a href="specialconfig.html" class="active btnAct1">特殊项目</a>
+				<a href="difficultconfig.html" class="btnAct1">施工难度</a>
+				<a href="typeconfig.html" class="btnAct1">队伍类型</a>
+			</div>
+			<div class="config clearfix">
+					
+					
+					<!-- 特殊项目 -->
+					<div class="conTable fl" id="special">
+						<h3>特殊项目加分设置 <span class="helpFont" id="helpFont" title="点击查看说明及帮助"></span></h3>
+						<span class="err"></span>
+							<div id="helpContext" class="helpContext">
+							<p>产值系数只能为非负数，并且精确小数后8位 注！(正常产值，近三年系数，之前年份系数为系统工作必有的参数，请勿随意操作)</p>
+						</div>
+						<table>
+							<thead>
+								<tr>
+									<th>名称</th>
+									<th>分数</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								
+							</tbody>
+						</table>
+					</div>
+					
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		domAjax();
+	
+		
+	})
+	//默认加载
+	function domAjax(){
+		DX.ajax_method({
+			'type':'POST',
+			'url':'/eva/ads/findAllAddScore',
+			'param':{},
+			'callBack':tableCall
+		})
+	}
+	// 渲染回调
+	function tableCall(res){
+		 
+		console.log(res);
+		if(res.code !='200'){console.log('没有数据');return;}
+			
+		var special = '';//特殊项目
+		if(res.data[3].length != 0 && res.data[3] != null){
+			special = each(res.data[3]);
+		}
+		$('#special table tbody').html(special+end1(3));
+		// $('#special tbody tr').click(function(){
+		// 	DX.clickTr($(this),['input']);			
+		// })
+		// 失去焦点值为空 恢复原先的值
+		var inputVlaue = '';
+		$('.conTable tbody td input').focus(function(){
+			var status =$(this).parents('tr').attr('status');//是保存的时候不能恢复
+			if(status == undefined) return;
+			inputVlaue = $(this).val();
+			console.log(inputVlaue);
+		})
+		$('.conTable tbody td input').blur(function(){
+			var status =$(this).parents('tr').attr('status');//是保存的时候不能恢复
+			if(status == undefined) return;
+			if(DX.isNull($(this).val())){
+				$(this).val(inputVlaue);
+			}
+		})
+		//修改 
+		$('.mod1').click(function(){
+			mod($(this),'/eva/ads/updateAddScore');
+		})
+		//删除 
+		$('.del1').click(function(){
+			del($(this),'/eva/ads/deleteAddScore');
+		})
+		//新增 
+		$('.inset1').click(function(){
+			inset($(this),'/eva/ads/insertAddScore');
+		})
+		
+	}
+	//table的添加
+	function end1(id){
+		return '<tr id ="'+id+'"><td class="clum1"><input type="text" value="" class="tableEdit" /></td><td class="clum2"><input type="text" value="" class="tableEdit" /></td><td><span class="inset1">添加</span></td></tr>';
+	}
+	
+	// 循环渲染 除队伍操作的table
+	function each(data){
+		var html = '';							
+		$.each(data,function(i,val){
+			html += '<tr status="'+val.status+'">';
+			html += "<td class='clum1'><input type='text' value='"+val.add_item+"' class='tableEdit' /></td>";
+			html += "<td class='clum2'><input type='text' value='"+val.project_score+"' class='tableEdit' /></td>";
+			html += "<td id='"+val.aid+"'><span class='mod1'>修改</span><span class='del1'>删除</span></td>";
+			html += '</tr>';
+		})
+		return html;
+	}
+	/* 修改
+	* obj 当前元素$(this)
+	* url 接口地址
+	* bar true 为队伍规模操作
+	*/
+	function mod(obj,url){
+		$('.err').hide();
+		var id = obj.parent().attr('id');
+		var name = obj.parent().siblings('.clum1').find('input').val();
+		var value = obj.parent().siblings('.clum2').find('input').val();
+		var status = obj.parents('tr').attr('status');
+		var res = {'aid':id,'add_item':name,'project_score':value};
+		
+		var isname = DX.isNull(name);
+		if(isname){
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('名称不能为空');return;
+		}
+		
+		var isvalueN = DX.isNull(value);
+		if(isvalueN){
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('分数不能为空');return;
+		}
+		var isvalue = DX.isFloat8(value);
+		if(!isvalue){
+			obj.parent().siblings('.clum2').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('分数只能为正数且小数后八位');return;
+		}
+		
+		DX.ajax_method({
+			'type':'POST',
+			'url':url,
+			'param':res,
+			'change':obj[0],
+			'callBack':function(res){
+				// console.log(res);
+				if(res.code != '200'){
+					obj.parents('.conTable').find('.err').show();
+					obj.parents('.conTable').find('.err').html(res.msg);
+				}
+			}
+		})
+	}
+
+	/* 删除
+	* obj 当前元素$(this)
+	* url 接口地址
+	* bar true 为队伍规模操作
+	*/
+	function del(obj,url){
+		$('.err').hide();
+		var sub = confirm('确认删除');
+		
+		if(!sub) return;
+		var id = obj.parent().attr('id');
+		var param = {'id':id};
+		
+		DX.ajax_method({
+			'type':'POST',
+			'url':url,
+			'param':param,
+			'change':obj[0],
+			'callBack':function(res){
+				console.log(res);
+				if(res.code != '200'){
+					obj.parents('.conTable').find('.err').show();
+					obj.parents('.conTable').find('.err').html(res.msg);
+				}else{
+					domAjax();
+				}
+			}
+		})
+	}
+	
+	/* 新增
+	* obj 当前元素$(this)
+	* url 接口地址
+	* bar true 为队伍规模操作
+	*/
+	function inset(obj,url){
+		$('.err').hide();
+		var name = obj.parent().siblings('.clum1').find('input').val();
+		var value = obj.parent().siblings('.clum2').find('input').val();
+		var status = obj.parents('tr').attr('id');
+		var res = {'add_item':name,'project_score':value,'status':status};
+	
+		var isname = DX.isNull(name);
+		if(isname){
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('名称不能为空');return;
+		}
+			
+		var isvalueN = DX.isNull(value);
+		if(isvalueN){
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('分数不能为空');return;
+		}
+		var isvalue = DX.isFloat8(value);
+		if(!isvalue){
+			obj.parent().siblings('.clum2').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('分数只能为正数且小数后八位');return;
+		}
+		
+
+		DX.ajax_method({
+			'type':'POST',
+			'url':url,
+			'param':res,
+			'change':obj[0],
+			'callBack':function(res){
+				if(res.code != '200'){
+					obj.parents('.conTable').find('.err').show();
+					obj.parents('.conTable').find('.err').html(res.msg);
+				}else{
+					domAjax();
+					// obj.parents('tr').before(html);
+				}
+			}
+		})
+	}
+</script>

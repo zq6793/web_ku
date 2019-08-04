@@ -1,0 +1,73 @@
+.err{    display: block;
+    font-size: 12px;
+    color: red;
+    text-indent: 36px;}
+/* 出勤列表 */
+.contant{margin: 20px 30px 0 30px;}
+/* .contant .nav .add{display: block;} */
+.contant .day{max-width: 1000px;margin-top: 10px;}
+.contant .day tr th{width: 20%;}
+
+/* 考勤详情 */
+.attendance{margin: 20px 30px 0 30px;}
+.attendance table{max-width: 1000px;}
+.attendance table tr th{width: 20%;}
+.attendance tbody tr td a{margin: 0 10px;}
+
+/* 添加考勤 */
+.addattendance{margin: 20px 30px 0 30px;}
+.addattendance table{table-layout:fixed;}
+.addattendance table td.allselect{cursor: pointer;}
+
+.addattendance .selects{margin-bottom: 10px; background: url(../img/background.png) no-repeat center right;}
+.addattendance .selects select{width: 120px;height: 30px;line-height: 30px;margin-right: 20px;text-indent: 5px;color: #666666;}
+.addattendance .selects span{line-height: 30px;color: #666666;}
+
+.addattendance table td.one{background: #07c626;}
+.addattendance table td.two{background: #fd2b10;}
+.addattendance table td.three{background: #222222;}
+.addattendance table td.four{background: #5de0f4;}
+.addattendance table td.five{background: #15a6d5;}
+.addattendance table td.six{background: #ff674e;}
+.addattendance table td.seven{background: #fe9a9a;}
+.addattendance table td.eight{background: #a15e53;}
+.addattendance table td.nine{background: #e1e1e1;}
+.addattendance table td.ten{background: #fff;}
+.addattendance table td.eleven{background: #8eedb6;}
+.addattendance table td.twelve{background: #21e0ba;}
+.addattendance table td.thirteen{background: #f4bf1c;}
+.addattendance table td.fourteen{background: #ff8921;}
+
+
+/* 鼠标右键自定义菜单 */
+#myMenu{
+	position:absolute;
+	width:80px;
+	padding: 10px 0;
+	box-sizing: border-box;
+	border:1px solid #CCCCCC;
+	background:#F8F8F8;
+	display:none;
+}
+#myMenu li{text-indent: 5px;line-height: 24px;font-size: 13px;cursor:pointer;padding: 0 10px;}
+#myMenu li:hover{background: #199ED8;}
+
+/* 人员 */
+.people{margin: 20px 30px 0 30px;}
+/* .people table{max-width: 1200px;} */
+.people table tr th:nth-child(3),.people table tr th:nth-child(5),.people table tr th:nth-child(7){width: 10%;}
+.people table tr th{width: 15%;}
+.people .search{padding-bottom: 10px;}
+.people .search input{width: 220px;margin-right: 20px;height: 28px;line-height: 28px;border: 1px solid #CCCCCC;text-indent: 5px;border-radius: 3px;}
+
+/* 编辑人员 */
+.ml20{margin-left: 20px;}
+.editpeople{margin: 20px 30px 0 30px;font-size: 13px;}
+.editpeople form{width: 80%;box-shadow: 0px 2px 13px 0px rgba(19,20,21,0.08);padding: 30px 20px 120px 20px;margin: 50px 30px;}
+.editpeople p{line-height: 40px;padding: 5px 0;}
+.editpeople span{width: 100px;text-align: right;padding-right: 10px;color: #666666;}
+.editpeople input[type=text]{width: 200px;height: 28px;line-height: 28px;border: 1px solid #CCCCCC;margin-top: 5px;text-indent: 5px;border-radius: 3px;}
+.editpeople select{width: 150px;height: 30px;border: 1px solid #CCCCCC;text-indent: 5px;margin-top: 5px;border-radius: 3px;}
+.editpeople label{margin-right: 30px;}
+.editpeople label input{width: 16px;height: 16px;margin-top: 12px;margin-right: 10px;}
+.editpeople .submit{margin-top: 30px;margin-left: 30px;}

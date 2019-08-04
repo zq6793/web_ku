@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>编辑考勤</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+	</head>
+	<body>
+		<div class="addattendance" id="addattendance" v-cloak>
+			<div class="selects clearfix">
+				<span class="fl">月份：{{select}}</span>
+				<!-- <span class="fl">当月：{{day}}天</span> -->
+			</div>
+			<table class="table">
+				<thead>
+					<!-- <th><label><input type="checkbox" checked @click="allSelect"></label></th> -->
+					<th width="6%">姓名</th>
+					<th v-for="val,index of day">{{index+1}}</th>
+					<!-- <th>操作</th> -->
+				</thead>
+				<tbody>
+					<tr >
+						<!-- <td><label><input type="checkbox" checked></label></td> -->
+						<td class="allselect">{{name}}</td>
+						<td v-for="val,index of dayList" class="click" :class="val.class"></td>
+						<!-- <td><span class="listToDetail">删除</span></td> -->
+					</tr>
+				</tbody>
+			</table>
+			<p class="err" style="text-indent: 0;">{{message}}</p>
+			<span class="btnOrange inline-block" @click="addSub" style="margin-top: 15px;">提交</span>
+			<span class="btnOrange inline-block" @click="toUrl" style="margin-top: 15px;">取消</span>
+		</div>
+		
+		<!-- 右键菜单 -->
+		<ul class="myMenu" id="myMenu">
+			<li id="one">出勤</li>
+			<li id="two">事假</li>
+			<li id="three">矿工</li>
+			<li id="four">出差</li>
+			<li id="five">学习</li>
+			<li id="six">探亲</li>
+			<li id="seven">婚假</li>
+			<li id="eight">病假</li>
+			<li id="nine">丧假</li>
+			<li id="ten">未点名</li>
+			<li id="eleven">公休</li>
+			<li id="twelve">年休</li>
+			<li id="thirteen">护理</li>
+			<li id="fourteen">产假</li>
+		</ul>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var Id = DX.getParam('id');
+	var vm = new Vue({
+		el:'#addattendance',
+		mounted:function(){
+			this.getData();
+		},
+		data:{
+			'message':"",//消息
+			'id':Id,//详情id
+			'select':'',//select选中值
+			'day':30,//总天数
+			'dayList':[],//考勤月份列表
+			'name':''//人员列表
+		},
+		methods:{
+			addSub:function(values){
+				var $this=this;
+				var ress = {'id': $this.id};
+				var config = ['two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen'];
+				$.each($('.table tbody tr'),function(i,val){
+
+					var obj ={'day':[],'type':[]};
+					$.each($(this).children('.click'),function(j,value){
+						var that = $(this);
+						$.each(config,function(s,cls){
+							if(that.attr('class').indexOf(cls) != -1){
+								obj.day.push(j+1);
+								obj.type.push(s+2);	
+							}
+						})
+					})
+					
+					ress.absenteeism_day=obj.day.join(',');
+					ress.absenteeism_cause=obj.type.join(',');
+				})
+
+				
+				DX.ajax_method({
+					'type':'POST',
+					'param':ress,
+					'url':'/finance/att/update',
+					'change':values.target,
+					'callBack':function(res){
+						if(res.code == 200){
+							console.log(res);
+							$this.toUrl();
+						}else{
+							$this.message = res.msg;
+						}
+					}
+				})
+			},
+			getData:function(){//获取项目部个人数据
+				var $this = this;
+				DX.ajax_method({
+					// 'type':'POST',
+					'param':{'id':$this.id},
+					'url':"/finance/att/findUserAttendanceById",
+					'callBack':function(res){
+						if(res.code == 200){
+							console.log(res);
+							$this.day = res.data[0].allDays;
+							$this.dayList =res.data[0].Daylist;
+							$this.name = res.data[0].name;
+							$this.select = res.data[0].year;
+							
+							setTimeout(function(){leftClick()},200);
+						}
+					}
+				})
+				
+			},
+			toUrl:function(){
+				url = 'attendance.html?year='+this.select;
+				window.location.href = url;
+			}
+		}
+	})
+	
+	function leftClick(){
+		
+		var that;
+		//点击出现选择
+		$('.click').on('contextmenu',function(e){
+			that = $(this);
+			$('#myMenu').show().css({
+				'top':e.pageY+'px',
+				'left':e.pageX+'px'
+			});
+			e.preventDefault();
+		});
+		//正常点击
+		$('#myMenu li').click(function(){
+			
+			dom(that);
+			var className = $(this).attr('id');
+			console.log(className);
+			that.removeClass('ten').addClass(className);
+		});
+		
+		$(window).click(function(){
+			$('#myMenu').hide();
+		})
+		// 双击全部正常
+		// $('.allselect').dblclick(function(){
+		// 	dom($(this).parent().children('.click'));
+		// 	if($(this).parent().hasClass('check')){
+		// 		$(this).parent().removeClass('check');
+		// 		$(this).parent().children('.click').removeClass('one').addClass('ten');
+		// 	}else{
+		// 		$(this).parent().addClass('check');
+		// 		$(this).parent().children('.click').addClass('one').removeClass('ten');
+		// 	}
+		// 	
+		// })
+		// 初始化背景
+		function dom(that){
+			$.each($('#myMenu li'),function(i,val){
+				var cls = $(this).attr('id');
+				console.log(cls);
+				// if(cls!='ten'){
+					if(cls == 'ten') return true;
+				that.removeClass(cls);				
+				// }
+			})
+			
+		}
+	}
+</script>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>人员列表</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/style.css"/>
+	</head>
+	<body>
+		<div class="people" id="people" v-cloak>
+			<div class="search clearfix">
+				<input type="text" placeholder="电话、姓名"  class="fl" v-model="conant" />
+				<button type="button" class="fl btnOrange" @click="getData">查询</button>
+			</div>
+			<table class="table tableHover">
+				<thead>
+					<tr>
+						<th>姓名</th>
+						<th>电话</th>
+						<th>性别</th>
+						<th>岗位</th>
+						<th>技术职称</th>
+						<th>技能</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="val,index in list">
+						<td>{{val.name}}</td>
+						<td>{{val.phone}}</td>
+						<td>{{val.sex}}</td>
+						<td>{{val.work_name}}</td>
+						<td>{{val.technical}}</td>
+						<td>{{val.skill}}</td>
+						<td><a :href="'editpeople.html?id='+val.uid" class="listToDetail">编辑</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="page1"></div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	var vm = new Vue({
+		el:'#people',
+		mounted:function(){
+			this.getData();
+		},
+		data:{
+			'list':[],
+			'conant':"",//查询条件
+		},
+		methods:{
+			getData:function(){//获取数据
+				var value = this.conant;
+				var $this = this;
+				
+				pages.init({
+					'key':['condition'],
+					'value':[value],
+					'type':'POST',
+					'url':'/finance/work/findAllUserWork',
+					'callBack':function(res){
+						console.log(res);
+						if(res.code == 200){
+							$this.list = [];
+							$this.list = res.data.list;
+							
+							clickTr();//选中
+						}
+					}
+					
+				})
+				
+			}
+		}
+	})
+	
+	function clickTr(){
+		setTimeout(function(){
+			$('table tbody tr').click(function(){
+				DX.clickTr($(this));
+			})
+		},100)
+	}
+</script>

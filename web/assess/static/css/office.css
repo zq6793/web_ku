@@ -1,0 +1,95 @@
+html,body{width: 100%;height: 100%;color: #333333;}
+
+/* table */
+table > tbody > tr:hover{background: #f2f896;}
+table > tbody > tr:hover input{background: #f2f896;}
+/* table > tbody > tr:hover span{background: #f2f896;} */
+table > tbody > tr:hover td{background: #f2f896;}
+
+table > thead > tr > th{border:1px solid #e3e3e3;}
+.ml34{margin-left: 34px;}
+.mt30{margin-top: 30px;}
+.btn{width: 65px;line-height: 30px;background: rgba(25, 158, 216, 1);color: #fff;border-radius: 3px;text-align: center;font-size: 13px;cursor: pointer;border: 0;}
+.midcontant{width: calc(100% - 60px);margin-left: 30px;}
+
+.right_top{width: calc(100% - 60px);font-size: 13px;margin-left: 30px;}
+.right_top h3,.right_contant h3{width: 100%;line-height: 30px;border-left: 3px solid #1296DB;margin: 20px 0;text-indent: 20px;font-size: 16px;font-weight: bold;}
+.right_top select{width: 160px;line-height: 30px;height: 30px;text-indent: 20px;}
+.right_top p{line-height: 30px;margin-left: 20px;text-align: center;width: 50px;}
+.right_top p:last-child{background: rgba(242, 242, 242, 1);}
+
+.right_contant{width: calc(100% - 60px);font-size: 13px;margin-left: 30px;margin-top: 50px;}
+.right_contant ul.clearfix p{font-size: 13px;font-weight: bold;}
+.right_contant ul.clearfix{margin-bottom: 15px;}
+.right_contant .list{width: 800px;line-height: 50px;background: rgba(242, 242, 242, 1);}
+.right_contant .list p{text-indent: 15px;}
+.right_contant .list span.fl{color: red;}
+.right_contant .list span.fr{line-height: 50px;margin-right:15px;}
+.right_contant .list input{width: 120px;line-height: 50px;height: 30px;border: 0; background: #fff;margin-top: 10px;margin-right: 10px;text-indent: 20px;}
+
+/* 查看项目部 */
+.downFile{font-size: 13px;}
+.downFile .top{position: relative;padding:0 0 15px 0;}
+.downFile .top input{width: 300px;height: 28px;border: 1px solid #ccc;text-indent: 10px;border-radius: 3px;}
+.downFile .top .blue{margin-left: 20px;width: 65px;line-height: 30px;background: rgba(25, 158, 216, 1);color: #fff;border-radius: 3px;text-align: center;font-size: 13px;cursor: pointer;}
+.downFile .top .res{position: absolute;left: 0;top: 50px;background: #fff;width: 350px;border: 1px solid #ccc;max-height: 245px;overflow-y: scroll;cursor: pointer;}
+.downFile .top .res li{line-height: 30px;text-indent: 10px;border-bottom: 1px solid #ccc;margin: 0 5px;}
+.downFile .top .res li:hover{font-size: 16px;}
+
+.downFile .middle{line-height: 30px;margin-left: 20px;}
+.downFile .middle h3{font-size: 16px;font-weight: bold;}
+.downFile .middle select{width: 160px;margin-left: 30px;height: 30px;border-radius: 3px;border: 1px solid #ccc;text-indent: 5px;}
+.downFile .middle p{color: rgba(25, 158, 216, 1);cursor: pointer;margin-left: 20px;border-radius: 3px;}
+
+/* 评价汇总 项目部*/
+.result1{width: 100% ;margin-top:20px;font-size: 13px;min-height: 500px;}
+.result1 table{width: 100%;}
+.result1 table thead th{width: 18%;background: #f5f5f6;}
+.result1 table thead th:nth-child(1),.result1 table thead th:nth-child(2){width: 3%;}
+.result1 table thead th:nth-child(7),.result1 table thead th:nth-child(8),.result1 table thead th:nth-child(9),.result1 table thead th:nth-child(4),.result1 table thead th:nth-child(10){width: 7%;}
+/* .result1 table thead th:nth-child(5){width: 22%;overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;} */
+.result1 table thead th:nth-child(6){width: 9%;}
+.result1 table tbody td:last-child a{color: #F44837;display:inline-block;margin: 0 10px;}
+.result1 table tr th,.result1 table tr td{line-height: 32px;text-align: center;}
+.result1 table tr td{border: 1px solid #e3e3e3;}
+
+/* 弹层 */
+.model{position: fixed;background: #000000;opacity: 0.5;width: 100%;height: 100%;top: 0;left: 0;z-index: 100;display: none;}
+.photo{position: fixed;background: #fff;width: 400px;height: 400px;top: 50%;left: 50%;margin-left: -200px;margin-top: -200px;z-index: 200;display: none;overflow-y: auto;}
+.photo ul{padding-top: 15px;}
+.photo ul li{line-height: 30px;
+    margin-left: 15px;}
+.photo ul li span{color: #1296DB;cursor: pointer;padding-right:10px;}
+/* .photo ul{width: 200px;margin: 0 auto;} */
+/* .photo ul li{margin-left: 20px;width: 65px;line-height: 30px;background: rgba(25, 158, 216, 1);color: #fff;border-radius: 3px;text-align: center;font-size: 13px;cursor: pointer;} */
+.photo img{width: 100%;height: 100%;display: block;}
+.block{display: block;}
+
+/* 附件列表 */
+.filelist{width: calc(100% - 60px);margin-left: 30px;font-size: 13px;margin-top: 10px;}
+.filelist .people{width: 100%;}
+.filelist h3{font-size: 18px;font-weight: 500;line-height: 40px;}
+ .filelist h3 button{   
+	 
+	margin: 20px 0;
+	margin-left: 45px;
+	
+   }
+.filelist .people ul{text-indent: 40px;}
+.filelist .people ul li{line-height: 30px;}
+.filelist .files1 p{font-size: 13px;line-height: 30px;text-indent: 40px;}
+.filelist .files1 p a{margin-left: 30px;}
+.filelist .files1 ul{line-height: 30px;width: 700px;margin-left: 50px;}
+.filelist .files1 ul li{float: left;width: 20%;}
+.filelist .files1 ul li:first-child{width: 30%;}
+.filelist .files1 ul li a{color: #0675BC;}
+
+/* 
+参评进度
+ */
+.schedule{margin: 20px 30px 0 30px;}
+.schedule .schedule_top{padding-bottom: 10px;}
+.schedule .schedule_top p{line-height: 30px;margin-right: 10px;}
+.schedule .schedule_top .select{width: 120px;margin-right: 20px;}
+.schedule .schedule_top .input{width: 250px;margin-right: 10px;}
+/* .schedule .schedule_top span.fl{line-height: 30px;margin-right: 10px;} */

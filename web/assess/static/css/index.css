@@ -1,0 +1,255 @@
+html,body{width: 100%;height: 100%;}
+
+/* table */
+table > tbody > tr:hover{background: #f2f896;}
+table > tbody > tr:hover input{background: #f2f896;}
+/* table > tbody > tr:hover span{background: #f2f896;} */
+table > tbody > tr:hover td{background: #f2f896;}
+table > thead > tr > th{border:1px solid #e3e3e3;}
+/*body{background: #f8f8f8;}*/
+.table{width: calc(100% - 60px);margin-top:15px;margin-left: 30px;font-size: 13px;min-height: 350px;}
+.table table{width: 100%;border:1px solid #e3e3e3;}
+.table table tr th,.table table tr td{line-height: 32px;}
+.table table thead tr th{background: #f5f5f6;width: 8%;border: 1px solid #e3e3e3;}
+.table table thead tr th:nth-child(1){width:3%;}
+/* .table table thead tr th:nth-child(1){width: 10%;} */
+/* .table table tbody tr:nth-child(2n){background: #E6E6E6;} */
+.table table tbody tr td{text-align: center;border: 1px solid #e3e3e3;}
+.table table tbody tr td:nth-child(1){width:3%;}
+.table table tbody tr td:last-child a{color:  #F44837 ;margin-right: 10px;}
+.table table tbody tr td:last-child span{margin-left: 10px;color:  #F44837 ;}
+.insert a{margin-top: 20px;margin-left: 30px;}
+.index_err{margin-right: 34px;width: 30%;text-align: left;margin-top: 5px;text-indent:30px}
+
+/* 修改 */
+.mod{box-shadow:0px 2px 13px 0px rgba(19,20,21,0.08);width: calc(100% - 60px);padding-bottom: 30px;background:rgba(255,255,255,1);margin-left: 30px;
+margin-top: 20px;background: #fff;}
+.mod form{width: 350px;display: block;padding: 30px 70px 20px 70px;}
+.mod form label{width: 50%;color: #666;font-size: 13px;line-height: 20px;}
+.mod form label:first-child{width: 100%;}
+.mod input{width: 40%;line-height: 30px;font-size: 13px;color: #333;text-indent: 10px;margin: 8px 0 10px 0;border-radius: 5px;border: 1px solid #ccc;
+outline: none;height: 30px;}
+.ml10{margin-left: 10% !important;}
+.mod .getback{margin-left: 70px;}
+.mod button{margin-left: 50px;}
+/* .mod button,.mod .getback{width:100px;height:30px;background:rgba(244,99,34,1);border-radius:4px;border: 0;outline: none;color: #fff;
+line-height: 30px;display: inline-block;text-align: center;font-size: 13px;} */
+/* 队伍信息展示 */
+.team{width: calc(100% - 60px);margin-left: 30px;box-shadow:0px 2px 13px 0px rgba(19,20,21,0.08);margin-top: 20px;height:500px;box-sizing: border-box;
+padding: 60px 0 0 100px;font-size: 13px;background: #fff;}
+.team input,.team select{background: #F8F8F8;border: 1px solid #ccc;text-indent: 10px;outline: none;}
+.one label{width: 40%;color: #666666 ;}
+.one input{width: 80%;display: block;height: 30px;line-height: 30px;margin-top: 5px;color: #333;}
+.two{margin-top: 30px;}
+.two label{width: 18%;color: #666666 ;}
+.two input,.two select{width: 80%;display: block;height: 30px;line-height: 30px;margin-top: 5px;color: #333;}
+.three{margin-top: 30px;box-sizing: border-box;padding-right: 30px;}
+.three label{width: 100%;color: #666666 ;}
+.three ul{padding: 10px 10px 10px 0;}
+.three ul span{padding:5px 10px;background: #F8F8F8;border: 1px solid #ccc;}
+.three ul input[type='checkbox']{width: 20px;height: 20px;margin: 5px 10px;}
+.team .submit{width:100px;height:30px;background:rgba(244,99,34,1);border-radius:4px; margin: 20px auto;display: block;border: 0;color: #fff;line-height: 30px;}
+/* 评价汇总 项目部*/
+.result1{width: calc(100% - 60px);margin-top:20px;margin-left: 30px;font-size: 13px;min-height: 500px;}
+.result1 table{width: 100%;}
+.result1 table thead th{width: 18%;background: #f5f5f6;}
+.result1 table thead th:nth-child(1),.result1 table thead th:nth-child(2){width: 3%;}
+.result1 table thead th:nth-child(7),.result1 table thead th:nth-child(8),.result1 table thead th:nth-child(9),.result1 table thead th:nth-child(4),.result1 table thead th:nth-child(10){width: 7%;}
+/* .result1 table thead th:nth-child(5){width: 22%;overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;} */
+.result1 table thead th:nth-child(6){width: 9%;}
+.result1 table tbody td:last-child a{color: #F44837;display:inline-block;margin: 0 10px;}
+
+/* .result1 table tbody td:last-child a{color: #F44837;display:inline-block;margin: 0 10px;} */
+.result1 table tr th,.result1 table tr td{line-height: 32px;text-align: center;}
+.result1 table tr td{border: 1px solid #e3e3e3;}
+/* 评价汇总 机关的*/
+.result{width: calc(100% - 60px);margin-top:20px;margin-left: 30px;font-size: 13px;min-height: 500px;text-align: center;}
+.result table{width: 100%;}
+.result table thead th{width: 12%;background: #f5f5f6;}
+.result table thead th:nth-child(1),.result table thead th:nth-child(2),.result table thead th:nth-child(6),.result table thead th:nth-child(8){width: 4%;}
+.result table thead th:nth-child(4),.result table thead th:nth-child(9),.result table thead th:nth-child(10){width: 6%;}
+/* .result table thead th:nth-child(7){width: 16%;overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;} */
+.result table thead th:nth-child(3),.result table thead th:nth-child(5),.result table thead th:nth-child(7){width: 15%;}
+.result table tbody td:nth-child(3),.result table tbody td:nth-child(5),.result table tbody td:nth-child(7){text-align: left;padding: 0 3px;}
+.result table tbody td:nth-child(9),.result table tbody td:nth-child(10){text-align: right;padding: 0 3px;}
+.result table thead th:nth-child(8){width: 4%;}
+.result table thead th:last-child{width: 7%;}
+.result table tbody td:last-child a{display:inline-block;}
+.result table tr th,.result table tr td{line-height: 32px;}
+.result table tr td{border: 1px solid #e3e3e3;}
+.result > table > tbody > tr.hover{background: #fff !important;}
+/*.result table tbody tr:nth-child(2n){background: #F0EFEF;}*/
+.showcheck{width: calc(100% - 60px);margin: 0 auto;margin-top: 10px;}
+.showcheck .check{display: block;margin-right: 20px;}
+/* .showcheck .selectyear{width: 670px;} */
+.showcheck span{padding-right: 20px;display: inline-block;line-height: 30px;height: 30px;}
+.showcheck span#seeCode{position: relative;cursor: pointer;margin-left: 10px;}
+.showcheck span#seeCode img{position: absolute;top: 28px;left: 0;width: 100px;height: 100px;display: none;box-sizing: border-box;padding: 5px;background: #F8F8F8;}
+.showcheck select{width: 150px;height: 30px;line-height: 30px;border-radius: 5px;outline: none;border: 1px solid #ccc;text-indent: 5px;}
+.showcheck .allMod{border: 0;margin-right: 20px;}
+/* 配置维护 */
+.config{width: calc(100% - 60px);margin-top:20px;margin-left: 30px;font-size: 13px;min-height: 500px;}
+/* .config .left,.config .right{width: 50%;} */
+.config .conTable{width: 80%;max-width: 800px;}
+.config .conTable h3{line-height: 30px;font-size: 13px;font-weight: bold;border-left: 4px solid rgba(25, 158, 216, 1);margin: 10px 0;text-indent: 10px;}
+.config .conTable table{width: 100%;background: #fff;}
+.config .conTable table thead tr th{width: 33%;background: #f5f5f6;line-height: 32px;}
+.config .conTable table tbody tr td{border: 1px solid #e3e3e3;text-align: center;line-height: 32px;}
+.config .conTable table tbody tr td input{border: 0;width: 100%;text-align: center;display: block;height: 32px;}
+.config .conTable table tbody tr td span{margin: 0 10px;color: #F46322;cursor: pointer;}
+#scale table thead tr th{width: 25%;}
+/* 选择队伍页面 */
+.query input{width: 25%;height:30px;margin: 20px 20px 0 34px;line-height: 30px;font-size: 13px;text-indent: 10px;outline: none;border: 1px solid #ccc;
+	background-position: 3px 9px;border-radius: 3px;}
+.query button,.query a{margin-top: 20px;}
+
+.checklist th input[type='checkbox'],.checklist td input[type='checkbox']{width: 15px;height: 15px;margin: 0 auto;position: relative;top: 3px;}
+.checklist td label{display: block;height: 32px;}
+/* 等级划分页面 */
+.drap{font-size: 13px;}
+.drap h3{line-height: 20px;font-weight: 600;}
+.drap ul.fl{margin-left: 30px;min-height: 500px;width: 12%;padding:10px 20px 20px 20px;font-size: 13px;}
+	/* align-items:center;justify-content: center;flex-direction: column;display: flex; */
+.drap ul.fl li{line-height: 30px;display: block;text-align: left;width: 100%;cursor: pointer;border: 1px solid #ccc;margin-top: 15px;height: 30px;
+	background:#F0EFEF;border-radius: 5px;}
+.drap ul.fl li span{display: block;overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;text-indent: 5px;}
+.drap .right{margin-left: 6%;width: 65%;}
+.drap .right h4{font-size: 13px;line-height: 40px;width: 100%;margin-left: 15px;}
+.drap .right h4 span{font-size: 12px;line-height: 30px;}
+.drap .right ul{float:left; width: 14%;height: 30px;line-height: 30px;border: 1px solid #ccc;margin-left: 15px;border-radius: 5px;text-indent: 5px;background: #F0EFEF;}
+.drap .right ul span{display: block;cursor: pointer;overflow: hidden;  
+	white-space: nowrap;  text-overflow: ellipsis;}
+button.next{margin: 0 15px;}
+/* 评分页面drap2 */
+.drap2{width: calc(100% - 60px);margin-top:20px;margin-left: 30px;font-size: 13px;}
+.drap2 table{width: 100%;}
+.drap2 table thead th{background: #f5f5f6;}
+.drap2 table thead th:nth-child(1){width: 5%;}
+.drap2 table thead th:nth-child(4),.drap2 table thead th:nth-child(6),.drap2 table thead th:nth-child(8),.drap2 table thead th:nth-child(9){width: 8%;}
+.drap2 table thead th:nth-child(2){width: 20%;}
+.drap2 table thead th:nth-child(7){width: 20%;}
+.drap2 table thead th:nth-child(3),.drap2 table thead th:nth-child(5){width: 15%;}
+/* .drap2 table thead th:nth-child(1),.drap2 table thead th:nth-child(7),.drap2 table thead th:nth-child(8){width: 10%;} */
+.drap2 table tr th,.drap2 table tr td{line-height: 32px;text-align: center;}
+.drap2 table tr td{border: 1px solid #e3e3e3;background: #fff;padding: 0;}
+
+.drap2 table tr td:nth-child(3),.drap2 table tr td:nth-child(5){cursor: pointer;position: relative;background-clip: content-box;}
+.drap2 table tr td span.please{display: block;overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;width: 100%;height: 100%;}
+.drap2 table tr td:nth-child(2){overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;}
+/*.drap2 table tbody tr:nth-child(2n){background: #F0EFEF;}*/
+.drap2 table tr td input{line-height: 32px;text-align: center;border: 0;display: block;width: 100%;height: 32px;}
+.drap2 table tr td.clum7 input{height: 16px;}
+/* .drap2 table tr td.clum4 p{display: flex;justify-content:center;} */
+/* .drap2 table tr td.clum4 input{width: 15px;height: 15px;float: left;margin: 12px 5px 0;} */
+/* .drap2 table tr td.clum4 span{float: left;margin: 0 5px;} */
+/* 弹层 */	
+.drap2 table .type{width: 260px;height: 300px;position: absolute;left: 0;top: 32px;font-size: 13px;color: #333;border: 1px solid #ccc;
+z-index: 100;background: #fff;}
+.drap2 table .type ol{overflow-y: scroll;width: 100%;height: 270px;}
+.drap2 .type h3{line-height: 28px;border-bottom: 1px solid #ccc;text-align: left;text-indent: 20px;}
+.drap2 .type h3 span{margin-left: 10px;background: #f46322;color: #fff;padding: 2px 10px;border-radius: 3px;}
+.drap2 .type h3 span.close{margin-left: 130px;}
+.drap2 .type li{width: 150%;line-height: 30px;text-align: left;overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis;cursor: default;}
+.drap2 .type li input{width: 15px;height: 15px;margin:8px 15px 0;}
+.subAll{float: right;margin-right: 34px;margin-top: 34px;}
+
+/* 详情 */
+.deatil{width: calc(100% - 60px);margin-top:20px;margin-left: 30px;font-size: 13px;min-height: 500px;}
+.deatil .head span.one{background: url('../img/oneback.png') no-repeat;}
+.deatil .head span.twoq{background: url('../img/twoback.png') no-repeat;}
+.deatil .head span.threeq{background: url('../img/three.png') no-repeat;}
+.deatil .head span.other{background: url('../img/other.png') no-repeat;}
+.deatil .head{font-size: 16px;box-shadow:0px 5px 5px rgba(0, 0, 0, 0.349019607843137);box-sizing: border-box;padding: 20px 40px;line-height: 48px;}
+.deatil .blue{color:#1296db;font-size: 26px;}
+.deatil .order{width: 40px;height: 46px;line-height: 48px;text-align: center;color: #fff;}
+.deatil .head h3{font-weight: bold;}
+.deatil .head h3.company{width: 500px;margin-left: 20px;}
+.deatil .head h3.fen{margin-left: 200px;}
+/* 得分构成 */
+.deatil .getbranch h3{font-size: 16px;font-weight: bold;}
+.deatil .getbranch ul{width: 20%;}
+.deatil .getbranch ul li{width: 80%;margin: 0 auto;background:#f0efef;text-align: center;line-height: 40px;overflow: hidden;white-space: nowrap;text-overflow:ellipsis;}
+.deatil .getbranch ul li:first-child{font-weight: bold;padding-top: 15px;}
+.deatil .getbranch ul li:nth-child(2){padding-bottom: 15px;}
+/* 得分明细 */
+.deatil .definite h3{font-size: 16px;font-weight: bold;line-height: 80px;font-size: 16px;}
+.deatil .definite .grade{width: 48%; }
+.definite .grade h4{line-height: 30px;text-indent: 10px;}
+.definite .grade .selectback{width: 100%;height:100px;background: #1296db;line-height: 100px;box-sizing: border-box;padding: 0 30px;}
+.definite .white{font-size: 26px;color: #fff;margin-left: 20px;}
+.definite .grade .selectback span.ml20{margin-left: 10%;}
+.definite .grade ul.pt10{padding-top:10px;}
+.definite .grade ul.pb10{padding-bottom:10px;}
+.definite .grade ul li{float: left;width: 10%;line-height: 30px;text-align: center;}
+.definite .grade ul li:first-child{font-weight: bold;}
+.definite .grade .blue1{color: #1296DB;}
+.definite .boxshad{box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.349019607843137);border-radius: 10px;overflow: hidden;}
+.deatil .titlegra{line-height: 60px;}
+.deatil .leftand{width: 48%;margin-left: 2%;}
+.deatil .leftand h4{line-height: 30px;text-indent: 10px;}
+.deatil .leftand .bold{font-size: 16px;font-weight: bold;}
+.deatil .leftand .actblue{font-weight: bold;color: #1296DB;}
+.deatil .leftand .left1{background: #1296DB;width: 40%;height: 180px;}
+.deatil .leftand .left1 p{line-height: 60px;text-indent: 10px;}
+.deatil .leftand .left1 p:first-child{padding-top: 30px;}
+.deatil .leftand .rightx{width: 60%;}
+.deatil .leftand .rightx ul{line-height: 40px;}
+.deatil .leftand .rightx ul li{width: 50%;text-align: center;float: left;}
+.deatil .leftand .rightx ul li:first-child,.deatil .leftand .rightx ul li:nth-child(2){width: 25%;}
+.deatil .leftand.ml0{margin-left: 0;}
+.deatil .leftand.mt20{margin-top: 20px;}
+.deatil .leftand .spright ul{line-height: 25px;}
+.deatil .back{
+    width: 120px;
+    line-height: 30px;
+    font-size: 13px;
+    border: 0;
+    background: #F46322;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    /* margin-top: 30px; */
+    display: block;
+    margin: 30px auto;
+}
+
+/* 详情 */
+.details{font-size: 13px;width: 100%;margin-left: 20px;}
+.details h3{text-indent: 10px;border-left: 5px solid #4BA1FF;text-align: left;font-weight: bold;font-size: 16px;line-height: 26px;margin: 7px 0;}
+.details p{text-indent: 10px;line-height: 30px;text-align: left;}
+.details p span:nth-child(1){width: 350px;text-align: left;}
+.ml20{margin-left: 20px;}
+.blod{font-weight: bold;}
+.details ul{width: 33%;padding: 5px 0;}
+.details ul li{text-align: left;text-indent: 10px;}
+.details ul p span:nth-child(1){width: 50%;}
+
+/* 帮助提示 */
+.conTable .helpFont{position: relative;top: 3px;left: 10px;}
+
+/* 扣分明细 */
+.deduction{padding:10px 20px 30px;}
+.deduction ul{font-size: 12px;padding: 10px 0;position: relative;}
+.deduction button{width: 80px;
+    border: 0;
+    background: #199ed8;
+    color: #fff;
+    height: 30px;
+    border-radius: 3px;
+	/* position: absolute;
+	right: 10px;
+	top: 10px; */
+	float: right;
+	cursor: pointer;
+}
+.deduction ul li{float: left;width: 10%;margin: 0 5px;background: #C9C9C9;text-align: center;line-height: 30px;border-radius: 3px;cursor: pointer;max-width: 130px;}
+.deduction ul li.actw{background: #199ed8;color: #fff;}
+.deduction .context{background: #fff;display: none;}
+.deduction .context h3{border-left: 5px solid #199ed8;line-height: 22px;margin: 15px 0;margin-left: 10px;text-indent: 10px;}
+.deduction .context ol{margin-left: 10px;padding: 5px 0;}
+.deduction .context ol li{width: 75%;float: left;line-height: 30px;font-size: 13px;max-width: 1050px;}
+.deduction .context ol input{width: 15%;float:left ;margin-left: 30px;height: 24px;border: 1px solid #E3E3E3;margin-top: 2px;text-indent: 5px;max-width: 160px;}
+
+/* 施工队名录详情 */
+.labor{width: 100%;padding: 10px;box-sizing: border-box;font-size: 13px;background: #F8F8F8;}
+.labor p{float: left;width: 50%;line-height: 30px;}

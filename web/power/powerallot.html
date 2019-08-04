@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>权限管理</title>
+    <link rel="stylesheet" type="text/css" href="../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/powerallot.css"/>
+</head>
+<body>
+    <!-- right -->
+    <div class="rightBox">
+   
+        <!-- <div class="nav">
+            <span>当前所在位置：权限设置></span><span class="pointer">权限分配</span>
+        </div> -->
+        <!-- 权限分配总体 -->
+        <div class="allotBox">
+            <p class="titleHeader">角色列表</p>
+            <!-- 权限分配左侧 -->
+            <div class="allotLeftBox" id="rolelist">
+                <p class="addRole">
+                    <button type="button" class="addRoleBtn pointer">添加新角色</button>
+                </p>
+               
+                <a class="title clearfix active navHeader" href="javascript:void(0)">
+                    <span class="bg"></span>
+                    <span class="navName">部领导</span>
+                </a>
+                <ul class="personList">
+                    <li><span></span><a href="#.html">项目经理</a></li>
+                    <li><span class="active"></span><a href="#.html">项目书记</a></li>
+                </ul>
+              <!-- <a class="title clearfix active navHeader" href="javascript:void(0)">
+                    <span class="bg"></span>
+                    <span class="navName">综合办公室</span>
+                </a> -->
+                <!-- <ul class="personList">
+                    <li><span></span><a href="#.html">项目经理</a></li>
+                    <li><span class="active"></span><a href="#.html">项目书记</a></li>
+                </ul> -->
+                <!-- <a class="title clearfix active navHeader" href="javascript:void(0)">
+                    <span class="bg"></span>
+                    <span class="navName">安全质量局</span>
+                </a> -->
+                <!-- <ul class="personList">
+                    <li><span></span><a href="#.html">项目经理</a></li>
+                    <li><span class="active"></span><a href="#.html">项目书记</a></li>
+                </ul> -->
+            </div>
+            <!-- 点击添加新角色出现弹窗 -->
+            <div class="showNewRole none">
+                <p>
+                    <span>角色名称:</span>
+                    <input type="text" class="writeIn" placeholder="请输入角色名称">
+                </p>
+                <p>
+                    <span>选择部门:</span>
+                    <select name="" id="" class="choosePart">
+                        <option value="">请选择部门</option>
+                    </select>
+                </p>
+                <p style="float:right;">
+                    <button type="button" class="noBtn">取 消</button>
+                    <button type="button" class="saveBtn">保 存</button>
+                </p>
+                
+            </div>
+
+            <!-- 权限分配右侧 -->
+            <div class="allotRightBox">
+                <ul class="rightBoxHeader">
+                    <li class="allotLimits pointer chooseIn">角色权限</li>
+                    <!-- <li class="allotUser pointer">角色用户</li> -->
+                </ul>
+                <!-- 点击角色权限出现 -->
+                <div class="limitsBox" >
+                    <div class="limitsLeft" id="rolesBox" style="visibility: hidden;">
+                        <p class="">程序权限</p>
+                        <a class=" clearfix  limitsList" href="javascript:void(0)">
+                            <span class="bg "></span>
+                            <span>物资合同审核管理</span>
+                            <span class="direction"></span>
+                        </a>
+                        <ul class="personList">
+                            <li><span></span><a href="#.html">供方调查审核</a></li>
+                            <li><span class=""></span><a href="#.html">物资合同审核</a></li>
+                            <li><span class=""></span><a href="#.html">供方重新调查评价审核</a></li>
+                        </ul> 
+                      <a class="clearfix active limitsList" href="javascript:void(0)">
+                            <span class="bg "></span>
+                            <span>供应商管理</span>
+                            <span class="direction"></span>
+                        </a>
+                        <ul class="personList">
+                            <li><span class="active"></span><a href="#.html">供方重新调查评价审核</a></li>
+                        </ul>
+                        <a class="clearfix active limitsList" href="javascript:void(0)">
+                            <span class="bg "></span>
+                            <span>部门职员管理</span>
+                            <span class="direction"></span>
+                        </a>
+                        <ul class="personList">
+                            <li><span></span><a href="#.html">职员审核</a></li>
+                        </ul>
+                    </div>
+                    <!-- 右侧已分配 -->
+                    <div class="limitsRight">
+                        <p>已分配权限</p>
+                        <div class="finishAllot" id="haves">
+                            <a class="title clearfix active" href="javascript:void(0)">
+                                <span class="bg "></span>
+                                <span>物资合同审核管理</span>
+                                <span class="direction"></span>
+                            </a>
+                            <ul class="personList">
+                                <li><span></span><a href="#.html">供方调查审核</a></li>
+                                <li><span class="active"></span><a href="#.html">物资合同审核</a></li>
+                                <li><span class="active"></span><a href="#.html">供方重新调查评价审核</a></li>
+                            </ul>
+                        </div>
+						<button type="button" class="subBtn" id="submit">保 存</button>
+						<span class="err"></span>
+                    </div>
+                    
+                </div>
+                <!-- 点击角色用户出现列表 -->
+               <!-- <div class="allotUserTable none">
+                    <table  id="list" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr id="outfit">
+                                <th>登录账号</th>
+                                <th>姓名</th>
+                                <th>部门</th>
+                                <th>职位</th>
+                                <th>权限范围</th>
+                            </tr> 
+                        </thead>
+                        <tbody>
+                            <tr id="detail">
+                                <td>15103318956</td>
+                                <td>张三</td>
+                                <td>物资部</td>
+                                <td>科室主任</td>
+                                <td><a href="#">查看</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	var id = DX.getParam('id');//添加角色的回显
+$(document).ready(function(){
+	//加载角色列表
+	DX.ajax_method({
+		'type':'GET',
+		'param':{},
+		'url':'/user/role/findUnitOrProjectRoles',
+		'callBack':function(res){
+			// console.log(res);
+			if(res.code == '200'){
+				var html = '';
+				$.each(res.data,function(i,val){
+					html += '<a class="clearfix  navHeader" href="javascript:void(0)"><span class="bg"></span>';
+                    html += '<span class="navName">'+val.roleName+'</span></a>';
+					html += '<ul class="personList">';
+					$.each(val.subRoles,function(index,value){
+						html += '<li rid="'+value.rid+'"><span></span><a href="javascript:void(0)">'+value.roleName+'</a></li>';
+					})
+					html += ' </ul>';
+
+				})
+				$('#rolelist').append(html);
+				
+				$('.navHeader').click(function(){//点击展示二级菜单
+					$('.navHeader .bg').css('backgroundImage','url(static/img/min-left.png)');
+					if($(this).find('.bg').hasClass('bgactive')){
+						$(this).find('.bg').removeClass('bgactive');
+					}else{
+						$(this).find('.bg').addClass('bgactive');
+					}
+					
+					// $(this).find('.bg').css('backgroundImage','url(static/img/min.png)');
+					// $(this).find('.bg').addClass('bgactive');
+					checklist($(this),'.personList');
+				})
+				$('.personList li').click(function(){//点击显示右边权限列表和已有权限
+					$('.personList1 li').removeClass('selectback');
+					$('.personList li').removeClass('selectMenu');
+					$(this).addClass('selectMenu');
+					$('#rolesBox').css("visibility","visible");
+					var rid = $(this).attr('rid');
+					have(rid);
+					domPerssion(rid);
+				})
+				
+				addRoleShow();
+			}
+		}
+	})
+	//添加完角色的回显
+	function addRoleShow(){
+		if(id != null){
+			$.each($('.personList li'),function(i,val){
+				// console.log(id);
+				// console.log($(this).attr('rid'));
+				if(id == $(this).attr('rid')){
+					// console.log(111);
+					// $(this).addClass('selectMenu');
+					// $('#rolesBox').css("visibility","visible");
+					// var rid = $(this).attr('rid');
+					// have(rid);
+					// domPerssion(rid);
+					$(this).click();
+					//角色列表的回显
+					$(this).parent().prev('.navHeader').find('.bg').addClass('bgactive');
+					checklist($(this).parent().prev('.navHeader'),'.personList');
+				}
+			})
+		}
+	}
+	//程序权限加载
+	function domPerssion(rid){
+		DX.ajax_method({
+			'type':'GET',
+			'param':{'rid':rid},
+			'url':'/user/perm/findPerms',
+			'callBack':function(res){
+				if(res.code == '200'){
+					// console.log(res);
+					var html = '';
+					$.each(res.data,function(i,val){
+						html += '<a class="clearfix  limitsList" href="javascript:void(0)"><span class="bg"></span>';
+		                html += '<span class="navName">'+val.name+'</span></a>';
+						html += '<ul class="personList1">';
+						$.each(val.subPerms,function(index,value){
+							
+							if(value.checked){
+								html += '<li pid="'+value.pid+'" class="selectback"><span></span><a href="javascript:void(0)">'+value.name+'</a></li>';
+							}else{
+								html += '<li pid="'+value.pid+'" class=""><a href="javascript:void(0)">'+value.name+'</a></li>';
+							}
+						})
+						html += ' </ul>';
+		
+					})
+					$('#rolesBox p').siblings().remove();
+					$('#rolesBox p').after(html);
+					//回显选中权限
+					$.each($('.personList1 li'),function(i,val){
+						
+						if($(this).hasClass('selectback')){
+							$(this).parent().show();
+							$(this).parent().prev('.limitsList').find('.bg').addClass('bgactive');
+						}
+					})
+					$('.limitsList').click(function(){//点击显示二级菜单
+						$('.limitsList .bg').css('backgroundImage','url(static/img/min-left.png)');
+						
+						if($(this).find('.bg').hasClass('bgactive')){
+							$(this).find('.bg').removeClass('bgactive');
+						}else{
+							$(this).find('.bg').addClass('bgactive');
+						}
+						checklist($(this),'.personList1');
+					})
+					//点击选中
+					$('.personList1 li').click(function(){
+						if($(this).hasClass('selectback')){
+							$(this).removeClass('selectback');
+						}else{
+							$(this).addClass('selectback');
+						}
+					})
+				}
+			}
+		})
+	}
+	//保存 赋予权限
+	$('#submit').click(function(){
+		$('.err').hide();
+		var rid = $('.personList li.selectMenu').attr('rid');
+		var pids = '';
+		$.each($('.personList1 li'),function(i,val){
+			if($(this).hasClass('selectback')){
+				pids += $(this).attr('pid')+',';
+			}
+		})
+		if(pids.length < 1){
+			$('.err').show().text('请选择权限');return;
+			// console.log('请选择权限');
+		}
+		// console.log(pids);
+		var that = $(this);
+		var res = pids.substring(pids.length - 1,-1).split(',');
+		DX.ajax_method({
+			'type':'POST',
+			'url':'/user/role/grantRole',
+			'change':that[0],
+			'param':{'rid':rid,'pids[]':res},
+			'callBack':function(res){
+				if(res.code == '200'){
+					var rid1 = $('.personList li.selectMenu').attr('rid');
+					have(rid1);
+				}
+			}
+		})
+	})
+	
+	//加载已经存在的权限
+	function have(rid){
+		
+		DX.ajax_method({
+			'type':'GET',
+			'url':'/user/perm/findRolePerms',
+			'param':{'rid':rid,},
+			'callBack':function(res){
+				// console.log(res);
+				if(res.code == '200'){
+					var html = '';
+					$.each(res.data,function(i,val){
+						html += '<a class="clearfix havers" href="javascript:void(0)"><span class="bg"></span>';
+					    html += '<span class="navName">'+val.name+'</span></a>';
+						html += '<ul class="personList2">';
+						$.each(val.subPerms,function(index,value){
+							html += '<li pid="'+value.pid+'"><span></span><a href="javascript:void(0)">'+value.name+'</a></li>';
+						})
+						html += '</ul>';
+					
+					})
+					$('#haves').html(html);
+				}
+				$('.havers').click(function(){//点击显示二级菜单
+					$('.havers .bg').css('backgroundImage','url(static/img/min-left.png)');
+					
+					if($(this).find('.bg').hasClass('bgactive')){
+						$(this).find('.bg').removeClass('bgactive');
+					}else{
+						$(this).find('.bg').addClass('bgactive');
+					}
+					checklist($(this),'.personList2');
+				})
+			}
+		})
+	}
+    // obj当前操作元素 html被操作元素
+	function checklist(obj,html){
+		// console.log(obj);
+		if(obj.hasClass('active')){
+		    obj.removeClass('active');
+		    // obj.css('background','none')
+		    obj.next(html).slideUp(100);return;
+		}
+		// $(this).css('background','#F0EFEF').siblings('.title').css('background','none');
+		// obj.css('background','#f5f5f5');
+		// $(this).addClass('active').siblings('.title').removeClass('active');
+		obj.addClass('active');
+		// $(this).next('.personList').slideDown(100).siblings('.personList').slideUp();
+		obj.next(html).slideDown(100);
+	}
+
+//     //切换角色权限  角色用户的相对应内容
+//     $('.allotUser').click(function(){
+//         $(this).addClass('chooseIn');
+//         $(this).siblings().removeClass('chooseIn');
+//         $('.limitsBox').addClass('none');
+//         $('.allotUserTable').removeClass('none');
+//     })
+//     $('.allotLimits').click(function(){
+//         $(this).addClass('chooseIn');
+//         $(this).siblings().removeClass('chooseIn');
+//         $('.allotUserTable').addClass('none');
+//         $('.limitsBox').removeClass('none');
+//     })
+// 
+//     //点击添加新角色弹出添加框
+//     $('.addRoleBtn').click(function(){
+//         $('.showNewRole').removeClass('none');
+//     })
+//     $('.saveBtn').click(function(){
+//         $('.showNewRole').addClass('none');
+//     })
+//     $('.noBtn').click(function(){
+//         $('.showNewRole').addClass('none');
+//     })
+})
+</script>

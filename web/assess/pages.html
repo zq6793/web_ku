@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>分页</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<style type="text/css">
+			/* 分页 */
+			.page1{max-width: 650px;margin: 20px auto;font-size: 14px;width: 100%;}
+			.page1:after {
+			    content: ".";
+			    display: block;
+			    height: 0;
+			    clear: both;
+			    visibility: hidden;
+			}
+			.pages1{float: left;width:35% ;color: #003F7E;}
+			.pages1 li{float: left;width: 25%;text-align: center;cursor: pointer;}
+			.pages1 li:hover{color: red;text-decoration: underline;}
+			.show1{float: left;width: 60%;margin-left: 20px;}
+			.show1 span{float: left;color: #000;padding: 0 5px;}
+			.show1  input{width: 70px;display: inline-block;height: 18px;text-align: center;border: 1px solid #ccc;}
+			
+			.page_active{color: #ccc;}
+		</style>
+		
+		
+	</head>
+	<body>
+		<div class="page1" >
+				
+				
+		</div>
+		
+		<div class="page clearfix">
+				<ul class="pages clearfix">
+					<li class="first">首页</li>
+					<li class="pre">上一页</li>
+					<li class="next">下一页</li>
+					<li class="last">尾页</li>
+				</ul>
+				<div class="show clearfix">
+					<span class="page_index">第1页</span>
+					<span class="page_count">/ 共1页</span>
+					<span class="page_count1">共0条</span>
+				</div>
+				<div class="select clearfix">
+					<div class="num">
+						<span>每页</span>
+						<input type="number"  id="page_number" value="15" min="1"/>
+						<span>条</span>
+					</div>
+					<div class="tourl">
+						<span>跳转到</span>
+						<input type="number" value="1" min="1"/>
+						<span id="page_tourl" style="cursor: pointer;">确认</span>
+					</div>
+				</div>
+				<!-- 当前页码 -->
+				<input type="hidden" name="" id="page_index" value="1">
+				<!-- 起始id -->
+				<input type="hidden" name="" id="page_pre" value="1">
+				<input type="hidden" name="" id="page_next" value="1">
+				<!-- <input type="hidden" name="" id="page_state" value="1"> -->
+				<!-- 共多少页 -->
+				<input type="hidden" name="" id="page_last" value="3" />
+				
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	pages.init({
+		'key':['a','b'],
+		'value':[111,122],
+		'url':'/eva/eva/findTeamBychecked',
+		'callBack':call,
+	});
+	function call(res){
+		console.log(res);
+	}
+						
+</script>

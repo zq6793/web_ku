@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>出库明细</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/goods.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <div class="search">
+            <select name="" id="" class="select" style="width: 15%;">
+                <option value="">一级分类</option>
+            </select>
+            <select name="" id="" class="select" style="width: 15%;">
+                <option value="">二级分类</option>
+            </select>
+            <input type="text" placeholder="材料名称、出库员" class="input" style="width: 15%;">
+            <input type="text" placeholder="出库时间" class="input" style="width: 15%;margin-right: 30px;">
+            <button type="button" class="btnOrange">查询</button>
+        </div>
+        <div class="tableBox">
+            <table class="table tableHover" cellspacing="0" cellpadding="0">
+
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../static/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../../static/js/common.js"></script>
+<script src="../../static/js/pages.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.table tbody tr').click(function(){
+        DX.clickTr($(this));  
+    })
+})
+</script>

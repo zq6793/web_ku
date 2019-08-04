@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>开具点料单</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/goods.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <div class="search">
+            <select name="" id="" class="select" style="width: 15%;">
+                <option value="">一级分类</option>
+            </select>
+            <select name="" id="" class="select" style="width: 15%;">
+                <option value="">二级分类</option>
+            </select>
+            <input type="text" placeholder="材料名、材料来源、入库员" class="input" style="width: 15%;">
+            <input type="text" placeholder="入库时间" class="input" style="width: 15%;">
+            <button type="button" class="btnOrange">查询</button>
+        </div>
+        <div class="tableBox">
+            <table class="table tableHover" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th style="width:4.3%;">序号</th>
+                        <th style="width:10%;">材料分类</th>
+                        <th style="width:15%;">材料来源</th>
+                        <th style="width:8.6%;">材料名称</th>
+                        <th style="width:12.2%;">规格型号</th>
+                        <th style="width: 8.6%;">计量单位</th>
+                        <th style="width: 8.6%;">入库数量</th>
+                        <th style="width: 10.7%;">入库时间</th>
+                        <th style="width: 6.5%;">入库员</th>
+                        <th style="width: 10.8%;">操作时间</th>
+                        <th style="width: 4.7%"><span class="listToDetail">全选</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>水泥&nbsp;&nbsp;水泥</td>
+                        <td>朝晖建材门市部</td>
+                        <td>水泥</td>
+                        <td>袋装PO.32.5</td>
+                        <td>吨</td>
+                        <td>60</td>
+                        <td>2010/5/11</td>
+                        <td>龚佳斯</td>
+                        <td>2014/3/14</td>
+                        <td><input type="checkbox" name="" id=""></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../static/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../../static/js/common.js"></script>
+<script src="../../static/js/pages.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.table tbody tr').click(function(){
+        DX.clickTr($(this));  
+    })
+})
+</script>

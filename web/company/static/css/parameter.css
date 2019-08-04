@@ -1,0 +1,88 @@
+html,body{width: 100%;height: 100%;color: #333333;}
+.rightBox{width:calc(100% - 78px);margin-left: 34px;}
+/* .none{display: none;} */
+table > thead > tr > th{border:1px solid #e3e3e3;background: #f5f5f6;}
+table > tbody > tr > td{text-align:center;border:1px solid #e3e3e3;}
+table > tbody > tr:hover{background: #f2f896;}
+.nav{padding: 10px 0;border-bottom: 1px solid #ccc;} 
+.nav li{float: left;font-size: 14px;width: 120px;text-align: center;line-height: 35px;border-radius: 5px;background:rgba(228, 228, 228, 1);cursor: pointer;}
+.nav li:nth-child(2){margin-left: 30px;}
+.nav li.active{background: rgba(25, 158, 216, 1);color: #fff;}
+.rightBox .contant{width: 100%;margin-top: 15px;}
+.rightBox .cont_left{background:rgba(228, 228, 228, 1);width: 160px;position: relative;}
+.rightBox .cont_left h3{font-size: 16px;font-weight: bold;line-height: 50px;text-align: center;}
+.rightBox .cont_left p.add{width: 120px;border: 1px solid rgba(25, 158, 216, 1);color: rgba(25, 158, 216, 1);text-align: center;margin: 0 auto;background: #fff;
+	line-height: 30px;border-radius: 5px;cursor: pointer;}
+.rightBox .cont_left .list{margin-top: 15px;min-height: 400px;font-size: 14px;}
+.rightBox .cont_left .list li{line-height: 35px;text-indent: 20px;cursor: pointer;}	
+.rightBox .cont_left .list li.active{background: rgba(25, 158, 216, 1);color: #fff;}	
+.rightBox .cont_left .list li:hover{background: #C9C9C9;color: #fff;}
+.rightBox .cont_right{width: calc(100% - 200px);position: relative;}
+.rightBox .cont_right .right_top p.btn{width: 120px;border: 1px solid rgba(25, 158, 216, 1);color: rgba(25, 158, 216, 1);text-align: center;margin: 0 auto;background: #fff;
+	line-height: 30px;border-radius: 5px;cursor: pointer;font-size: 14px;}
+.err{width: auto;margin-left: 10px;line-height: 35px;color: red;font-size: 12px;display: none;}
+.rightBox .cont_right .right_top ul{width: 350px;height: 35px;position: relative;}
+.rightBox .cont_right .right_top ul input{width: 90%;height: 28px;line-height: 28px;border: 1px solid #ccc;text-indent: 10px;border-radius: 5px;}
+/* .rightBox .cont_right .right_top ul span{width: 40px;height: 30px;background: url(../img/u2789.png) no-repeat;position: absolute;left: 280px;} */
+.rightBox .cont_right table{width: 100%;line-height: 36px;margin-top: 15px;font-size: 14px;}
+.rightBox .cont_right table thead th:nth-child(1),.rightBox .cont_right table thead th:nth-child(2){width: 8%;}
+.rightBox .cont_right table thead th:nth-child(3){width: 60%;}
+.rightBox .cont_right table thead th:nth-child(4){width: 15%;}
+.rightBox .cont_right table input[type=checkbox]{width: 15px;height: 15px;}
+.rightBox .cont_right table td:last-child{color: red;cursor: pointer;}
+/* 弹窗 */
+.showNewRole{
+    width: 400px;
+    position: absolute;
+	left: 170px;
+	top: 50px;
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.34902);
+	z-index: 100;
+    background: #ffffff; 
+    padding: 10px 0;
+}
+
+.showNewRole p{
+    width: 100%;
+    height:50px;
+    margin-top: 5px;
+}
+.showNewRole p span{
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+	text-indent: 15px;
+}
+.writeIn,.choosePart{
+    width: 70%;
+    height: 30px;
+    border: 1px solid #F0EFEF;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-indent: 10px;
+}
+.choosePart{
+    width: 70%;
+    height: 32px;
+}
+.saveBtn,.noBtn{
+     margin-top: 15px;
+     width: 80px;
+     height: 30px;
+     border: none;
+     border-radius: 4px;
+     background-color: #1296db;
+     color: #ffffff;
+     float: right;
+     margin-right: 15px;
+}
+
+/* 物资 */
+.list_wuzi h4{float: left;font-size: 16px; font-weight: bold;line-height: 40px;width: 100%;margin: 10px 0;}
+.list_wuzi li{float: left;width: 24%;line-height: 35px;margin: 5px 5px;text-indent: 20px;}
+.list_wuzi li span{float: right;margin-right: 10%;width: 20px;height: 20px;background: url(../img/del.png) no-repeat;margin-top: 12px;}
+.list_wuzi li:hover{background: rgba(25, 158, 216, 1);color: #fff;}
+.list_wuzi li:hover em{color: #fff;}
+/* 添加项目部 */
+.cont_right .blue{width: 65px;line-height: 30px;background: rgba(25, 158, 216, 1);color: #fff;border-radius: 3px;text-align: center;font-size: 14px;cursor: pointer;}

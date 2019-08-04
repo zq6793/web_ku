@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="static/css/carManage.css" />
+	<link rel="stylesheet" href="../static/common.css" />
+	<style>
+		.bgcolor {
+			background-color: #f4fb87;
+		}
+		table tbody tr:hover{
+			background-color: #f4fb87;
+		}
+	</style>
+
+	<body>
+		<div class="rightBox">
+			<div class="car-choose-type">
+				<label>车辆状态:</label>
+				<select class="car-state select">
+					<option>车辆运输状态</option>
+					<option>车辆运输状态</option>
+					<option>车辆运输状态</option>
+					<option>车辆运输状态</option>
+					<option>车辆运输状态</option>
+				</select>
+				<button type="button" class="btnOrange btn-1">查询</button>
+				<button type="button" class="btnOrange btn-1 add-car-team">增加运输队</button>
+			</div>
+			<div class="car-manage-wrapper">
+				<div class="wrapper-title">
+					<div class="add-car-wrapper-content">
+						<div class="add-wrapper-content">
+							<div class="add-wrapper-content-left">
+								<p>车主信息:</p>
+								<div><label><span>*</span>车&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label><input id="carTel" class="input" placeholder="请输入车号" /></div>
+								<div><label><span>*</span>车&nbsp;&nbsp;牌&nbsp;&nbsp;号:</label><input id="carTel" class="input" placeholder="请输入车号" /></div>
+								<div><label><span>*</span>车&nbsp;&nbsp;载&nbsp;&nbsp;量:</label><input id="carAmount" class="input" placeholder="请输入车载量" /></div>
+								<div><label><span>*</span>车主姓名:</label><input id="carName" class="input" placeholder="请输入车主姓名" /></div>
+								<div><label><span>*</span>联系电话:</label><input id="carPhone" class="input" placeholder="请输入联系电话" /></div>
+							</div>
+							<div class="add-wrapper-content-right">
+								<p>驾驶员信息:</p>
+								<div><label><span>*</span>驾&nbsp;&nbsp;驶&nbsp;&nbsp;员&nbsp;1:</label><input id="carVehicleOwner1" class="left-input input" placeholder="请输入驾驶员姓名" /><label><span>*</span>驾&nbsp;&nbsp;驶&nbsp;&nbsp;员&nbsp;1:</label><input id="carVehicleOwner2" class="right-input input" placeholder="请输入驾驶员姓名" /></div>
+								<div><label><span>*</span>联&nbsp;系&nbsp;电&nbsp;话:</label><input id="carVehicleOwnerPhone1" class="left-input input" placeholder="请输入联系电话" /><label><span>*</span>联&nbsp;系&nbsp;电&nbsp;话:</label><input id="carVehicleOwnerPhone2" class="right-input input" placeholder="请输入联系电话" /></div>
+								<div>
+
+									<label><span>*</span>请选择班次:</label>
+									<select id="shifts1" class="select">
+										<option>请选择班次</option>
+										<option>白班</option>
+										<option>夜班</option>
+									</select>
+
+									<label class="classes"><span>*</span>请选择班次:</label>
+									<select id="shifts2" class="select">
+										<option>请选择班次</option>
+										<option>白班</option>
+										<option>夜班</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="bottom-footer"></div>
+						<div class="add-wrapper-footer">
+							<div class="btn-wrapper">
+								<button type="button" class="btnOrange submits">提交</button>
+								<button type="button" class="btnOrange cancel">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<table class="table checklist" id="table">
+					<thead>
+						<tr>
+							<th>车号</th>
+							<th>车主姓名</th>
+							<th>联系电话</th>
+							<th>车载量</th>
+							<th>加入时间</th>
+							<th>司机1</th>
+							<th>联系电话</th>
+							<th>班次</th>
+							<th>司机2</th>
+							<th>联系电话</th>
+							<th>班次</th>
+							<th>车辆状态</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="message">
+							<td>1</td>
+							<td>1</td>
+							<td>14444444444</td>
+							<td>6</td>
+							<td>2019/02/04</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>正常运输</td>
+							<td><span class="update">修改</span><span class="delete">删除</span></td>
+						</tr>
+						<tr id="message">
+							<td>2</td>
+							<td>1</td>
+							<td>14444444444</td>
+							<td>6</td>
+							<td>2019/02/04</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>正常运输</td>
+							<td><span class="update">修改</span><span class="delete">删除</span></td>
+						</tr>
+						<tr id="message">
+							<td>3</td>
+							<td>1</td>
+							<td>14444444444</td>
+							<td>6</td>
+							<td>2019/02/04</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>正常运输</td>
+							<td><span class="update">修改</span><span class="delete">删除</span></td>
+						</tr>
+						<tr id="message">
+							<td>4</td>
+							<td>1</td>
+							<td>14444444444</td>
+							<td>6</td>
+							<td>2019/02/04</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>张三</td>
+							<td>14444444444</td>
+							<td>白班</td>
+							<td>正常运输</td>
+							<td><span class="update">修改</span><span class="delete">删除</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../static/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="../static/dx.js"></script>
+	<script src="static/js/carManage.js"></script>
+	<script>
+	</script>
+
+</html>

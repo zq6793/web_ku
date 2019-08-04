@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>信用评价扣分</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/index.css" />
+	</head>
+	<body>
+		<div class="deduction">
+			<ul class="clearfix control">
+				<li class="actw">重大不良行为</li>
+				<li>人员、设备</li>
+				<li>安全生产</li>
+				<li>质量管理</li>
+				<li>进度管理</li>
+				<li>验工计价及结算</li>
+				<li>文明施工</li>
+				<li>项目经理</li>
+				<button type="button" class="submitA btnAct1">保 存</button>
+			</ul>
+			<div class="context" style="display: block;" grade='A'>
+				<h3>请根据劳务队是否存在以下不良行为打分</h3>
+				<ol class="clearfix">
+					<li>A、因施工原因发生较大安全事故（扣分标准：100分）</li>
+					<input type="checkbox" value="" name="a1" style="height: 20px;" />
+				</ol>
+				<ol class="clearfix">
+					<li>B、将劳务分包内容转包且不能有效管控的（扣分标准：100分）</li>
+					<input type="checkbox" value="" name="a2" style="height: 20px;" />
+				</ol>
+				<ol class="clearfix">
+					<li>C、中途退场或不按合同约定办理结算，且存在漫天要价的（扣分标准：100分）</li>
+					<input type="checkbox" value="" name="a3" style="height: 20px;" />
+				</ol>
+				<ol class="clearfix">
+					<li>D、指使民工到项目部及相关部门闹事，或因恶意拖欠民工工资、材料款，且因拖欠问题造成群体事件或不良社会影响（扣分标准：100分）</li>
+					<input type="checkbox" value="" name="a4" style="height: 20px;" />
+				</ol>
+				<ol class="clearfix">
+					<li>E、施工过程倒卖材料（扣分标准：100分）</li>
+					<input type="checkbox" value="" name="a5" style="height: 20px;" />
+				</ol>
+				<ol class="clearfix">
+					<li>F、因队伍施工原因发生质量事故，且损失在100万元以上的（扣分标准：100分）</li>
+					<input type="checkbox" value="" name="a6" style="height: 20px;" />
+				</ol>
+			</div>
+
+			<div class="context" grade='B' >
+				<h3>请根据劳务队是否存在以下不良行为打分(满分:10分，扣完为止)</h3>
+				<ol class="clearfix">
+					<li>A、承诺的现场负责人未按承诺到位，或在施工期间未经批准擅自更换，或每月在现场不能保证22天以上（2分/人次）</li>
+					<input type="number" value="" name="a7" />
+				</ol>
+				<ol class="clearfix">
+					<li>B、主要施工机械不能满足现场要求（扣分标准：1分/台套）</li>
+					<input type="number" value="" name="a8" />
+				</ol>
+				<ol class="clearfix">
+					<li>C、未按规定实名制签订劳务用工合同（扣分标准：0.2分/人次）</li>
+					<input type="number" value="" name="a9" />
+				</ol>
+			</div>
+
+			<div class="context" grade='C' >
+				<h3>请根据劳务队是否存在以下不良行为打分(满分:15分，扣完为止)</h3>
+				<ol class="clearfix">
+					<li>A、未向作业人员提供安全防护品（扣分标准：3分/次）</li>
+					<input type="number" value="" name="a10" />
+				</ol>
+				<ol class="clearfix">
+					<li>B、现场作业人员不服从管理，存在“三违”行为（违章指挥、违反管理规定和操作规程）（扣分标准：3分/次）</li>
+					<input type="number" value="" name="a11" />
+				</ol>
+				<ol class="clearfix">
+					<li>C、不及时整改安全隐患，或多次整改仍有安全问题，对存在重大安全事故隐患但拒绝停工整改（扣分标准：5分/次）</li>
+					<input type="number" value="" name="a12" />
+				</ol>
+				<ol class="clearfix">
+					<li>D、因施工原因发生一般安全事故，没有给公司造成不良影响的（扣分标准：8分/次）</li>
+					<input type="number" value="" name="a13" />
+				</ol>
+				<ol class="clearfix">
+					<li>E、因施工原因发生一般安全事故，且给公司造成不良影响的（扣分标准：15分/次）</li>
+					<input type="number" value="" name="a14" />
+				</ol>
+				<ol class="clearfix">
+					<li>F、其它不符合项目安全生产规定的行为（扣分标准：1～10分/次）</li>
+					<input type="number" value="" name="a15" />
+				</ol>
+			</div>
+
+
+			<div class="context" grade='D' >
+				<h3>请根据劳务队是否存在以下不良行为打分(满分15:分，扣完为止)</h3>
+				<ol class="clearfix">
+					<li>A、因施工原因出现质量问题，对工程实体质量影响不大(如水泥混凝土表面蜂窝麻面、砌筑砂浆不饱满、钢筋混凝土保护层不够等)（扣分标准：0.5分/次，最多不超过5分）</li>
+					<input type="number" value="" name="a16" />
+				</ol>
+				<ol class="clearfix">
+					<li>B、因施工原因发生质量事故，损失在0-50万元的（扣分标准：8分/次）</li>
+					<input type="number" value="" name="a17" />
+				</ol>
+
+				<ol class="clearfix">
+					<li>C、因施工原因发生质量事故，损失在50-100万元的（扣分标准：15分/次）</li>
+					<input type="number" value="" name="a18" />
+				</ol>
+				<ol class="clearfix">
+					<li>D、出现质量问题拒不整改（扣分标准：5分/次）</li>
+					<input type="number" value="" name="a19" />
+				</ol>
+
+				<ol class="clearfix">
+					<li>A、其它不符合项目质量管理的行为（扣分标准：1～10分/次）</li>
+					<input type="number" value="" name="a20" />
+				</ol>
+			</div>
+
+
+
+			<div class="context" grade='E' >
+				<h3>请根据劳务队是否存在以下不良行为打分(满分:10分，扣完为止)</h3>
+				<ol class="clearfix">
+					<li>A、因队伍原因未能完成评价期内总进度指标的（扣分标准：1～5分）</li>
+					<input type="number" value="" name="a21" />
+				</ol>
+				<ol class="clearfix">
+					<li>A、因外界因素引起标准变化、工期调整或需抢工时，不能配合项目补充要素（扣分标准：2分/次）</li>
+					<input type="number" value="" name="a22" />
+				</ol>
+				<ol class="clearfix">
+					<li>A、项目下达停工指令拒不执行（扣分标准：2分/次）</li>
+					<input type="number" value="" name="a23" />
+				</ol>
+				<ol class="clearfix">
+					<li>A、其它不符合项目进度管理的行为（扣分标准：1～5分/次）</li>
+					<input type="number" value="" name="a24" />
+				</ol>
+			</div>
+			<div class="context" grade='F' >
+				<h3>请根据劳务队是否存在以下不良行为打分(满分:10分，扣完为止)</h3>
+				<ol class="clearfix">
+					<li>A、在项目付款后拖欠农民工工资、材料款，尚未造成影响（扣分标准：5分/次）</li>
+					<input type="number" value="" name="a25" />
+				</ol>
+				<ol class="clearfix">
+					<li>A、不按合同约定办理结算，存在合同纠纷（扣分标准：10分/次）</li>
+					<input type="number" value="" name="a26" />
+				</ol>
+			</div>
+
+			<div class="context" grade='G' >
+				<h3>请根据劳务队是否存在以下不良行为打分(满分:10分，扣完为止)</h3>
+				<ol class="clearfix">
+					<li>A、未按项目要求施工产生的废旧物资、废渣等随意堆放和丢弃，废水随意排放（扣分标准：2分/次）</li>
+					<input type="number" value="" name="a27" />
+				</ol>
+				<ol class="clearfix">
+					<li>A、不积极配合项目文明施工要求（扣分标准：2分/次）</li>
+					<input type="number" value="" name="a28" />
+				</ol>
+				<ol class="clearfix">
+					<li>A、因文明施工、标准化施工被业主检查批评（扣分标准：3分/次）</li>
+					<input type="number" value="" name="a29" />
+				</ol>
+				<ol class="clearfix">
+					<li>A、文明施工、标准化施工差，项目提出后屡教不改（扣分标准：2分/次）</li>
+					<input type="number" value="" name="a30" />
+				</ol>
+				
+				<ol class="clearfix">
+					<li>A、其它不符合项目文明施工要求的行为（扣分标准：1～5分/次）</li>
+					<input type="number" value="" name="a31" />
+				</ol>
+			</div>
+			
+			<div class="context" grade='H' >
+				<h3>项目经理认为的扣分行为(满分30分，扣完为止)</h3>
+				<ol class="clearfix">
+					<li>A、扣分</li>
+					<input type="number" value="" name="a32" />
+				</ol>
+				
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var tid = DX.getParam('tid');
+	var year = DX.getParam('year');
+	$(document).ready(function(){
+		var flag = 1;
+		if(year == null){
+			flag = 0;
+		}
+		
+		// 加载详情
+		DX.ajax_method({
+			'type':'POST',
+			'url':'/eva/dlc/EchoDeductionItem',
+			'param':{'tids':tid,'flag':flag},
+			'callBack':function(res){
+				if(res.code == '200'){
+					setDeails(res.data[0]);
+				}
+			}
+		})
+	
+		// 点击切换
+		$('.control li').click(function(){
+			var index= $(this).index();
+			$(this).addClass("actw").siblings().removeClass("actw");
+			$('.context').eq(index).css('display','block').siblings('.context').css('display','none')
+		})
+		// 点击获取数据
+		$('.submitA').click(function(){
+			var json = getDetail($(this),tid);
+			if(json == undefined) return;
+			DX.ajax_method({
+				'type':'POST',
+				'param':{'creditRatings':JSON.stringify(json),'team_id':tid},
+				'url':'/eva/dlc/insertDeductionItem',
+				'change':$(this)[0],
+				'callBack':function(res){
+					console.log(res);
+					if(res.code == '200'){
+						
+						var obj = window.parent.document.getElementById(tid);
+						var score = res.data == 0 ? 0 : '-'+res.data;
+						$(obj).find('.score').text(score);
+						$(obj).next().remove();
+						
+					}
+				}
+			})
+			
+		})
+		
+		/**获取input的值
+		 * @param {Object} dom id
+		 * @param {Object} tid 施工队id
+		 */
+		function getDetail(dom,tid){
+			var arr = [];
+			
+			// var min ={a:0,b:0,c:0,d:0,e:0,f:0,g:0,h:0};
+			// var me={};
+			$.each(dom.parent().siblings('.context').find('input'),function(i,val){
+				// 组装数据
+				var obj = {};
+				obj.flag=0;
+				obj.credit_name = $(this).attr('name');
+				obj.score =  Math.abs($(this).val());
+				if($(this).prop('checked')){
+					obj.score = 100;
+				}
+				obj.flag=0;
+				obj.t_id = tid;
+				obj.status = 'CATEGORY_'+$(this).parents('.context').attr('grade');
+				arr.push(obj);
+				
+				// 个小分类汇总
+				// var that = $(this);
+				// $.each(min,function(j,k){
+				// 	if(that.parents('.context').attr('grade') == j){	
+				// 		var value = 0; 
+				// 		if(that.val() != ''){
+				// 			if(that.val() == NaN) {return true};
+				// 			value = that.val();
+				// 		}
+				// 		
+				// 		value += value;
+				// 		me[j] = value;
+				// 	}
+				// })
+			});
+			return arr;
+
+		}
+		
+		/**给input赋值
+		 * @param {Object} data 返回数据
+		 */
+		function setDeails(data){
+			$.each(data,function(i,val){
+				// dom.parent().next('td').find('.'+val.credit_name).val(val.score);
+				$('.context').find('input[name='+val.credit_name+']').val(val.score);
+				if(val.score == "100"){
+					$('.context').find('input[name='+val.credit_name+']').prop("checked",true);
+				}
+				$('.context input[type=checkbox]').val('');//checkbox为空
+			})
+		}
+		
+	})
+</script>

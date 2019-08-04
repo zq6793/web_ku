@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>评价打分</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+	</head>
+	<body>
+		
+		<!-- right-->
+		<div class="rightBox">
+			<!-- <div class="nav">
+			    <span>当前所在位置：劳务队评价></span><span class="pointer">评价打分</span>
+			
+			</div> -->
+			<div class="drap2 clearfix">
+				<span class="err"></span>
+				<table>
+					<thead>
+						<tr>
+							<th>级别</th>
+							<th>队伍名称</th>
+							<th>施工作业难度</th>
+							<th>当期产值（元）</th>
+							<!-- <th>重大不良行为</th> -->
+							<th>队伍类别</th>
+							<th>信用评价扣分</th>
+							<!-- <th>产值类别</th>
+							<th>公司年限</th> -->
+							<th>具体施工内容</th>
+							<th>峰值人数</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+			<button type="button" id="allSub" class="subAll btnBlue">完成</button>
+		</div>
+<!--		<button type="button" id="tst">测试</button>-->
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	var year = DX.getParam('year');
+	$(document).ready(function(){
+		var ids = DX.getParam('ids');
+		var flags = 0;
+		if(year){
+			flags = 1;
+		}
+		// console.log(ids);
+			DX.ajax_method({
+				'type':'POST',
+				'url':'/eva/dlc/findByid',
+				'param':{'ids':ids,'flag':flags},
+				'callBack':callBack
+			})
+			function callBack(res){
+				// console.log(Object.prototype.toString.call(res.data[0].flag));
+				if(res.code == '200'){
+					//处理null数据
+					var array = [];
+					$.each(res.data,function(i,val){
+						var join = {}; 
+						$.each(val,function(key,value){
+							if(value == null){
+								join[key]= '';
+							}else{
+								join[key]= value;
+							}
+						})
+						
+						array.push(join);
+					})
+					
+					console.log(array);
+					var str = '';
+					$.each(array,function(i,val){
+						str += '<tr eid="'+val.eid+'">';
+						str += '<td sizeid="'+val.level_id+'" class="clum1">'+val.team_size_name+'</td>';
+						str += '<td teamid="'+val.team_id+'" class="clum2">'+val.team_name+'</td>';
+						str += '<td class="selectType clum3" ids="" ><span class="please">请选择</span></td>';
+						
+						if(Number(val.current_production) == 0){
+							str += '<td class="clum6"><input type="text" value="" class="tableEdit"></td>';
+						}else{
+							str += '<td class="clum6"><input type="text" value="'+accMul(val.current_production,10000)+'" class="tableEdit"></td>';
+						}
+
+						// if(val.outptflag == 1 || val.outptflag == ''){
+						// 	str += '<td class="clum4"><p><input type="checkbox" value="1" class="clone" id="tunnel'+i+'"><label for="tunnel'+i+'" style="margin-right: 10px;">隧道</label><input type="checkbox" value="2" class="cltwo" id="cubic1'+i+'"><label for="cubic1'+i+'">土石方</label></p></td>';
+						// }else if(val.outptflag == 2){
+						// 	str += '<td class="clum4"><p><input type="checkbox" value="1" class="clone" id="tunnel'+i+'" checked><label for="tunnel'+i+'" style="margin-right: 10px;">隧道</label><input type="checkbox" value="2" class="cltwo" id="cubic1'+i+'"><label for="cubic1'+i+'">土石方</label></p></td>';
+						// }else{
+						// 	str += '<td class="clum4"><p><input type="checkbox" value="1" class="clone" id="tunnel'+i+'"><label for="tunnel'+i+'" style="margin-right: 10px;">隧道</label><input type="checkbox" value="2" class="cltwo" checked id="cubic1'+i+'"><label for="cubic1'+i+'">土石方</label></p></td>';
+						// }
+						// if(val.level_id_score == 0 && val.peoplesize != ""){
+						// 	str += '<td class="clum7"><input type="checkbox" checked /></td>';
+						// }else{
+						// 	str += '<td class="clum7"><input type="checkbox" /></td>';
+						// }
+						
+						str += '<td class="clum4 selectType1" ids="" ><span class="please">请选择</span></td>';	
+						if(val.deduct_marks_pro == 0){
+							str += '<td class="clum5">'+val.deduct_marks_pro+'</td>';
+						}else{
+							str += '<td class="clum5">-'+val.deduct_marks_pro+'</td>';
+						}
+						
+						str +='<td class="clum9"><input type="text" value="'+val.construction_content+ '" class="tableEdit" /></td>';
+						str += '<td class="clum8"><input type="text" value="'+val.peoplesize+'" class="tableEdit" /></td>';
+						str += '</tr>';
+					})
+					$('.drap2 tbody').html(str);
+					
+					// $('.drap2 tbody tr').click(function(){
+					// 	DX.clickTr($(this),['input','td']);
+					// })
+					//施工难度多选加载
+					$.each($('.selectType span.please'),function(i,val){
+						// console.log(this);
+						var url = '/eva/dlc/findpartid';
+						var arr = ['partid','part_name','score'];
+						teamDom($(this),true,url,arr);
+					})
+					//队伍类别加载
+					$.each($('.selectType1 span.please'),function(i,val){
+						// console.log(this);
+						var arr = ['cid','cname','cscore'];
+						var url = '/eva/dlc/findCATEGORY';
+						teamDom($(this),true,url,arr);
+					})
+					
+					// 点击清除0
+					// $('.clum5 input').focus(function(){
+					// 	if($(this).val() == 0){
+					// 		$(this).val('');
+					// 	}
+					// })
+				}
+				//点击请选择加载施工难度
+				$('.selectType span').click(function(){
+					var url = '/eva/dlc/findpartid';
+					var arr = ['partid','part_name','score'];
+					teamDom($(this),false,url,arr);
+				})
+				//点击请选择加载队伍类型
+				$('.selectType1 span').click(function(){
+					var url = '/eva/dlc/findCATEGORY';
+					var arr = ['cid','cname','cscore'];
+					teamDom($(this),false,url,arr);
+				})
+			}
+			//点击完成提交
+			$('#allSub').click(function(){
+				subData($(this));
+			})
+			
+		
+	
+	})
+
+	
+	//施工难度加载 isflag true默认加载选中回显
+	function teamDom(that,isflag,url,arr){
+		
+		var id = that.parents('tr').attr('eid');
+		
+		if(that.siblings('ul').length > 0){ //如果已经加载 就不再请求接口	
+			if(that.siblings('ul.type').css('display') == 'none'){
+				$('ul.type').hide();
+				that.siblings('ul.type').show();
+			}else{
+				that.siblings('ul.type').hide();
+			}
+			return;
+		};
+		
+		
+		DX.ajax_method({
+			'type':'POST',
+			'url':url,
+			'param':{'eid':id},
+			'callBack':function(res){
+				console.log(res);
+				if(res.code == '200'){
+					var str ='<ul class="type"><h3> <span class="close">取消</span><span class="subselect">确定</span></h3><ol>';
+					$.each(res.data,function(i,val){
+						
+						// console.log(val[arr[0]])
+						if(val.flag){
+							str += '<li class="clearfix" ><input type="checkbox" class="fl checkbox" oid="'+val[arr[0]]+'" checked/><span class="fl">'+val[arr[1]]+'-'+val[arr[2]]+'分</span></li>';
+						}else{
+							str += '<li class="clearfix" ><input type="checkbox" class="fl checkbox" oid="'+val[arr[0]]+'" /><span class="fl">'+val[arr[1]]+'-'+val[arr[2]]+'分</span></li>';
+							
+						}
+					})
+					str += '</ol></ul>';
+					that.siblings('ul.type').hide();
+					
+					 that.after(str);
+					 //有选中显示
+					 $.each('ul.type span.subselect',function(i,val){
+						 subType($(this));
+					 })
+				}
+				//阻止冒泡
+				$('.checkbox').click(function(e){
+					e.stopPropagation();
+				})
+		
+				//点击li 选中checkbox
+				$('ul.type ol li').unbind("click").click(function(e){
+					e.stopPropagation();
+					
+					liCheckbox($(this));
+		
+				})
+				//默认加载
+				if(isflag){
+					$.each($('.subselect'),function(i,val){
+						subType($(this));
+					})
+					
+				}
+			
+				//点击确认
+				$('.subselect').click(function(e){
+					// console.log(11);
+					e.stopPropagation();
+					subType($(this));	
+				})
+				
+				//点击取消
+				$('.close').click(function(e){
+					e.stopPropagation();
+					$(this).parents('.type').hide();
+				})
+				
+		
+				
+			}
+		})
+	}
+	//队伍类型确认
+	function subType(obj){
+		var arr = '';
+		var str = '';
+		$.each(obj.parents('.type').find('li input[type="checkbox"]'),function(i,val){
+			if( $(this).prop('checked')){
+				arr += $(this).attr('oid')+',';
+				str += $(this).siblings('span').text()+',';
+			}
+		})
+		arr = arr.substring(arr.length-1,-1);
+		obj.parents('td').attr('ids',arr);
+		if(str == ''){
+			obj.parents('.type').siblings('span').text('请选择');
+		}else{
+			str = str.substring(str.length-1,-1);
+			str = str.substr(0,12);
+			if(str.length >= 12){str+='...'};
+			obj.parents('.type').siblings('span').text(str);
+		}
+		
+		obj.parents('.type').hide();
+	}
+	//提交数据
+	function subData(values){
+		$('.err').hide();
+		var arr = [];
+		var go = true;
+		$.each($('.drap2 tbody tr'),function(i,val){
+			var str = {};
+			str.eid = $(this).attr('eid');
+			str.level_id = $(this).find('.clum1').attr('sizeid');
+			str.team_id = $(this).find('.clum2').attr('teamid');
+			var ids = $(this).find('.clum3').attr('ids');
+			if(ids.length<1){
+				go = false;
+				$('.err').show();
+				$('.err').html('请选择施工作业难度');return false;
+			}
+			var partid = ids.split(",");
+			var array = [];
+			$.each(partid,function(i,val){
+				var stre = {};
+				stre.partid = val;
+				array.push(stre);
+			})
+			str.partids = array;
+			
+			var ids1 = $(this).find('.clum4').attr('ids');
+			if(ids1.length<1){
+				go = false;
+				$('.err').show();
+				$('.err').html('请选择队伍类别');return false;
+			}
+			var partid1 = ids1.split(",");
+			var array1 = [];
+			$.each(partid1,function(i,val){
+				var stre1 = {};
+				stre1.cid = val;
+				array1.push(stre1);
+			})
+			str.teamCategories = array1;
+		//1正常 2隧道  3土石方    23两个都选
+			// var outptflag = false;
+			// outptflag = $(this).find('.clone').prop('checked');
+			// var outptflag1 = false;
+			// outptflag1 = $(this).find('.cltwo').prop('checked');
+			// var out = 23;
+			// /* debugger; */
+			// if(!outptflag && !outptflag1){
+			// 	out = 1;
+			// }
+			// if(outptflag && !outptflag1){
+			// 	
+			// 	out = 2
+			// }
+			// if(!outptflag && outptflag1){
+			// 	out = 3
+			// }
+			// str.outptflag = out;
+			var construction_content = $(this).find('.clum9 input').val();
+			var isNullC = DX.isNull(construction_content);
+			if(isNullC || construction_content.length<1 || construction_content.length>40){
+				go = false;
+				$('.err').show();
+				$('.err').html('具体施工内容必须填写（40字以内）');return false;
+			}
+			
+			str.construction_content = construction_content;
+			var current_production = $(this).find('.clum6 input').val();
+			var isCurrent = DX.floatTwo(current_production);//两位浮点
+			var isNullCurrent = DX.isNull(current_production);//是否为空
+			if(isNullCurrent){
+				go = false;
+				$('.err').show();
+				$('.err').html('当期产值不能为空');return false;
+			}
+			if(!isCurrent){
+				go = false;
+				$('.err').show();
+				$('.err').html('当期产值只能保留两位小数');return false;
+			}
+			str.current_production = current_production;
+			var flagGreate = $(this).find('.clum7 input').prop('checked');
+			if(flagGreate){
+				str.flagGreate = 1;
+			}else{
+				str.flagGreate = 0;
+			}
+			// var deduct_marks = $(this).find('.clum5 input').val();
+			// if(deduct_marks){
+			// 	var isDeduct_marks = DX.floatTwo(deduct_marks);//两位浮点
+			// 	if(!isDeduct_marks){
+			// 		go = false;
+			// 		$('.err').show();
+			// 		$('.err').html('信用评价只能保留两位小数');return false;
+			// 	}
+			// 	str.deduct_marks=deduct_marks;
+			// }else{
+			// 	str.deduct_marks=0;
+			// }
+			
+			
+			var size = $(this).find('.clum8 input').val();
+			var isSize= DX.isInt(size);
+			var isNullSize = DX.isNull(size);//是否为空
+			if(isNullSize){
+				go = false;
+				$('.err').show();
+				$('.err').html('队伍人数不能为空');return false;
+			}
+			if(!isSize){
+				go = false;
+				$('.err').show();
+				$('.err').html('队伍人数只能为正整数');return false;
+			}
+			str.peoplesize = size;
+			if(year){
+				str.year_quarter = year;
+			}
+			arr.push(str);
+			
+		})
+		
+		console.log(arr);
+		if(!go) return;
+		DX.ajax_method({
+			'type':'POST',
+			'change':values[0],
+			'url':'/eva/dlc/updateDxl',
+			'param':{'dxLaborEvaluation':JSON.stringify(arr)},
+			'callBack':function(res){
+				console.log(res);
+				if(res.code == '200'){
+					window.location.href = 'show.html';
+				}else{
+					$('.err').show();
+					$('.err').html(res.msg);
+				}
+			}
+		})
+	}
+	//点击选中input
+	function liCheckbox(obj){
+		if(obj.find('input').prop('checked')){
+			// console.log(3333);
+			obj.find('input').prop('checked',false);return;
+		}
+				// console.log(444);
+		obj.find('input').prop('checked',true);
+	}
+	// 乘法
+	function accMul(arg1,arg2){
+         var m=0,s1=arg1.toString(),s2=arg2.toString();
+         try{m+=s1.split(".")[1].length}catch(e){}
+         try{m+=s2.split(".")[1].length}catch(e){}
+        
+         return (Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)).toFixed(2);
+    }
+
+</script>

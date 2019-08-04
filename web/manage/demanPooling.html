@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="static/css/demanPooling.css" />
+	<link rel="stylesheet" href="../static/common.css" />
+	<style>
+		table tbody tr:hover{
+			background-color: #f4fb87;
+		}
+	</style>
+	<body>
+		<div class="rightBox">
+			<div class="choose-title">
+				<label>车辆状态:</label>
+				<select class="choose-state preject select">
+					<option>请选择需求状态</option>
+					<option>请选择需求状态</option>
+					<option>请选择需求状态</option>
+					<option>请选择需求状态</option>
+				</select>
+				<button type="button" class="btnBlue">查询</button>
+			</div>
+			<div class="message">
+				<div class="message-content">
+					<img width="20px" height="22px" src="static/img/message.png" />
+					<span class="message-count">10</span>
+					<label class="message-title">消息提醒:</label>
+					<span class="message-content-1">您有新的需求消息,请点击"立即刷新"查看,系统将在<span class="time"><span
+							class="minute">4</span><span class="minute-title">分</span><span class="second">59</span><span>秒</span></span>后自动刷新</span>
+					<button type="button" class="btnBlue fresh">立即刷新</button>
+				</div>
+			</div>
+			<div class="deman-pooling-wrapper">
+				<div class="deman-pooling-wrapper-left">
+					<div class="deman-pooling-left-content">
+						<div class="deman-num">
+							<span>需求编号:</span>
+							<span>1106</span>
+							<span>查看详情</span>
+						</div>
+						<div class="deman-state">
+							<span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</span>
+							<span>等待配置比</span>
+						</div>
+						<div class="deman-type">
+							<span>订单类型:</span>
+							<span>营业线天窗施工</span>
+						</div>
+						<div class="deman-adress">
+							<span>部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位:</span>
+							<span>桥涵工程-临汾特大桥-基础工程-桩基- 1-1-1</span>
+						</div>
+						<div class="deman-detailed">
+							<span>详细部位:</span>
+							<span>1#砥柱</span>
+						</div>
+						<div class="deman-time">
+							<span>需求时间:</span>
+							<span>2019/2/5 15:22</span>
+						</div>
+						<div class="square-quantity-content">
+							<div class="square-quantity-wrapper">
+								<div>
+									<span>计划方量:</span><span>222</span>
+								</div>
+								<div>
+									<span>计划方量:</span><span>222</span>
+								</div>
+								<div>
+									<span>计划方量:</span><span>222</span>
+								</div>
+								<div>
+									<span>计划方量:</span><span>222</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="deman-pooling-wrapper-center" style="overflow-y: scroll;">
+					<table class="table checklist" id="table">
+						<thead>
+							<tr>
+								<th>车号</th>
+								<th>安排趟数</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="deman-pooling-wrapper-right" id="table" style="overflow-y: scroll;">
+					<table class="table checklist" id="table">
+						<thead>
+							<tr>
+								<th>车号</th>
+								<th>驾驶员</th>
+								<th>联系电话</th>
+								<th>车载方量</th>
+								<th>安排方量</th>
+								<th>安排员</th>
+								<th>安排时间</th>
+								<th>车辆状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="moudle">
+								<td colspan="9" style="border: 1px solid #FFFFFF;">
+									<div style="width: 100%;height: 294px;line-height: 294px;background-color: #FFFFFF;">
+										暂无车辆安排
+									</div>
+								</td>
+							</tr>
+							<!--<tr>
+								<td>1</td>
+								<td>张三</td>
+								<td>12345678910</td>
+								<td>8</td>
+								<td>1</td>
+								<td>张三</td>
+								<td>2019/01/01</td>
+								<td>等待装车</td>
+								<td><span>删除</span></td>
+							</tr>-->
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="deman-pooling-wrapper">
+				<div class="deman-pooling-wrapper-left">
+					<div class="deman-pooling-left-content">
+						<div class="deman-num">
+							<span>需求编号:</span>
+							<span>1106</span>
+							<span>查看详情</span>
+						</div>
+						<div class="deman-state">
+							<span>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</span>
+							<span>等待配置比</span>
+						</div>
+						<div class="deman-type">
+							<span>订单类型:</span>
+							<span>营业线天窗施工</span>
+						</div>
+						<div class="deman-adress">
+							<span>部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位:</span>
+							<span>桥涵工程-临汾特大桥-基础工程-桩基- 1-1-1</span>
+						</div>
+						<div class="deman-detailed">
+							<span>详细部位:</span>
+							<span>1#砥柱</span>
+						</div>
+						<div class="deman-time">
+							<span>需求时间:</span>
+							<span>2019/2/5 15:22</span>
+						</div>
+						<div class="square-quantity-content">
+							<div class="square-quantity-wrapper">
+								<div>
+									<span>计划方量:</span><span>222</span>
+								</div>
+								<div>
+									<span>安排方量:</span><span>222</span>
+								</div>
+								<div>
+									<span>剩余方量:</span><span>222</span>
+								</div>
+								<div>
+									<span>补方方量:</span><span>222</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="deman-pooling-wrapper-center" style="overflow-y: scroll;">
+					<table class="table checklist" id="table">
+						<thead>
+							<tr>
+								<th>车号</th>
+								<th>安排趟数</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>5</td>
+								<td><span class="arrange">安排</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="deman-pooling-wrapper-right" id="table" style="overflow-y: scroll;">
+					<table class="table checklist" id="table">
+						<thead>
+							<tr>
+								<th>车号</th>
+								<th>驾驶员</th>
+								<th>联系电话</th>
+								<th>车载方量</th>
+								<th>安排方量</th>
+								<th>安排员</th>
+								<th>安排时间</th>
+								<th>车辆状态</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="moudle">
+								<td colspan="9" style="border: 1px solid #FFFFFF;">
+									<div style="width: 100%;height: 294px;line-height: 294px;background-color: #FFFFFF;">
+										暂无车辆安排
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../static/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="../static/dx.js"></script>
+		<script src="static/js/demanPooling.js"></script>
+	</body>
+	<script>
+	</script>
+
+</html>

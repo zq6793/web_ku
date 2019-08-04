@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加合同</title>
+    <link rel="stylesheet" type="text/css" href="../../static/leftCommon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/company.css"/>
+</head>
+<body>
+    <div class="rightBox">
+        <div class="searchconstract">
+            
+        </div>
+        <div class="fillFor">
+            <p class="fillto">填写说明</p>
+            <ul class="explain">
+                <li style="height: 20px;width: 920px"><span class="close pointer" style="float:right;color:red;">收起</span></li>
+                <li>1、带*输入框需必填。</li>
+                <li>2、上传询比价附件需注意：询价函、报价单、报价汇总、三重一大会议纪要、会议签到表、影像资料、合同文本。</li>
+                <li>3、上传竞争性谈判、邀请招标、公开招标附件需注意：评标报告、中标单位报价单、三重一大会议纪要，会议签到表、影像资料、合同文本。</li>
+                <li>4、上传文件时，若多文件需要同时上传，请<span style="color: red;">打包文件后上传</span>。</li>
+            </ul>
+        </div>
+        <div class="apply">审核流程表</div>
+        <!-- 申请表 -->
+        <div class="condetailList" style="margin-top:50px;margin-left: 10%;">
+            <p class="conList printBefore">物 资 合 同 审 核 流 程 表</p>
+            <!-- 里面具体的表格 -->
+            <table border="0" class="conList" cellpadding="1" cellspacing="0">
+                <tr id="rowHeight">
+                    <td>项目工程名称</td>
+                    <td colspan="3">
+                        <input type="text" id="projectName" class="sameInput" readonly="readonly" style="outline:none;">
+                    </td>
+                    <td>合同编号</td>
+                    <td colspan="3"><input type="text" id="contractNo" class="sameInput"/></td>
+                </tr>
+                <tr id="rowHeight">
+                    <td>是否采用公司格式合同</td>
+                    <td colspan="7" style="text-align:left;" id="radios">
+                        <label for="a0" class="lt"><input type="radio" name="dan" id="a0" value="true" class="lt" style="margin-top: 13px;margin-right:5px;" checked>是</label>
+                        <label for="a1" class="lt"><input type="radio" name="dan" id="a1" value="false" class="lt" style="margin-top: 13px;margin-right:5px;">否</label>
+                    </td>
+                </tr>
+                <tr id="rowHeight">
+                    <td>供应商名称</td>
+                    <td colspan="3">
+                        <input type="text" id="name" class="sameInput" surId="">
+                    </td>
+                    <td>供货材料品种</td>
+                    <td colspan="3" id="classify">
+                        <!-- <input type="text"> -->
+                    </td>
+                </tr>
+                <!-- 弹窗 -->
+                <!-- <div class="openWin none">
+                    <ul class="firNav">
+                        <li class="comSelf pointer" id="comSelf">本项目部供应商</li>
+                        <li class="comAll pointer" id="comAll">全公司供应商</li>
+                    </ul>
+                    <div class="secNav">
+                        <p class="self none"></p>
+                        <p class="all none"></p>
+                    </div>
+                    <button type="button" id="btnS" style="position: absolute;right: 10px;bottom: 10px;">确认</button>
+                </div> -->
+                <tr id="rowHeight">
+                    <td>运距（km）</td>
+                    <td colspan="3"><input type="text" id="loadDistance" class="sameInput" /></td>
+                    <td>单价</td>
+                    <td colspan="3"><input type="text" id="price" class="sameInput listToDetail" autocomplete="off"/></td>
+                <tr id="rowHeight">
+                    <td rowspan="2">供方资信状态</td>
+                    <td>营业执照注册号</td>
+                    <td>营业执照有效期</td>
+                    <td>营业执照注册资金</td>
+                    <td>生产许可证号</td>
+                    <td>生产许可证有效期</td>
+                    <td>资信等级</td>
+                    <td>诚信状况</td>
+                </tr>
+                <tr id="rowHeight">
+                    <td><input type="text" id="businessLicense"  class="sameInput"/></td>
+                    <td><input type="text" id="businessExpireDate" class="sameInput"/></td>
+                    <td><input type="text" id="businessRegisterMoney" class="sameInput"/></td>
+                    <td><input type="text" class="sameInput" id="productLicence"/></td>
+                    <td><input type="text" class="sameInput" id="productExpireDate"/></td>
+                    <td><input type="text" class="sameInput" id="creditLevel"/></td>
+                    <td><input type="text" class="sameInput" id="honestLevel"/></td>
+                </tr>
+                <tr id="rowHeight">
+                    <td>招标方式</td>
+                    <td colspan="6" >
+                        <label for="bid1" style="float:left;margin-left:20px;"><input type="radio" value="1" name="bid" id="bid1" class="lt" style="margin-top: 13px;margin-right:5px;" checked>询比价</label>
+                        <label for="bid2" style="float:left;margin-left:20px;"><input type="radio" value="2" name="bid" id="bid2" class="lt" style="margin-top: 13px;margin-right:5px;">竞争性谈判</label>
+                        <label for="bid3" style="float:left;margin-left:20px;"><input type="radio" value="3" name="bid" id="bid3" class="lt" style="margin-top: 13px;margin-right:5px;">邀请招标</label>
+                        <label for="bid4" style="float:left;margin-left:20px;"><input type="radio" value="4" name="bid" id="bid4" class="lt" style="margin-top: 13px;margin-right:5px;">公开招标</label>
+                    </td>
+                    <td>
+                        <button type="button" id="datumFile" onclick="preView(this)" class="upandshow">预览</button>
+                        <button type="button" class="download upandshow" id="download" onclick="downLoad(this)">下载</button>
+                    </td>
+                </tr>
+                <tr style="height:120px;" class="materialsComment none">
+                    <td>项目物资部审核意见</td>
+                    <td colspan="7" style="height:120px;">
+                        <textarea id="materialsComment" class="" style="width: 100%;height:100%;float: left; border: none; resize: none;"/></textarea>
+                        <input type="hidden" id="mater">
+                    </td>
+                </tr>
+                <tr style="height:120px;" class="planComment none">
+                    <td>项目计划部审核意见</td>
+                    <td colspan="7" style="height:120px;">
+                        <textarea id="planComment" class="" style="width: 100%;height:100%;float: left; border: none; resize: none;"/></textarea>
+                        <input type="hidden" id="plan">
+                    </td>
+                </tr>
+                <tr style="height:120px;" class="accountingComment none">
+                    <td>项目财务部审核意见</td>
+                    <td colspan="7" style="height:120px;">
+                        <textarea id="accountingComment" class="" style="width: 100%;height:100%;float: left; border: none; resize: none;"/></textarea>
+                        <input type="hidden" id="acc">
+                    </td>
+                </tr>
+                <tr style="height:120px;" class="secretaryComment none">
+                    <td>项目书记审核意见</td>
+                    <td colspan="7" style="height:120px;">
+                        <textarea id="secretaryComment" class="" style="width: 100%;height:100%;float: left; border: none; resize: none;"/></textarea>
+                        <input type="hidden" id="secre">
+                    </td>
+                </tr>
+                <tr style="height:120px;" class="manageComment none">
+                    <td>项目经理审核意见</td>
+                    <td colspan="7" style="height:120px;">
+                        <textarea  id="manageComment" class="" style="width: 100%;height:100%;float: left; border: none; resize: none;"/></textarea>
+                        <input type="hidden" id="manage">
+                    </td>
+                </tr>
+                <tr style="height:120px;" class="companyMaterialsComment none">
+                    <td>公司物资管理部审核意见</td>
+                    <td colspan="7" class="co" style="height:120px;">
+                        <textarea  id="companyMaterialsComment" class="" style="width: 100%;height:100%;float: left; border: none; resize: none;"/></textarea>
+                        <input type="hidden" id="comma">
+                    </td>
+                </tr>
+                <tr style="height:120px;" class="lawComment none">
+                    <td>公司律师事务部审核意见</td>
+                    <td colspan="7" class="la" style="height:120px;">
+                        <textarea  id="lawComment" class="" style="width: 100%;height:100%;float: left; border: none; resize: none;"/></textarea>
+                        <input type="hidden" id="law">                        
+                    </td>
+                    <input type="hidden" id="status">
+                </tr>
+            </table>
+            <!-- 点击单价弹出表格 -->
+            <div class="shade none"></div>
+            <div class="pricetableList none">
+                <table id="pricelist" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>型号</th>
+                            <th>单价</th>
+                            <th>运费</th>
+                        </tr>
+                    </thead>
+                    <tbody>  
+                    </tbody>
+                </table>
+                <div class="explan">
+                    <p>总说明：</p>
+                    <div id="remark" style="width: 100%;height:80px;border: 1px solid #e6e6e6;"></div>
+                </div>
+                <button type="button" class="closebtn btnBlue" style="margin-left:0; margin-top: 10px;">关闭</button>
+            </div>
+            <p style="text-align:center;margin:20px 0;">
+                <button type="button" id="submit" class="btnBlue">提 交</button>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../static/js/jquery-1.8.3.js"></script>
+<script src="../../static/dx.js"></script>
+<script src="../../static/laydate/laydate.js"></script>
+<script src="../static/js/progress.js"></script>
+<script src="../static/js/comment.js"></script>
+<script src="../static/js/tip.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    var surveyId = DX.getParam('id');
+    randerContract(surveyId);
+    
+    
+    // 填写说明收起
+    $('.close').toggle(
+        function(){
+            $(this).parent().siblings().slideUp(200);
+            $(this).html('查看更多');
+        },
+        function(){
+            $(this).parent().siblings().slideDown(200);
+            $(this).html('收起');
+        }
+    )
+
+    // 上传
+    $('.uploadfile').click(function(){
+        $('#upload').click();
+        $('#upload').change(function(){
+            DX.uplaodFile({
+                'id':'upload',
+                'url':'/materials/file/upload',
+                'callBack':function(res){
+                    console.log(res)
+                    $('#bidfile').val(res.data);
+                }
+            })
+        })  
+    })
+})
+
+//资信等级
+var creditLevelMap = {1:'1A',2:'2A',3:'3A','':''}
+function randerContract(surveyId){
+
+    DX.ajax_method({
+        'type':'GET',
+        'url':'/materials/supply/contractAudit/findById',
+        'param':{id:surveyId},
+        'callBack':function(res){
+            console.log(res.data)
+            doRander(res.data);
+        }
+    })
+}
+
+function doRander(data){
+    console.log(data)
+    for(var j in data){
+        if(!data[j] && data[j] != 0){
+            data[j] = '';
+        }
+    }
+    // 流程
+ $('.searchconstract').progress({
+        active:data.status,
+        data: [{
+                title: '提交资料',
+                date: data.createTime
+            },
+            {
+                title: '项目物资部审核',
+                date: data.materialsCommentDate
+            },
+            {
+                title: '项目计划部审核',
+                date: data.planCommentDate
+            },
+            {
+                title: '项目财务部审核',
+                date: data.accountingCommentDate
+            },
+            {
+                title: '项目书记审核',
+                date: data.secretaryCommentDate
+            },
+            {
+                title: '项目经理审核',
+                date: data.manageCommentDate 
+            },
+            {
+                title: '公司物资管理部审核',
+                date: data.companyMaterialsCommentDate
+            },
+            {
+                title: '法律事务部审核',
+                date: data.lawCommentDate
+            },
+        ]
+    })
+    if(data.showBtn != true || data.status == 8){
+        $('#submit').addClass('none');
+        data.status = 8;
+    }
+    if (data.companyContract) {
+        $('#a0').prop('checked','checked')
+    }else{
+        $('#a1').prop('checked','checked')
+    }
+    $('#status').val(data.status);
+    $('#projectName').val(data.supplierSurvey.projectName);
+    $('#name').val(data.supplierSurvey.supplier.name);
+    $('#classify').text(data.supplierSurvey.productType);
+    $('#businessLicense').val(data.supplierSurvey.supplier.businessLicense);
+    if(data.supplierSurvey.supplier.businessExpireDate == '9999-12-31'){
+        $('#businessExpireDate').val('长期');
+    }else{
+        $('#businessExpireDate').val(data.supplierSurvey.supplier.businessExpireDate);
+    }
+    // $('#businessExpireDate').val(data.supplierSurvey.supplier.businessExpireDate);
+    $('#businessRegisterMoney').val(data.supplierSurvey.supplier.businessRegisterMoney);
+    $('#productLicence').val(data.supplierSurvey.supplier.productLicence);
+    $('#productExpireDate').val(data.supplierSurvey.supplier.productExpireDate);
+    // $('#creditLevel').val(data.supplierSurvey.supplier.creditLevel);
+    $('#creditLevel').val((data.supplierSurvey.supplier.creditLevel != undefined?creditLevelMap[data.supplierSurvey.supplier.creditLevel]:''));
+    $('#contractNo').val(data.contractNo);
+    $('#loadDistance').val(data.loadDistance );
+    $('#honestLevel').val(data.honestLevel );
+    $('#bid'+data.datum).prop('checked',true);
+    $('#datumFile').attr('fid',data.datumFile);
+    $('#download').attr('fid',data.datumFile);
+    $('#price').val('点击查看详情');
+    var price = JSON.parse(data.price);
+    $('#remark').text(price.remark);
+    //{"remark":"21212","detail":[{"name":"1","model":"1","price":"1","freight":"1"}]}
+    var html = "";
+    $.each(price.detail,function(i,n){
+        html+='<tr>';
+        html+='<td>' + n.name + '</td>';
+        html+='<td>' + n.model + '</td>';
+        html+='<td style="color:red;">' + n.price + '</td>';
+        html+='<td>' + n.freight + '</td>';
+        html+='</tr>';
+    })
+    $('#pricelist').find('tbody').html(html);
+//1:物资部审批,2:计划部审批,3:财务部审批4:项目书记审批,5:项目经理审批,6:公司物资部审批7:法律部审核,8:审核通过,-1:驳回
+    var status = data.status;
+    if(status == 1){ //物资部审批
+        $('.materialsComment').removeClass('none');
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('#materialsComment').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                       $('#mater').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else if(status == 2){//计划部审批
+        $('.materialsComment').removeClass('none');
+        $('.planComment').removeClass('none');
+        $('#materialsComment').comment({
+            readonly:true,
+            sign:data.materials.name,
+            signDate:data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content:data.materialsComment 
+        })
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('#planComment').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                        $('#plan').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else if(status == 3){ //财务部审批
+        $('.materialsComment').removeClass('none');
+        $('.planComment').removeClass('none');
+        $('.accountingComment').removeClass('none');
+        $('#materialsComment').comment({
+            readonly:true,
+            sign:data.materials.name,
+            signDate:data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content:data.materialsComment 
+        })
+        $('#planComment').comment({
+            readonly:true,
+            sign:data.plan.name,
+            signDate:data.planCommentDate,
+            signFile:data.planSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.planSignFile:null,
+            signStatus:data.planCommentStatus, 
+            content:data.planComment 
+        })
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('#accountingComment').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                        $('#acc').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else if(status == 4){//项目书记审核意见
+        $('.materialsComment').removeClass('none');
+        $('.planComment').removeClass('none');
+        $('.accountingComment').removeClass('none');
+        $('.secretaryComment').removeClass('none');
+        $('#materialsComment').comment({
+            readonly:true,
+            sign:data.materials.name,
+            signDate:data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content:data.materialsComment 
+        })
+        $('#planComment').comment({
+            readonly:true,
+            sign:data.plan.name,
+            signDate:data.planCommentDate,
+            signFile:data.planSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.planSignFile:null,
+            signStatus:data.planCommentStatus, 
+            content:data.planComment 
+        })
+        $('#accountingComment').comment({
+            readonly:true,
+            sign:data.accounting.name,
+            signDate:data.accountingCommentDate,
+            signFile:data.accountingSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.accountingSignFile:null,
+            signStatus:data.accountingCommentStatus,
+            content:data.accountingComment
+        })
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('#secretaryComment').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                        $('#secre').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else if(status == 5){//项目经理审核意见
+        $('.materialsComment').removeClass('none');
+        $('.planComment').removeClass('none');
+        $('.accountingComment').removeClass('none');
+        $('.secretaryComment').removeClass('none');
+        $('.manageComment').removeClass('none');
+        $('#materialsComment').comment({
+            readonly:true,
+            sign:data.materials.name,
+            signDate:data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content:data.materialsComment 
+        })
+        $('#planComment').comment({
+            readonly:true,
+            sign:data.plan.name,
+            signDate:data.planCommentDate,
+            signFile:data.planSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.planSignFile:null,
+            signStatus:data.planCommentStatus, 
+            content:data.planComment 
+        })
+        $('#accountingComment').comment({
+            readonly:true,
+            sign:data.accounting.name,
+            signDate:data.accountingCommentDate,
+            signFile:data.accountingSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.accountingSignFile:null,
+            signStatus:data.accountingCommentStatus,
+            content:data.accountingComment
+        })
+        $('#secretaryComment').comment({
+            readonly:true,
+            sign:data.secretary.name,
+            signDate:data.secretaryCommentDate,
+            signFile:data.secretarySignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.secretarySignFile:null,
+            signStatus:data.secretaryCommentStatus,
+            content:data.secretaryComment
+        })
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('#manageComment').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                        $('#manager').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else if(status == 6){//公司物资管理部审核意见
+        $('.materialsComment').removeClass('none');
+        $('.planComment').removeClass('none');
+        $('.accountingComment').removeClass('none');
+        $('.secretaryComment').removeClass('none');
+        $('.manageComment').removeClass('none');
+        $('.companyMaterialsComment').removeClass('none');
+        $('#materialsComment').comment({
+            readonly:true,
+            sign:data.materials.name,
+            signDate:data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content:data.materialsComment 
+        })
+        $('#planComment').comment({
+            readonly:true,
+            sign:data.plan.name,
+            signDate:data.planCommentDate,
+            signFile:data.planSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.planSignFile:null,
+            signStatus:data.planCommentStatus, 
+            content:data.planComment 
+        })
+        $('#accountingComment').comment({
+            readonly:true,
+            sign:data.accounting.name,
+            signDate:data.accountingCommentDate,
+            signFile:data.accountingSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.accountingSignFile:null,
+            signStatus:data.accountingCommentStatus,
+            content:data.accountingComment
+        })
+        $('#secretaryComment').comment({
+            readonly:true,
+            sign:data.secretary.name,
+            signDate:data.secretaryCommentDate,
+            signFile:data.secretarySignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.secretarySignFile:null,
+            signStatus:data.secretaryCommentStatus,
+            content:data.secretaryComment
+        })
+        $('#manageComment').comment({
+            readonly:true,
+            sign:data.manage.name,
+            signDate:data.manageCommentDate,
+            signFile:data.manageSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.manageSignFile:null,
+            signStatus:data.manageCommentStatus,
+            content:data.manageComment
+        })
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('#companyMaterialsComment').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                        $('#comma').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else if(status == 7){//公司律师事务部审核意见
+        $('.materialsComment').removeClass('none');
+        $('.planComment').removeClass('none');
+        $('.accountingComment').removeClass('none');
+        $('.secretaryComment').removeClass('none');
+        $('.manageComment').removeClass('none');
+        $('.companyMaterialsComment').removeClass('none');
+        $('.lawComment').removeClass('none');
+        $('#materialsComment').comment({
+            readonly:true,
+            sign:data.materials.name,
+            signDate:data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content:data.materialsComment 
+        })
+        $('#planComment').comment({
+            readonly:true,
+            sign:data.plan.name,
+            signDate:data.planCommentDate,
+            signFile:data.planSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.planSignFile:null,
+            signStatus:data.planCommentStatus, 
+            content:data.planComment 
+        })
+        $('#accountingComment').comment({
+            readonly:true,
+            sign:data.accounting.name,
+            signDate:data.accountingCommentDate,
+            signFile:data.accountingSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.accountingSignFile:null,
+            signStatus:data.accountingCommentStatus,
+            content:data.accountingComment
+        })
+        $('#secretaryComment').comment({
+            readonly:true,
+            sign:data.secretary.name,
+            signDate:data.secretaryCommentDate,
+            signFile:data.secretarySignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.secretarySignFile:null,
+            signStatus:data.secretaryCommentStatus,
+            content:data.secretaryComment
+        })
+        $('#manageComment').comment({
+            readonly:true,
+            sign:data.manage.name,
+            signDate:data.manageCommentDate,
+            signFile:data.manageSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.manageSignFile:null,
+            signStatus:data.manageCommentStatus,
+            content:data.manageComment
+        })
+        $('#companyMaterialsComment').comment({
+            readonly:true,
+            sign:data.companyMaterials.name,
+            signDate:data.companyMaterialsCommentDate,
+            signFile:data.companyMaterialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.companyMaterialsSignFile:null,
+            signStatus:data.companyMaterialsCommentStatus ,
+            content:data.companyMaterialsComment
+        })
+        DX.ajax_method({
+            'type':'GET',
+            'url':'/user/emp/getLogUserInfo',
+            'param':'',
+            'callBack':function(res){
+                $('#lawComment').comment({
+                    sign:res.data.name,
+                    signFile:res.data.signature ? DX.domain('user')+'/user/file/img?size=80&fid=' + res.data.signature:null,
+                    signDate:getDate(),
+                    btnClick:function(status){
+                        $('#law').val(status ? 0 : -1);
+                    }
+                })
+            }
+        })
+    }else{
+        $('.materialsComment').removeClass('none');
+        $('.planComment').removeClass('none');
+        $('.accountingComment').removeClass('none');
+        $('.secretaryComment').removeClass('none');
+        $('.manageComment').removeClass('none');
+        $('.companyMaterialsComment').removeClass('none');
+        $('.lawComment').removeClass('none');
+        $('#submit').remove();
+        // $('#submit').remove();
+        // $('.printBefore').after('<button class="btn print" style="float:right;margin-bottom:10px;" onclick="DX.print()">打印</button>');
+        $('#materialsComment').comment({
+            readonly:true,
+            sign:data.materials.name,
+            signDate:data.materialsCommentDate,
+            signFile:data.materialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.materialsSignFile:null,
+            signStatus:data.materialsCommentStatus, 
+            content:data.materialsComment 
+        })
+        $('#planComment').comment({
+            readonly:true,
+            sign:data.plan.name,
+            signDate:data.planCommentDate,
+            signFile:data.planSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.planSignFile:null,
+            signStatus:data.planCommentStatus, 
+            content:data.planComment 
+        })
+        $('#accountingComment').comment({
+            readonly:true,
+            sign:data.accounting.name,
+            signDate:data.accountingCommentDate,
+            signFile:data.accountingSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.accountingSignFile:null,
+            signStatus:data.accountingCommentStatus,
+            content:data.accountingComment
+        })
+        $('#secretaryComment').comment({
+            readonly:true,
+            sign:data.secretary.name,
+            signDate:data.secretaryCommentDate,
+            signFile:data.secretarySignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.secretarySignFile:null,
+            signStatus:data.secretaryCommentStatus,
+            content:data.secretaryComment
+        })
+        $('#manageComment').comment({
+            readonly:true,
+            sign:data.manage.name,
+            signDate:data.manageCommentDate,
+            signFile:data.manageSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.manageSignFile:null,
+            signStatus:data.manageCommentStatus,
+            content:data.manageComment
+        })
+        $('#companyMaterialsComment').comment({
+            readonly:true,
+            sign:data.companyMaterials.name,
+            signDate:data.companyMaterialsCommentDate,
+            signFile:data.companyMaterialsSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.companyMaterialsSignFile:null,
+            signStatus:data.companyMaterialsCommentStatus ,
+            content:data.companyMaterialsComment
+        })
+        $('#lawComment').comment({
+            readonly:true,
+            sign:data.law.name,
+            signDate:data.lawCommentDate,
+            signFile:data.lawSignFile ? DX.domain('user')+'/user/file/img?size=80&fid='+data.lawSignFile:null,
+            signStatus:data.lawCommentStatus,
+            content:data.lawComment
+        })
+    }
+}
+
+//点击单价弹出可输入表格
+$('#price').focus(function(){
+    $('#price').val('');
+    $('.pricetableList').removeClass('none');
+    $('#price').val('点击查看详情');
+    $('.shade').removeClass('none');
+})
+$('.closebtn').click(function(){
+    $('.pricetableList').addClass('none');
+    $('.shade').addClass('none');
+})
+
+
+//提交
+//1:物资部审批,2:计划部审批,3:财务部审批4:项目书记审批,5:项目经理审批,6:公司物资部审批7:法律部审核,8:审核通过,-1:驳回
+$('#submit').click(function(){
+    var url,obj = {id: DX.getParam('id')};
+    var status = $('#status').val();  
+    if(status == 1){//物资部审批
+        url = '/materials/supply/contractAudit/addMaterialsComment';
+        obj.status = $('#mater').val();
+        obj.materialsComment = $('#materialsComment').val();
+    }else if(status == 2){//计划部审批
+        url = '/materials/supply/contractAudit/addPlanComment';
+        obj.status = $('#plan').val();
+        obj.planComment = $('#planComment').val();
+    }else if(status == 3){//财务部审批
+        url = '/materials/supply/contractAudit/addAccountingComment';
+        obj.status = $('#acc').val();
+        obj.accountingComment = $('#accountingComment').val();
+    }else if(status == 4){//项目书记审批
+        url = '/materials/supply/contractAudit/addSecretaryComment';
+        obj.status = $('#secre').val();
+        obj.secretaryComment = $('#secretaryComment').val();
+    }else if(status == 5){//项目经理审批
+        url = '/materials/supply/contractAudit/addManageComment';
+        obj.status = $('#manage').val();
+        obj.manageComment = $('#manageComment').val();
+    }else if(status == 6){//公司物资部审批7
+        url = '/materials/supply/contractAudit/addCompanyMaterialsComment';
+        obj.status = $('#comma').val();
+        obj.companyMaterialsComment = $('#companyMaterialsComment').val();
+        if(DX.isNull(obj.companyMaterialsComment)){$('.co').tip({msg:'不可为空'});flag = false;}
+    }else if(status == 7){//法律部审核
+        url = '/materials/supply/contractAudit/addLawComment';
+        obj.status = $('#law').val();
+        obj.lawComment = $('#lawComment').val();
+        if(DX.isNull(obj.lawComment)){$('.la').tip({msg:'不可为空'});flag = false;}
+    }
+    var that = $(this);
+    DX.ajax_method({
+        'type':'POST',
+        'url':url,
+        'param':obj,
+        'change':that[0],
+        'callBack':function(res){
+            if(res.code == 200){
+                // console.log(11111)
+                window.location.href = 'comcontract.html';
+            }else{
+                alert(res.msg);
+            }
+        }
+    }) 
+})
+
+// 获取时间
+function getDate(){
+    var now = new Date();
+    var year = now.getFullYear(); //得到年份
+    var month = now.getMonth();//得到月份
+    var date = now.getDate();//得到日期
+    month = month + 1;
+    return year+'/'+month+'/'+date;
+}
+
+function preView(e){
+    var fid = $(e).attr('fid');
+    if(!fid){
+        alert('文件未上传')
+        return
+    }
+    window.parent.open(DX.preview('materials',fid))
+}
+function downLoad(e){
+    var fid = $(e).attr('fid');
+    if(!fid){
+        alert('文件未上传')
+        return
+    }
+    window.parent.open(DX.domain('materials') + '/materials/file/download?fid=' + fid);
+}
+</script>

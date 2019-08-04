@@ -1,0 +1,332 @@
+a{
+    color: #000;
+}
+html,body{width: 100%;height: 100%;}
+.allotBox{
+    width: calc(100% - 60px);
+	margin:0 30px;
+	height: 100%;
+}
+.titleHeader{
+    height: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 50px;
+   
+}
+/* 权限分配左侧 */
+.allotLeftBox{
+    width: 200px;
+    min-height: 100%;
+    float: left;
+    border-right:1px solid #adadad;
+}
+.roleList{
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    line-height: 50px;
+    padding-left: 35px;
+}
+.addRole{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    /* padding-left: 35px; */
+}
+.addRoleBtn{
+    width: 80%;
+    height: 35px;
+	line-height: 35px;
+	outline: none;
+    background: none;
+    border-radius: 5px;
+    border: 1px solid #333333;
+}
+.manager{
+    width: 100%;
+    height: 50px;
+    font-size: 14px;
+    line-height: 50px;
+    padding-left: 35px;
+}
+.navName{
+    height: 22px;
+    font-weight: bold;
+    margin-right: 16px;
+    /* margin-top: 12px; */
+    display: inline-block;
+}
+.navHeader{
+    width: 100%;
+    height: 40px;
+	line-height: 40px;
+    display: block;
+}
+
+.bg{
+    width: 20px;
+    height: 20px;
+	background: url(../img/min-left.png) no-repeat center center;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.bg_bottom{background: url(../img/min.png) no-repeat center center;}
+.bgactive{
+	  background: url(../img/min.png) no-repeat !important;
+	  background-position: 10px 10px !important;
+}
+.personList,.personList1,.personList2{display: none;}
+
+.personList li,.personList1 li,.personList2 li{
+    line-height: 30px;
+    font-size: 13px;
+    color: #333333;
+    padding-left: 40px;
+}
+.personList li{line-height: 40px;}
+.personList li.selects{background: #199ED8;color: #fff;}
+.personList li.selects a{color: #fff;}
+/* .personList2 li.haves a{color: red;} */
+.personList1 li.selectback a{color: red;}
+.personList li.selectMenu a{color: red;}
+
+.personList label{display: block;line-height: 40px;font-size: 13px;padding-left: 20px;}
+/* .personList label a{color: #fff;} */
+.personList label input{width: 13px;height: 13px;}
+
+/* 权限分配右侧 */
+.allotRightBox{
+    width:calc(100% - 250px);
+    height: 100%;
+    float: left;
+    margin-left: 30px;
+    position: relative;
+}
+.rightBoxHeader{
+    width: 100%;
+    padding-left: 45px;
+	margin-top: 10px;
+}
+.allotLimits,.allotUser{
+   
+    width: 170px;
+    
+    line-height: 20px;
+    font-size: 16px;
+}
+.limitsBox{
+    width: 98%;
+    min-height: 350px;
+    background-color: #f5f5f5;
+    margin:20px auto;
+  /*  position: absolute;
+    left: 40px; */
+    padding-bottom: 20px;
+	margin-left: 40px;
+}
+/* 默认首次出现的角色权限样式 */
+.chooseIn{
+    font-weight: 600;
+    color: #1296db;
+}
+.man_bottom ul{margin: 0 auto;width: 200px;}
+/* 权限分配左侧下拉列表 */
+
+.limitsLeft{
+    float:left;
+	width: 30%;
+    height: 100%;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+.limitsLeft p:nth-child(1){
+    width: 100%;
+    line-height: 40px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.limitsList{
+    width: 100%;
+    height: 40px;
+    font-size: 13px;
+    /* margin-right: 16px; */
+    /* margin-top: 12px; */
+    display: block;
+}
+/* 权限分配右侧已分配权限 */
+.limitsRight{
+    float: left;
+    width: 40%;
+    height: 100%;
+    padding-top: 20px;
+    padding-left: 30px;
+    margin-left: 10%;
+}
+.limitsRight p:nth-child(1){
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.finishAllot{
+    width: 90%;
+    min-height: 400px;
+    padding-top: 20px;
+    padding-left: 20px;
+    background: #ffffff;
+	font-size: 13px;
+}
+.subBtn{
+    width: 80px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1296db;
+    color: #ffffff;
+	cursor: pointer;
+	/* display: block; */
+    /* position: absolute;
+    top: 520px;left: 0;right: 0;bottom: 0;
+    margin: auto; */
+	/* margin-top: 30px; */
+}
+/* 点击角色用户出现的列表 */
+.allotUserTable{
+   /* width: 94%;
+    min-height: 350px;
+    margin:35px auto;
+    position: absolute;
+    left: 40px; */
+	
+	width: calc(100% - 250px);
+    height: 100%;
+    float: left;
+    margin-left: 30px;
+}
+/* 表格 */
+
+#list{
+    width:100%;
+    height: 100%;
+    border-collapse:collapse;
+}
+#detail td:nth-child(1) input{
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+#outfit{
+    height: 45px;
+    background-color: #F0EFEF;
+}
+#outfit th{
+    font-size: 12px;
+    font-weight: 900;
+}
+#detail{
+    height: 45px;
+}
+#detail td{
+    text-align: center;
+    font-size: 12px;
+    color: #404040;
+}
+#outfit th:nth-child(1),#detail td:nth-child(1){
+    width:20%;
+}
+#outfit th:nth-child(2),#detail td:nth-child(2){
+    width:20%;
+}
+#outfit th:nth-child(3),#detail td:nth-child(3){
+    width:20%;
+}
+#outfit th:nth-child(4),#detail td:nth-child(4){
+    width:20%;
+}
+#outfit th:nth-child(5),#detail td:nth-child(5){
+    width:20%;
+}
+#detail:hover{
+    background-color: #1296db;
+}
+#detail:hover td{
+    color: #ffffff;
+}
+
+#detail:hover td a{
+    color: #ffffff;
+}
+#detail td a:hover{
+    color: red;
+}
+
+/* 点击添加新角色出现弹窗 */
+.showNewRole{
+    width: 270px;
+    /* height: 200px; */
+    /* position: fixed;
+    top: -300px;left: -100px;right: 0;bottom: 0;
+    margin: auto;
+    z-index: 100;
+    border: 1px solid #F0EFEF;
+    border-radius: 5px;
+    box-shadow:0px 9px 21px 0px #21355229;
+    background: #ffffff; */
+    /* padding-top: 20px; */
+    padding-left: 40px;
+}
+
+.showNewRole p{
+    width: 100%;
+    height:50px;
+    margin-top: 5px;
+}
+.showNewRole p span{
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+}
+.writeIn,.choosePart{
+    width: 70%;
+    height: 30px;
+    border: 1px solid #F0EFEF;
+    border-radius: 5px;
+    margin-left: 10px;
+    text-indent: 10px;
+}
+.choosePart{
+    width: 70%;
+    height: 32px;
+}
+.saveBtn,.noBtn{
+     margin-top: 45px;
+     width: 80px;
+     height: 30px;
+     border: none;
+     border-radius: 4px;
+     background-color: #1296db;
+     color: #ffffff;
+     float: right;
+     margin-right: 15px;
+}
+
+.role_top{height: 30px;padding: 10px 0 20px 0;position: relative;}
+.role_top span{margin-top: 5px;}
+.role_top button{margin-left: 20px;}
+/* .table tr td span{color: red;cursor: pointer;} */
+.add_role{position: absolute;top: 40px;left: 260px;width: 250px;border: 1px solid #E3E3E3;background: #fff;}
+.add_role h3{text-indent: 10px;font-weight: bold;font-size: 16px;line-height: 40px;border-bottom: 1px solid #E3E3E3;}
+.add_role ol{max-height: 200px;overflow-y: auto;min-height: 100px;}
+.add_role ol li{line-height: 30px;border-bottom: 1px solid #E3E3E3;}
+.add_role ol li .right{width: 20px;height: 30px;background: url(../img/right.png) no-repeat center center;padding-left: 15px;}
+.add_role ol li .img_bottom{background: url(../img/bottom.png) no-repeat center center;}
+.add_role ol li input[type=checkbox]{width: 16px;height: 16px;margin: 7px 0 0 10px;}
+.add_role ol li span{font-size: 13px;line-height: 30px;margin: 0;margin-left: 5px;}
+.add_role ol ul li{padding-left: 20px;}
+.add_role p{padding: 10px 0;}
+.add_role p button:first-child{margin-left: 75px;}

@@ -1,0 +1,36 @@
+.ml20{margin-left: 20px;}
+.err{font-size: 12px;color: red;line-height: 30px;height: 20px;}
+/* 现场收料 */
+.enter{margin: 0 30px;}
+.enter .search{width:100%;height:50px;margin-top:20px;position:relative;}
+.enter .search p{width: 460px;height:30px;position: absolute;top:0;left:0;right:0;bottom:0;margin: auto;}
+.enter .materType{width:100%;}
+.enter .materType h3{font-size:20px;font-weight:600;}
+.enter .comMater{width: 100%;}
+.enter .comMater span{display: inline-block;width:18%;text-align: center;line-height: 40px;background:#e3e3e3;margin-right:20px;cursor:pointer;
+	overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.enter .comMater span:hover{background: #C9C9C9;}
+
+/* 材料收料 */
+.choose{margin: 0 30px;}
+.choose h3{margin: 0 auto;line-height: 70px;font-size: 18px;font-weight: bold;text-indent: 28px;}
+.choose p{line-height: 60px;border-bottom:1px solid #F0EFEF ;}
+.choose p.last{border: 0;}
+.choose p em{color: red;}
+.choose p .block{color: #000000;width: 105px;text-align: right;}
+.choose p label{width: 33%;}
+.choose p input,.choose p select{margin-top: 15px;width: 200px;margin-left: 20px;}
+.choose p textarea{width: 600px;height: 70px;padding: 5px;margin-left: 20px;margin-top: 20px;border: 1px solid #ccc;line-height: 25px;overflow-y: auto;
+	resize:none}
+	
+/* 收料名称 */
+.detail{margin: 0 30px;}
+.detail .top input{width: 300px;}
+.detail table th input,.detail table td input{width: 16px;height: 16px;position: relative;top: 3px;}
+
+/* 开收料单 */
+.receipt{margin: 0 30px;}
+.receipt h3{line-height: 30px;font-size: 18px;font-weight: bold;}
+.middle{line-height: 50px;height: 30px;}
+.middle em{color: #000000;font-weight: bold;}
+.middle span{margin-right: 40px;}

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>劳务队展现</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/index.css" />
+		
+	</head>
+	<body>
+
+		<!-- right -->
+		<div class="rightBox">
+			<!-- <div class="nav">
+				<span>当前所在位置：劳务队></span><span class="pointer">劳务队评价</span>
+			
+			</div> -->
+			
+			<div class="clearfix showcheck">
+
+				<div class="selectyear fl clearfix" >
+					<a href="javascript:void(0)" class="fl allMod btnBlue inline-block" id="summary">汇总评价</a>
+					<a href="javascript:void(0)" class="allMod fl showT btnBlue" id="isUpdate" style="width:120px;">本季度评价结束</a>
+					<!-- <span class="fl">请选择季度</span> -->
+					<select class="fl" id="selectYear" style="margin-right: 10px;">
+						<option value="">请选择季度</option>
+					</select>
+					<!-- <select class="fl showT" id="experTo" style="margin-right: 20px;">
+						<option value="">请选择下载文件</option>
+					</select> -->
+					<div class="query clearfix fl" style="width: 500px;">
+						<input type="text" placeholder="项目部、劳务队名称、负责人、队伍类别" id="checked" class="fl" style="width: 48%; margin: 0 20px 0 0;height: 28px;border-radius: 5px;font-size: 12px;" autocomplete="off">
+						<button type="button" class="fl pointer btnBlue" id="subCheck" style="margin:0 20px 0 0;">查询</button>
+						<select class="fl" id="dowlaodFile">
+							<option value ="">请选择导出文件</option>
+							<option value ="7">信用评价结果汇总表</option>
+							<option value ="6">信用评价汇总表</option>
+						</select>
+					</div>
+					<span id="seeCode" class="listToDetail">二维码分享
+						<img src="" id="imgCode">
+					</span>
+				</div>
+			</div>
+			<div class=" result">
+
+				<table>
+					<thead>
+						<tr>
+							<th>级别</th>
+							<th>排名</th>
+							<th>劳务分包队伍</th>
+							<th>劳务队负责人</th>
+							<th>参评项目部</th>
+							<th>参评个数</th>
+							
+							<th>队伍类别</th>
+							<th>队伍规模</th>
+							<th>过渡分</th>
+							<th>总分</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- <tr>
+							<td >12</td>
+							<td>11</td>
+							<td>11</td>
+							<td>11</td>
+							<td>11</td>
+							<td>12</td>
+							
+							<td>11</td>
+						
+							<td><a href="">修改评价</a><a href="detail.html">详情</a></td>
+						</tr> -->
+
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+	var contant = DX.getParam('contant');
+	// console.log();
+	if(contant){
+		$('#checked').val(decodeURI(contant));
+	}
+		//初始化加载季度
+		domYear();
+
+		function domYear() {
+			getYears();
+			yearList({}); //默认加载最新数据
+		};
+		//查询
+		$('#subCheck').click(function(){
+			var year = $('#selectYear').val();
+			yearList({
+				'year_quarter': year
+			});
+		});
+		//回车查询
+		$('#checked').keydown(function(event){
+			if (event.keyCode == 13){
+				event.returnValue=false;
+				event.cancel = true;
+				$('#subCheck').trigger('click');
+			}
+		})
+		
+		$('#seeCode').mouseover(function(){
+			var port = '';
+			if(window.location.port){
+				port = ':'+window.location.port
+			}
+			var url = DX.domain('eva')+'/eva/dlc/sendCeoWithQrCode?url='+window.location.protocol+'//'+window.location.hostname+port+'/AssessH5.html';
+			url += '?year='+$('#selectYear').val();
+			$('#imgCode').attr('src',url).show();
+			
+		})
+		$('#seeCode').mouseleave(function(){
+			// var url = DX.domain('eva')+'/eva/dlc/sendCeoWithQrCode?url='+window.location.protocol+'//'+window.location.hostname+'/AssessH5.html';
+			$('#imgCode').hide();
+			
+		})
+		
+		// 获取年份
+		function getYears(){
+			DX.ajax_method({
+				'type': 'GET',
+				'url': '/eva/dlc/selectOfficeYear',
+				'param': {},
+				'callBack': function(res) {
+					console.log(res);
+					var str = '<option value ="">请选择季度</option>';
+					if (res.code == '200') {
+						$.each(res.data, function(i, val) {
+							var arr = val.split('-');
+							str += '<option value ="' + val + '">' + arr[0] + '年第' + arr[1] + '季度</option>';
+						})
+						$('#selectYear').html(str);
+					};
+					
+					//select改变取值
+					$('#selectYear').change(function() {
+						var value = $(this).val();
+						console.log(value);
+						if (value) {
+							yearList({
+								'year_quarter': value
+							});
+							$('.showT').show();
+						} else {
+							$('.showT').hide();
+							$('.result tbody').html('');
+						}
+			
+					});
+				}
+			});
+		}
+		//点击下载
+		$('#dowlaodFile').change(function(){
+			var value = $(this).val();
+			var year = $('#selectYear').val();
+			if(year && value != ''){
+				
+				DX.DownLoadFile({
+					// 'url':'/file/exportUnit?year_quarter='+year+'&flag='+value
+					'url':'/eva/files/exportUnit?year_quarter='+year+'&flag='+value
+				});
+			}
+		});
+		//确认完成 不能再修改数据
+		$('#isUpdate').click(function() {
+			var yes = confirm('确定结束本季度数据');
+			if(!yes) return;
+			var year = $('#selectYear').val();
+			console.log(year);
+			DX.ajax_method({
+				'type': 'POST',
+				'param': {
+					'year_quarter': year
+				},
+				'url': '/eva/dlc/returnTeamIdAndYear',
+				'change':$(this)[0],
+				'callBack': function(res) {
+					console.log(res);
+					if(res.code == '200'){
+						yearList({'year_quarter': year});
+					}
+				}
+			});
+		});
+		//点击汇总拉去数据
+		$('#summary').click(function() {
+			var that = $(this);
+			domYear();
+			DX.ajax_method({
+				'type': 'POST',
+				'param': {},
+				'change':that[0],
+				'url': '/eva/dlc/findDleByOffice',
+				'callBack': function(res) {
+					console.log(res);
+					if (res.code == '200') {
+						getYears();
+						// selectList(res.data);
+						yearList({
+							
+						});
+					}
+				}
+			});
+		});
+
+ 
+		//根据年份拉数据
+		function yearList(obj) {
+			obj.condition = $('#checked').val();
+			DX.ajax_method({
+				'type': 'POST',
+				'url': '/eva/dlc/FindOfficeListByCondition',
+				'param': obj,
+				'callBack': function(res) {
+					if (res.code == '200') {
+						selectList(res.data);
+					}
+				}
+			})
+		};
+		//渲染页面
+		function selectList(data) {
+
+			console.log(data);
+			var html = '';
+			$.each(data.list, function(i, val) {
+				var leave = '';
+				var style = '';
+				if (i < 50) {
+					leave = 'A';
+					style = '#86eba5';
+				} else if (data.list.length > 50 && i > (data.list.length - 11)) {
+					leave = 'C';
+					style = '#e48383';
+				} else {
+					leave = 'B';
+					style = '#f4f38c';
+				};
+
+				html += '<tr eid="' + val.eid + '" style="background:' + style + '">';
+
+				html += '<td >' + leave + '级</td>';
+				html += '<td >' + val.rownum + '</td>';
+				// html += '<td>'+val.rownum+'</td>';
+				html += '<td class="seeDet"><span class="listToDetail">' + val.team_name + '</span></td>';
+				html += '<td>' + val.representative + '</td>';
+				var str = ''
+				$.each(val.projects, function(index, value) {
+					str += value.abbreviation + '，';
+				});
+				str = str.substring(str.length - 1, -1);
+				html += '<td>' + str + '</td>';
+				html += '<td>' + val.projects.length + '</td>';
+				
+				var res = '';
+				$.each(val.teamCategories, function(s, rey) {
+					res += rey.cname + '，';
+				});
+				res = res.substring(res.length - 1, -1);
+				html += '<td>' + res + '</td>';
+				html += '<td>' + val.team_size_level + '</td>';
+				html += '<td>' + val.count + '</td>';
+				html += '<td>' + val.final_count + '</td>'
+				html += '<td>';
+				if (val.is_update == 0) {
+					html += '<a href="javascript:toMod('+val.eid+')" class="listToDetail">特殊项目加分</a>';
+				}
+				html += '</td>';
+
+			});
+			$('.result tbody').html(html);
+			
+			
+			$('.seeDet span').click(function(){//查看详情
+				var that = $(this);
+				if($(this).parents('tr').next().hasClass('hover')){
+					$(this).parents('tr').next('.hover').remove();return;
+				}
+				var eid = $(this).parents('tr').attr('eid');
+				DX.ajax_method({
+					'type':'POST',
+					'param':{'id':eid},
+					'change':that[0],
+					'url':'/eva/dlc/UnitListdetailsByid',
+					'callBack':function(res){
+						if(res.code == '200'){
+							var res = template(res.data);
+							that.parents('tr').after(res);
+						}
+					}
+				})
+			})
+				$('#selectYear').val(data.year);
+			if (data.isupdate == 'success') { //回显select的值
+				// $('#selectYear').val(data.year);
+				$('#isUpdate').show();
+				
+				if(data.isupdate == 'error'){//结束评价 隐藏
+					$('#isUpdate').hide();
+					// $('#summary').remove(); 临时功能 （确认完成评价后不能进行拉取数据，不能汇总评价）
+				}
+			} else {
+				$('#isUpdate').hide();
+			}
+		};
+
+
+	})
+	
+	// 修改跳转
+	function toMod(eid){
+		var val = $('#checked').val();
+		window.location.href = 'offmod.html?id='+eid+'&contant='+val;
+	}
+	
+	function template(data) {
+		console.log(data);
+		// var html = '<tr class="hover">';
+		var html = '<td colspan="11" class="hover">';
+		html += '<div class="details">';
+		html += '<h3>劳务队评价得分</h3>';
+		html += '<p class="clearfix"><span class="fl blod">劳务队排名信息</span><span class="fl blod">总分详情</span></p>';
+		html += '<p class="clearfix"><span class="fl">排名：'+data.details.rownum+'</span><span class="fl">总分：'+data.details.final_count+'</span></p>';
+		html += '<p class="clearfix"><span class="fl">劳务队名称：'+data.details.team_name+'</span><span class="fl">过渡分：'+data.details.count+'</span>';
+		html += '<span class="fl ml20">参评次数：'+data.contestant_number+'</span>';
+		html += '<span class="fl ml20">以往得分：'+data.historyFinallCount+'</span></p>';
+		html += '	<p class="clearfix"><span class="fl">劳务队负责人：'+data.details.representative+'</span><span class="fl">计算方式：（当期过渡分+以往得分）/ 参评次数</span></p>';
+		html += '<h3>劳务队评价得分构成及明细</h3>';
+		html += '<div class="clearfix">';
+		
+		
+		html += '<ul class="fl">';
+		html += '<li class="blod">施工年限得分</li>';
+		html += '<p class="clearfix"><span class="fl">施工年限： '+data.details.construction_year+'</span><span class="fl">得分：'+data.details.construction_year_score+'分</span></p>';
+		html += '</ul>';
+	
+		html += '<ul class="fl">';
+		html += '	<li class="blod">队伍规模得分</li>';
+		html += '	<p class="clearfix"><span class="fl">队伍人数：'+data.details.peoplesize+'</span><span class="fl">得分：'+data.details.team_size_score+'分</span></p>';
+		html += '		</ul>';
+		html += '<ul class="fl">';
+		html += '<li class="blod">当期产值得分</li>';
+		html += '	<p class="clearfix"><span class="fl">当期产值： '+data.details.current_production+'</span><span class="fl">得分：'+DX.toNonExponential(data.details.current_production_score)+'分</span></p>';
+		html += '</ul>';
+		html += '<ul class="fl">';
+		html += '<li class="blod">近三年产值得分</li>';
+		html += '<p class="clearfix"><span class="fl">近三年产值： '+data.details.three_production+'</span><span class="fl">得分：'+DX.toNonExponential(data.details.three_production_score)+'分</span></p>';
+		// html += '<p class="clearfix"><span class="fl">施工年限： A+</span><span class="fl">得分：100分</span></p>'
+		html += '</ul>';
+		html += '<ul class="fl">';
+		html += '<li class="blod">以往产值得分</li>';	
+		html += '<p class="clearfix"><span class="fl">以往产值： '+data.details.before_production+'</span><span class="fl">得分：'+DX.toNonExponential(data.details.before_production_score)+'分</span></p>';
+		html += '</ul>';
+		html += '<ul class="fl">';
+		html += '<li class="blod">特殊项目加分</li>';
+		html += '	<p class="clearfix"><span class="fl">得分： '+data.details.spproject_socre+'</span></p>';
+		html += '	</ul>';
+		html += '	<ul class="fl">';
+		html += '<li class="blod">信用评价得分</li>';
+		html += '<p class="clearfix"><span class="fl">得分： '+data.details.misconduct_score+'</span></p>';
+		html += '			</ul>';
+		html += '<ul class="fl">';
+		html += '	<li class="blod">队伍级别得分</li>';
+		html += '	<p class="clearfix"><span class="fl">得分：'+data.details.level_id_score+'分</span></p>';
+		html += '</ul>';
+		html += '		<ul class="fl">';
+		html += '<li class="blod">队伍类别</li>';
+		var tes = getValue(data.details.teamCategories,'cname');
+		html += '	<p class="clearfix">队伍类型： '+tes+'</p>';
+		html += '</ul>';
+		html += '<ul class="fl" >';
+		html += '<li class="blod">参评项目部得分</li>';
+		var test = getValue(data.details.projects,'abbreviation');
+		html += '<p class="clearfix"><span class="fl" style="width:auto;">参评项目部：'+test+'</span><span class="fl">得分：'+data.details.projectSize_score+'分</span></p>';
+		html += '</ul>';
+		html += '<ul class="fl" >';
+		html += '<li class="blod">施工作业难度</li>';
+		var test1 = getValue(data.details.partids,'part_name');
+		html += '<p class="clearfix"><span class="fl" style="width:auto;">施工作业难度：'+test1+'</span><span class="fl">得分：'+data.details.partid_score+'分</span></p>';
+		html += '</ul>';
+		
+		html += '</div>';
+		html += '</div>';
+		html += '	</td>';
+		// html += '</tr>';
+		
+		return html;
+	}
+	function getValue(data,name){
+		var res='';
+		console.log(data);
+		$.each(data,function(i,val){
+			// console.log(data.abbreviation);
+			res += val[name]+',';
+		})
+		res1 = res.substring(res.length-1,-1);
+		return res1;
+	}
+</script>

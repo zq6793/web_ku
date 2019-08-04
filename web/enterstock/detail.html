@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>收料明细</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/enter.css"/>
+	</head>
+	<body>
+		<div class="detail" id="detail">
+			<div class="top mt20 clearfix">
+				<input type="text" class="input fl" placeholder="供应商名称、材料名称、收料名称" v-model="conant" @keydown.enter="getList">
+				<span class="btnBlue fl ml20" @click="getList">开收料单</span>
+			</div>
+			<table class="table tableHover mt20">
+				<thead>
+					<tr>
+						<th width="3%"><input type="checkbox" @click="allSelect"/></th>
+						<th width="11%">单号</th>
+						<th>供应商</th>
+						<th>材料名称</th>
+						<th>规格型号</th>
+						<th width="6%">计量单位</th>
+						<th>数量</th>
+						<th width="6%">过磅单位</th>
+						<th>过磅净重</th>
+						<th>车牌号</th>
+						<th>入库时间</th>
+						<th>收料员</th>
+						<th width="3%">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="val,index in list">
+						<td><input type="checkbox" /></td>
+						<td>{{val.orderNo}}</td>
+						<td>{{val.supplierName}}</td>
+						<td>{{val.productName}}</td>
+						<td>{{val.productModel}}</td>
+						<td>{{val.productUnitName}}</td>
+						<td>{{val.productQuantity}}</td>
+						<td>{{val.productWeighUnitName}}</td>
+						<td>{{val.productWeightSuttle}}</td>
+						<td>{{val.carNo}}</td>
+						<td>{{val.receiveDate}}</td>
+						<td>{{val.receiverName}}</td>
+						<td><span class="listToDetail" @click="last(index)">置后</span></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="page1"></div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:"#detail",
+		mounted:function(){
+			this.getList();
+		},
+		data:{
+			'conant':'',//模糊搜内容
+			'list':[],
+		},
+		methods:{
+			getList:function(){//获取最近明细
+				var $this = this;
+				pages.init({
+					'key':['condition'],
+					'value':[$this.conant],
+					'url':'/materials/storage/procurement/findAll',
+					'callBack':function(res){
+						if(res.code == 200){
+							$this.list = res.data.list;
+							DX.vueClickTr();
+						}
+					}
+				})
+			},
+			last:function(index){//置后
+				var $this = this;
+				var id = $this.list[index].id;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/materials/storage/procurement/toggleSort',
+					'param':{'id':id,'isLast':true},
+					'callBack':function(res){
+						if(res.code == 200){
+							console.log(res);
+							$this.getList();
+							// $this.list = res.data.list;
+						}
+					}
+				})
+			},
+			allSelect:function(values){//全选
+				if(values.target.checked){
+					$('table td input').prop('checked',true);
+				}else{
+					$('table td input').prop('checked',false);
+				}
+				// console.log(values);
+			}
+		}
+		
+	})
+</script>

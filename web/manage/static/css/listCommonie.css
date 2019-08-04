@@ -1,0 +1,42 @@
+/* 兼容ie9浏览器css样式 */
+.leftBox{
+    float: left\9;
+}
+.logo img{
+    display: inline-block\9;
+    margin-top: 23px\9;
+    margin-left: 44px\9;
+}
+.title {
+    display: inline-block\9;
+}
+.title span{
+    display: inline-block\9;
+}
+.title span:nth-child(1){
+    margin-top: 25px\9;
+}
+.rightBox{
+    float: right\9;
+}
+header span:nth-child(1){
+    float: left\9;
+}
+header span:nth-child(1){
+    float: left\9;
+    margin-top: 22px\9;
+}
+.tx{
+    float: right\9;
+}
+.tx img{
+    margin-top: 17px\9;
+}
+.tx span:nth-child(2){
+    height: 28px\9;
+}
+.personList li a{
+    width: 33px;
+    line-height: 33px;
+}
+

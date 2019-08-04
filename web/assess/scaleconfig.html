@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>规模分数设置</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/index.css" />
+
+	</head>
+	<body>
+	
+		<!-- right -->
+		<div class="rightBox">
+			<div class="nav1 clearfix">
+				<a href="gradeconfig.html" class="btnAct1">等级分数</a>
+				<a href="valueconfig.html" class="btnAct1">产值系数</a>
+				<a href="scaleconfig.html" class="active btnAct1">规模分数</a>
+				<a href="numberconfig.html" class="btnAct1">参评个数</a>
+				<a href="specialconfig.html" class="btnAct1">特殊项目</a>
+				<a href="difficultconfig.html" class="btnAct1">施工难度</a>
+				<a href="typeconfig.html" class="btnAct1">队伍类型</a>
+			</div>
+			<div class="config clearfix">
+
+				<!-- 队伍规模等级 -->
+				<div class="conTable fl" id="scale">
+					<h3>规模分数设置 <span class="helpFont" id="helpFont" title="点击查看说明及帮助"></span></h3>
+					<span class="err"></span>
+					<div id="helpContext" class="helpContext">
+						<p>产值系数只能为非负数，并且精确小数后8位 注！(正常产值，近三年系数，之前年份系数为系统工作必有的参数，请勿随意操作)</p>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>规模等级</th>
+								<th>最多人数</th>
+								<th>分数</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+
+
+						</tbody>
+					</table>
+				</div>
+
+
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		domAjax();
+
+	})
+	//默认加载
+	function domAjax() {
+		DX.ajax_method({
+			'type': 'POST',
+			'url': '/eva/ads/findAllAddScore',
+			'param': {},
+			'callBack': tableCall
+		})
+	}
+	// 渲染回调
+	function tableCall(res) {
+
+		console.log(res);
+		if (res.code != '200') {
+			console.log('没有数据');
+			return;
+		}
+
+		var people = ''; //规模等级
+		if (res.data.people.length != 0 && res.data.people != null) {
+			$.each(res.data.people, function(i, val) {
+				people += '<tr status="' + val.status + '">';
+				people += "<td class='clum1'><input type='text' value='" + val.level + "' class='tableEdit' /></td>";
+				people += "<td class='clum2'><input type='text' value='" + val.people_size + "' class='tableEdit' /></td>";
+				people += "<td class='clum3'><input type='text' value='" + val.team_score + "' class='tableEdit' /></td>";
+				people += "<td id='" + val.eid + "' ><span class='mod2'>修改</span><span class='del2'>删除</span></td>";
+				people += '</tr>';
+			})
+
+		}
+		$('#scale table tbody').html(people + end2());
+		// $('#scale tbody tr').click(function(){
+		// 	DX.clickTr($(this),['input']);			
+		// })
+		// 失去焦点值为空 恢复原先的值
+		var inputVlaue = '';
+		$('.conTable tbody td input').focus(function() {
+			var status = $(this).parents('tr').attr('status'); //是保存的时候不能恢复
+			if (status == undefined) return;
+			inputVlaue = $(this).val();
+			console.log(inputVlaue);
+		})
+		$('.conTable tbody td input').blur(function() {
+			var status = $(this).parents('tr').attr('status'); //是保存的时候不能恢复
+			if (status == undefined) return;
+			if (DX.isNull($(this).val())) {
+				$(this).val(inputVlaue);
+			}
+		})
+
+		//队伍规模新增
+		$('.inset2').click(function() {
+			inset($(this), '/eva/ads/insertTeamSize');
+		})
+		//队伍规模修改
+		$('.mod2').click(function() {
+			mod($(this), '/eva/ads/updateTeamSize');
+		})
+		//队伍规模删除
+		$('.del2').click(function() {
+			del($(this), '/eva/ads/deleteTeamSize');
+		})
+	}
+
+	function end2() {
+		return '<tr><td class="clum1"><input type="text" value="" class="tableEdit" /></td><td class="clum2"><input type="text" value="" class="tableEdit" /></td><td class="clum3"><input type="text" value="" class="tableEdit" /></td><td><span class="inset2">添加</span></td></tr>';
+
+	}
+
+	/* 修改
+	 * obj 当前元素$(this)
+	 * url 接口地址
+	 * bar true 为队伍规模操作
+	 */
+	function mod(obj, url) {
+		$('.err').hide();
+		var id = obj.parent().attr('id');
+		var name = obj.parent().siblings('.clum1').find('input').val();
+		var value = obj.parent().siblings('.clum2').find('input').val();
+		var clum3 = obj.parent().siblings('.clum3').find('input').val();
+		res = {
+			'eid': id,
+			'level': name,
+			'people_size': value,
+			'team_score': clum3
+		}
+
+		var isname = DX.isInt(name);
+		if (!isname) {
+			obj.parent().siblings('.clum1').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('规模等级只能为正整数');
+			return;
+		}
+		var isvalue = DX.isInt(value);
+		if (!isvalue) {
+			obj.parent().siblings('.clum2').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('最少人数只能为正整数');
+			return;
+		}
+		var isclum3 = DX.isFloat8(clum3);
+		if (!isclum3) {
+			obj.parent().siblings('.clum3').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('分数只能为正数且小数后八位');
+			return;
+		}
+
+
+		DX.ajax_method({
+			'type': 'POST',
+			'url': url,
+			'param': res,
+			'callBack': function(res) {
+				// console.log(res);
+				if (res.code != '200') {
+					obj.parents('.conTable').find('.err').show();
+					obj.parents('.conTable').find('.err').html(res.msg);
+				}
+			}
+		})
+	}
+
+	/* 删除
+	 * obj 当前元素$(this)
+	 * url 接口地址
+	 * bar true 为队伍规模操作
+	 */
+	function del(obj, url) {
+		$('.err').hide();
+		var sub = confirm('确认删除');
+
+		if (!sub) return;
+		var id = obj.parent().attr('id');
+		var param = {
+			'eid': id
+		};;
+
+
+		DX.ajax_method({
+			'type': 'POST',
+			'url': url,
+			'param': param,
+			'callBack': function(res) {
+				console.log(res);
+				if (res.code != '200') {
+					obj.parents('.conTable').find('.err').show();
+					obj.parents('.conTable').find('.err').html(res.msg);
+				} else {
+					domAjax();
+				}
+			}
+		})
+	}
+
+	/* 新增
+	 * obj 当前元素$(this)
+	 * url 接口地址
+	 * bar true 为队伍规模操作
+	 */
+	function inset(obj, url) {
+		$('.err').hide();
+		var name = obj.parent().siblings('.clum1').find('input').val();
+		var value = obj.parent().siblings('.clum2').find('input').val();
+		var clum3 = obj.parent().siblings('.clum3').find('input').val();
+		var res = {
+			'level': name,
+			'people_size': value,
+			'team_score': clum3
+		};
+
+		var isname = DX.isInt(name);
+		if (!isname) {
+			obj.parent().siblings('.clum1').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('规模等级只能为正整数');
+			return;
+		}
+		var isvalue = DX.isInt(value);
+		if (!isvalue) {
+			obj.parent().siblings('.clum2').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('最少人数只能为正整数');
+			return;
+		}
+		var isclum3 = DX.isFloat8(clum3);
+		if (!isclum3) {
+			obj.parent().siblings('.clum3').find('input').val('');
+			obj.parents('.conTable').find('.err').show();
+			obj.parents('.conTable').find('.err').html('分数只能为正数且小数后八位');
+			return;
+		}
+
+
+		DX.ajax_method({
+			'type': 'POST',
+			'url': url,
+			'param': res,
+			'change':obj[0],
+			'callBack': function(res) {
+				if (res.code != '200') {
+					obj.parents('.conTable').find('.err').show();
+					obj.parents('.conTable').find('.err').html(res.msg);
+				} else {
+					domAjax();
+				}
+			}
+		})
+	}
+</script>

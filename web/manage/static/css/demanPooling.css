@@ -1,0 +1,256 @@
+
+.rightBox{
+    width: calc(100% - 60px);
+    margin-left: 30px;
+}
+
+.choose-state{
+	padding-left: 5px;
+	width: 130px;
+	height: 28px;
+}
+.preject{
+	width: 14%;
+	padding-left: 5px;
+	min-width: 100px;
+	height: 28px;
+}
+.choose-title{
+	background-color: #FFFFFF;
+	width: 100%;
+	min-width: 800px;
+	padding:20px 0px 20px 0px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #E4E4E4;
+}
+.choose-title label:nth-child(1){
+	font-size: 14px;
+	font-weight: 700;
+	padding-right: 20px;
+}
+
+.btnBlue{
+	margin-left: 10px;
+}
+
+.message-title{
+	font-size: 14px;
+	color: #ff0000;
+	font-weight: 700;
+}
+.message-content{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.message-count{
+	font-size: 12px;
+	text-align: center;
+	border-radius: 50%;
+	background-color: #FF6600;
+	color: #FFFFFF;
+	margin-right: 20px;
+	box-sizing: content-box;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+}
+.message-content-1{
+	padding: 0px 10px 0px 10px;
+	font-size: 14px;
+	font-weight: 700;
+}
+.time{
+	font-size: 14px;
+	color: #ff0000;
+	font-weight: 700;
+}
+.message{
+	width: 100%;
+	min-width: 800px;
+	padding: 10px 0px 10px 0px;
+}
+.deman-pooling-wrapper{
+	border-radius: 4px;
+	background-color: #F2F2F2;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	min-width: 1020px;
+	height: 384px;
+}
+.deman-pooling-wrapper:after{
+	clear: both;
+	content: "";
+	display: block;
+}
+.deman-pooling-wrapper >div{
+	float: left;
+}
+.deman-pooling-wrapper-left{
+	border-radius: 4px;
+	margin: 0px 0px 0px 10px;
+	background-color: #FFFFFF;
+	width: 19%;
+	min-width: 334px;
+	height: 366px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.deman-pooling-wrapper-center{
+	
+}
+.deman-pooling-wrapper-right{
+	
+}
+.deman-pooling-left-content{
+	width: 94%;
+	min-width: 300px;
+	height: 340px;
+}
+
+
+
+.deman-pooling-left-content>div{
+	padding: 10px 0px 10px 0px;
+}
+.deman-pooling-left-content>div span:nth-child(1){
+	color: #666666;
+	display: inline-block;
+	text-align: right;
+	width: 60px;
+}
+.deman-pooling-left-content>div span:nth-child(2){
+	padding-left: 14px;
+	font-weight: 600;
+}
+
+.deman-adress{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	position: relative;
+	padding: 0!important;
+}
+.deman-adress>span:nth-child(1){
+	/*position: absolute;*/
+	top: 0;
+}
+.deman-adress>span:nth-child(2){
+	display: inline-block;
+	width: 200px;
+}
+.deman-state >span:nth-child(2){
+	color: red;
+}
+
+.square-quantity-content:after{
+	clear: both;
+	content: "";
+	display: block;
+}
+.square-quantity-content{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.square-quantity-wrapper{
+	width: 94%;
+	min-width: 310px;
+}
+.square-quantity-wrapper>div{
+	border-radius: 4px;
+	background-color: #F2F2F2;
+	margin: 5px 5px 5px 5px;
+	width: 144px;
+	height: 42px;
+	float: left;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.deman-pooling-wrapper-center{
+	border-radius: 4px;
+	margin: 0px 0px 0px 10px;
+	background-color: #FFFFFF;
+	width: 12%;
+	min-width: 166px;
+	height: 366px;
+}
+
+.deman-pooling-wrapper-right{
+	border-radius: 4px;
+	margin: 0px 0px 0px 10px;
+	background-color: #FFFFFF;
+	width: 68%;
+	min-width: 446px;
+	height: 366px;
+}
+
+
+.deman-pooling-wrapper-right table tbody >tr >td:last-child span:hover{
+	color: red;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+.deman-pooling-wrapper-right table thead >tr th:nth-child(1){
+	width: 6%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(2){
+	width: 10%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(3){
+	width: 19%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(4){
+	width: 12%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(5){
+	width: 12%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(6){
+	width: 9%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(7){
+	width: 14%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(8){
+	width: 12%;
+}
+.deman-pooling-wrapper-right table thead >tr th:nth-child(9){
+	width: 6%;
+}
+.deman-pooling-wrapper-center table tbody >tr >td:last-child span:hover{
+	color: #199ed8;
+	cursor: pointer;
+}
+.deman-pooling-wrapper:not(:first-of-type){
+	margin-top: 10px;
+}
+
+.square-quantity-wrapper>div>span:last-child{
+	font-size: 16px;
+}
+.square-quantity-wrapper>div:nth-child(3)>span:last-child{
+	color: red;
+}
+.deman-num >span:last-child{
+	cursor: pointer;
+	color: #1296DB;
+	display: inline-block;
+	float: right;
+	padding-right: 20px;
+}

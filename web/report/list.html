@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>报表列表</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/style.css"/>
+	</head>
+	<body>
+		<div class="reportlist" id="reportlist" v-cloak>
+			<div class="top clearfix">
+				<a href="add.html" class="fl">填报报表</a>
+				<select class="fl" @change="changeSelect" v-model="tag">
+					<option value ="">请选择报表类型</option>
+					<option v-for="val,index in typelist" :value ="val.tag">{{val.name}}</option>
+				</select>
+				<button type="button" class="fl" :class="{active : value ==1}" style="margin-left: 30px;" @click="clickButton(1)">填报中</button>
+				<button type="button" class="fl" :class="{active : value ==0}" @click="clickButton(0)">填报完成</button>
+			</div>
+			<div class="contant">
+				<ul class="clearfix">
+					<li>报表类型</li>
+					<li>报表摘要</li>
+					<li>是否限制截止时间</li>
+					<li>发起时间</li>
+					<li>状态</li>
+					
+				</ul>
+				
+				<ul class="middle clearfix" v-for="val,index in list">
+					<li>{{val.business_name}}</li>
+					<li><p>报表周期：{{val.reporting_period}}</p><p>开始时间：{{val.start_time}}</p><p>结束时间：{{val.end_time}}</p></li>
+					<li>{{val.isdeadline == 1 ? '否' :'是'}}</li>
+					<li>{{val.profession_starttime}}</li>
+					<li>{{val.isefficacious == 1 ? '填报中' :'填报完成'}}</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#reportlist',
+		created:function (){
+			this.getList();
+			this.getType();
+		},
+		data:{
+			'list':[],//数据列表
+			'typelist':[],//类型列表
+			'tag':'',//业务类型
+			'value':1,//填报中1 填报完成0
+		},
+		methods:{
+			//
+
+			getList:function() {//获取list
+				var $this = this;
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/report/findReport',
+					'callBack':function (res) {
+						// console.log(res);
+						if(res.code=='200'){
+							$this.list = res.data.list;
+						}
+					}
+				});
+			},
+			getType:function () {//获取业务类型
+				var $this = this;
+				DX.ajax_method({
+					'type': 'GET',
+					'param': {},
+					'url': '/eva/report/getReportConfig',
+					'callBack': function(res) {
+						// console.log(res);
+						if (res.code == '200') {
+							$this.typelist = res.data.reportList;
+						}
+					}
+				})
+			},
+			changeSelect:function () {//select改变请求接口
+				var $this = this;
+				var tag = this.tag;
+
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/eva/report/findReport',
+					'param':{'flag':tag,'isefficacious':this.value},
+					'callBack':function (res) {
+						// console.log(res);
+						if(res.code=='200'){
+							$this.list = res.data.list;
+						}
+					}
+				});
+			},
+			clickButton:function (value) {//点击填报中和填报完成切换
+				this.value = value;
+				this.changeSelect();
+			}
+		},
+		watch:{
+
+		},
+
+	})
+</script>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>配置详情</title>
+    <link rel="stylesheet" href="static/css/listCommon.css">
+    <link rel="stylesheet" href="static/css/deploy.css">
+	<script src="../static/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../static/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="../static/islogin.js" type="text/javascript" charset="utf-8"></script> -->
+</head>
+<body>
+    <!-- 左边盒子为公共样式 -->
+    <div class="leftBox">
+        <!-- logo -->
+        <p class="logo"><img src="static/img/indexLogo.png" alt=""></p>
+        <!-- 每一个列表 -->
+        <a class="title" href="#">
+            <span></span>
+            <span>程序操作</span>
+            <span></span>
+        </a>
+		<a class="title order" href="#">
+		    <span></span>
+		    <span>拌合站</span>
+		    <span></span>
+		</a>
+        <ul class="personList">
+            <li><span class="none"></span><a href="addorder.html">需求发布</a></li>
+            <li><span></span><a href="manage.html">需求管理</a></li>
+        </ul>
+    </div>
+    <!-- 右侧表格盒子 -->
+    <div class="rightBox">
+		<!-- 右侧公共部分头部 -->
+		<ul class="quit none">
+			<li><a href="#"><span></span>退出</a></li>
+			<li><a href="#"><span></span>帮助</a></li>
+		</ul>
+        <header>
+            <span>实验室管理系统</span>
+            <p class="tx">
+                 <img src="static/img/tx.png" alt="">
+                <span class="more"></span>
+            </p>
+        </header>
+        <!-- 位置，搜索，时间 -->
+        <div class="nav">
+            <span>当前所在位置：任务管理></span><span class="pointer">需求管理</span>
+        </div>
+        <div class="needDetail">
+            <h3>需求详情</h3>
+            <p class="num">
+                <span id="did">编号： </span>
+                <span id='parentPart'>单位工程： </span>
+                <span id="subPart">分部工程： </span>
+                <span id="detailPart">详细部位： </span>
+                <span id="cubeModel">强度等级： </span>
+            </p>
+        </div>
+        <div class="deployMes">
+            <h3>配置信息</h3>
+            <p class="ratio">
+                <span>配合比：</span>
+                <select name="" id="jSelect">
+                    
+                </select>
+                <a href="#" id="new">新建配合比</a>
+            </p>
+            <div class="recipe">
+                <p class="everyRecipe">
+                    <span>水泥</span>
+                    <input type="text" id="cement">
+                </p>
+                <p class="everyRecipe">
+                    <span>细砂</span>
+                    <input type="text" id="fineSand">
+                </p>
+                <p class="everyRecipe">
+                    <span>碎石1</span>
+                    <input type="text" id="gravelOne">
+                </p>
+                <p class="everyRecipe">
+                    <span>塌落度</span>
+                    <input type="text" id="slump">
+                </p>
+                <p class="everyRecipe">
+                    <span>粉末灰</span>
+                    <input type="text" id="soot">
+                </p>
+            </div>
+            <div class="recipe">
+                <p class="everyRecipe">
+                    <span>水</span>
+                    <input type="text" id="water">
+                </p>
+                <p class="everyRecipe">
+                    <span>粗砂</span>
+                    <input type="text" id="coarseSand">
+                </p>
+                <p class="everyRecipe">
+                    <span>碎石2</span>
+                    <input type="text" id="gravelTwo">
+                </p>
+                <p class="everyRecipe">
+                    <span>水胶比</span>
+                    <input type="text" id="waterGlue">
+                </p>
+                <p class="everyRecipe">
+                    <span>外加剂</span>
+                    <input type="text" id="admixture">
+                </p>
+            </div>
+            <div class="recipe">
+                <p class="everyRecipe">
+                    <span>矿粉</span>
+                    <input type="text" id="ore">
+                </p>
+            </div>
+        </div>
+        <div class="sub">
+            <a href="javascript:void(0)" id="submit">提交</a>
+        </div>
+    </div>
+	<!-- 强度id -->
+	<input type="hidden" name="" id="fid" value="" />
+</body>
+</html>
+<script>
+
+$(document).ready(function(){
+	// 初始化加载
+	var did = DX.getParam('did');
+	DX.ajax_method({
+		'type':'POST',
+		'url' :'/demand/getDemandDetailPc',
+		'param':{'did':did},
+		'callBack':callBack
+	})
+	
+	// input 不可编辑
+	$('.deployMes input').click(function(){
+		if($('#jSelect').val()){
+			$(this).prop('readOnly',true);
+		}else{
+			$(this).prop('readOnly',false);
+		}
+		// console.log();
+	})
+	//新建配合比
+	$('#new').click(function(){
+		var value = 'c96';
+		var html = '<option value="'+value+'" oid="">'+value+'</option>';
+		$('#jSelect').html(html);
+	})
+	// select 改变请求数据
+	$('#jSelect').change(function(){
+		var jfid = $(this).find('option:selected').attr('oid');
+		if(!jfid) return;
+		DX.ajax_method({
+			'type':'POST',
+			'url' :'/demand/getJtFormula',
+			'param':{'jfid':jfid},
+			'callBack':function(res){
+				if(res.code == '200'){
+					setInput(res.data);
+				}
+			}
+		})
+	})
+	
+	// 提交数据
+	$('#submit').click(function(){		
+		var selectid = $('#jSelect').find('option:selected').attr('oid');
+		var selectv = $('#jSelect').val();
+		var obj = {'did':did,'jfid':selectid,'formulaName':selectv};
+		if(!selectid){//新建
+			var fid = $('#fid').val();
+			var obj = getInput();
+			obj.fid = fid;
+			obj.did = did;
+			obj.jfid = '';
+			obj.formulaName = selectv;
+		}
+		
+		DX.ajax_method({
+			'type':'POST',
+			'url' :'/demand/saveJtFormula',
+			'param':obj,
+			'callBack':function(res){
+				console.log(res);
+				if(res.code == '200'){
+					window.location.href='manage.html';
+				}
+			}
+		})
+	})
+})
+//初始化回调
+function callBack(res){
+	if(res.code=='200'){
+		//详情
+		detail(res.data.detail);	
+		// select
+		selectF(res.data.JtFormulaList);		
+		// input赋值
+		setInput(res.data.gbFormula);
+	}
+}
+//详情赋值
+function detail(value){
+	var did = '编号：'+value.did;
+	var parentPart = '单位工程：'+value.parentPart;
+	var subPart = '分部工程：'+value.subPart;
+	var detailPart = '详细部位：'+value.detailPart;
+	var cubeModel = '强度等级：'+value.cubeModel;
+	
+	$('#did').text(did);
+	$('#parentPart').text(parentPart);
+	$('#subPart').text(subPart);
+	$('#detailPart').text(detailPart);
+	$('#cubeModel').text(cubeModel);
+	// 存储强度id
+	$('#fid').val(value.fid);
+}
+/* 获取input详细数据 */
+function getInput(){
+	var cement=$('#cement').val();
+	var isCement = DX.isNull(cement);
+	if(isCement){
+		console.log('水泥比不能为空');
+	}
+	var fineSand=$('#fineSand').val();
+	var isFineSand = DX.isNull(fineSand);
+	if(isFineSand){
+		console.log('不能为空');
+	}
+	var slump=$('#slump').val();
+	var isSlump = DX.isNull(slump);
+	if(isSlump){
+		console.log('不能为空');
+	}
+	var soot=$('#soot').val();
+	var isSsoot = DX.isNull(soot);
+	if(isSsoot){
+		console.log('不能为空');
+	}
+	var water=$('#water').val();
+	var isWater = DX.isNull(water);
+	if(isWater){
+		console.log('不能为空');
+	}
+	var coarseSand=$('#coarseSand').val();
+	var isCoarseSand = DX.isNull(coarseSand);
+	if(isCoarseSand){
+		console.log('不能为空');
+	}
+	var waterGlue=$('#waterGlue').val();
+	var isWaterGlue = DX.isNull(waterGlue);
+	if(isWaterGlue){
+		console.log('不能为空');
+	}
+	var admixture=$('#admixture').val();
+	var isAdmixture = DX.isNull(admixture);
+	if(isAdmixture){
+		console.log('不能为空');
+	}
+	var ore=$('#ore').val();
+	var isOre = DX.isNull(ore);
+	if(isOre){
+		console.log('不能为空');
+	}
+	var gravelOne=$('#gravelOne').val();
+	var isGravelOne = DX.isNull(gravelOne);
+	if(isGravelOne){
+		console.log('不能为空');
+	}
+	var gravelTwo=$('#gravelTwo').val();
+	var isGravelTwo = DX.isNull(gravelTwo);
+	if(isGravelTwo){
+		console.log('不能为空');
+	}
+	
+	return obj={'cement':cement,'fineSand':fineSand,'slump':slump,'soot':soot,'water':water,'coarseSand':coarseSand,
+	'waterGlue':waterGlue,'admixture':admixture,'ore':ore,'gravelOne':gravelOne,'gravelTwo':gravelTwo};
+}
+
+//select赋值
+function selectF(res){
+	var html = '<option value="">请选择</option>';
+	$.each(res,function(i,val){
+		html += '<option value="'+val.formulaName+'" oid="'+val.jfid+'">'+val.formulaName+'</option>';
+	})
+	$('#jSelect').html(html);
+}
+//input赋值
+function setInput(value){
+	$('#cement').val(value.cement);
+	$('#fineSand').val(value.fineSand);
+	$('#slump').val(value.slump);
+	$('#soot').val(value.soot);
+	$('#water').val(value.water);
+	$('#coarseSand').val(value.coarseSand);
+	$('#waterGlue').val(value.waterGlue);
+	$('#admixture').val(value.admixture);
+	$('#ore').val(value.ore);
+	$('#gravelOne').val(value.gravelOne);
+	$('#gravelTwo').val(value.gravelTwo);
+}
+// 点击显示左边二级菜单
+$('.order').toggle(
+    function(){
+        // console.log(111);
+        $('.personList').slideDown();
+        $(".order span:nth-child(1)").css('background-position','-36px -75px');
+        $(".order span:nth-child(2)").css('color','#DD6B4D');
+        $(".order span:nth-child(3)").css({'background-position':'-124px -78px','width':'15px'});
+    },
+    function(){
+        // console.log(111);
+        $('.personList').slideUp();
+        $(".order span:nth-child(1)").css('background-position','-6px -75px');
+        $(".order span:nth-child(2)").css('color','#FFFFFF');
+        $(".order span:nth-child(3)").css({'background-position':'-100px -78px','width':'11px'});
+    }
+)
+
+</script>
+

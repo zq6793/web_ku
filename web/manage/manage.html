@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>需求管理</title>
+    <link rel="stylesheet" href="../static/common.css">
+    <link rel="stylesheet" href="static/css/leftcommon.css">
+    <link rel="stylesheet" href="static/css/manage.css">
+	<script src="../static/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../static/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="../static/islogin.js" type="text/javascript" charset="utf-8"></script> -->
+    <!--[if IE 9]>
+        <link rel="stylesheet" href="static/css/listCommonie.css">
+
+    <![endif]-->
+</head>
+<body>
+    <!-- 左边盒子为公共样式 -->
+    <div class="leftBox">
+        <!-- logo -->
+        <p class="logo"><img src="static/img/indexLogo.png" alt=""></p>
+        <!-- 每一个列表 -->
+        <a class="title" href="#">
+            <span></span>
+            <span>程序操作</span>
+            <span></span>
+        </a>
+		<a class="title order" href="#">
+		    <span></span>
+		    <span>拌合站</span>
+		    <span></span>
+		</a>
+        <ul class="personList">
+            <li><span></span><a href="addorder.html">需求发布</a></li>
+            <li><span class="active"></span><a href="manage.html">需求管理</a></li>
+        </ul>
+    </div>
+    <!-- 右侧表格盒子 -->
+    <div class="rightBox">
+		<!-- 右侧公共部分头部 -->
+		<ul class="quit none">
+			<li><a href="#"><span></span>退出</a></li>
+			<li><a href="#"><span></span>帮助</a></li>
+		</ul>
+        <header>
+            <span>实验室管理系统</span>
+            <p class="tx">
+                 <img src="static/img/tx.png" alt="">
+                <span class="more"></span>
+            </p>
+        </header>
+        <!-- 位置，搜索，时间 -->
+        <div class="nav">
+            <span>当前所在位置：任务管理></span><span class="pointer">需求管理</span>
+        </div>
+        <div class="refer">
+            <span class="partspan">部位：</span>
+            <input type="text" id="par">
+            <span>详细部位：</span>
+            <input type="text" id='detailPart' placeholder="">
+            <span class="namespan">姓名：</span>
+            <input type="text" id='userName' placeholder="">
+            <span class="statespan">状态：</span>
+            <select name="" id="state" class="state">
+				<option value="">请选择</option>
+                <option value="0">等待接单</option>
+				<option value="1">已接单</option>
+				<option value="2">配置完成</option>
+				<option value="3">已安排罐车</option>
+				<option value="4">已完成</option>
+            </select>
+            <a href="javascript:void(0)" id="blurry">查询</a>
+            <a href="addorder.html">添加任务</a>
+			<!-- 弹窗 -->
+			<div class="openWin">
+			    <ul class="firNav">
+			       
+			    </ul>
+			    <div class="secNav">
+			       
+			    </div>
+				<button type="button" id="btnS" style="position: absolute;right: 10px;bottom: 10px;">确认</button>
+			</div>
+        </div>
+        
+        <div class="tableList">
+            <table id="list" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr id="outfit">
+                        <th>序号</th>
+                        <th>需求编号</th>
+                        <th>单位工程</th>
+						<th>分部工程</th>
+                        <th>详细部位</th>
+                        <th>施工队</th>
+                        <th>队长姓名</th>
+                        <th>设计方量</th>
+                        <th>需求方量</th>
+                        <th>补方方量</th>
+                        <th>强度等级</th>
+                        <th>需求状态</th>
+                        <th>技术员</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="detail">
+                        <td>1</td>
+                        <td>1</td>
+                        <td>一号位</td>
+                        <td>一号位下面</td>
+                        <td>aaaa</td>
+                        <td>xx施工队</td>
+                        <td>王大锤</td>
+                        <td>100</td>
+                        <td>102</td>
+                        <td>0</td>
+                        <td>超级混凝土</td>
+                        <td class="status">已接单</td>
+                        <td>abc</td>
+                        <td><a href="javascript:void(0)" class="deploy" did="1" style="color:blue">开始配置</a>
+                        </td>
+                    </tr>
+                    <table cellspacing="0" cellpadding="0">
+
+                    </table>
+                </tbody>
+            </table>
+        </div>
+		<!-- 部门id -->
+		<input type="hidden"  id="parentId" value="" />
+		<input type="hidden"  id="subId" value="" />
+       <!-- 分页 -->
+		<div class="page clearfix">
+			<ul class="pages clearfix">
+				<li class="first">首页</li>
+				<li class="pre">上一页</li>
+				<li class="next">下一页</li>
+				<li class="last">尾页</li>
+			</ul>
+			<div class="show clearfix">
+				<span class="page_index">第5页</span>
+				<span class="page_count">/ 共120页</span>
+				<span class="page_count1">共2000条</span>
+			</div>
+			<div class="select clearfix">
+				<div class="num">
+					<span>每页</span>
+					<input type="number"  id="page_number" value="2" min="1"/>
+					<span>条</span>
+				</div>
+				<div class="tourl">
+					<span>跳转到</span>
+					<input type="number" value="1" min="1"/>
+					<span id="page_tourl" style="cursor: pointer;">确认</span>
+				</div>
+			</div>
+			<!-- 当前页码 -->
+			<input type="hidden" name="" id="page_index" value="1">
+			<!-- 起始id -->
+			<input type="hidden" name="" id="page_pre" value="1">
+			<input type="hidden" name="" id="page_next" value="1">
+			<!-- <input type="hidden" name="" id="page_state" value="1"> -->
+			<!-- 共多少页 -->
+			<input type="hidden" name="" id="page_last" value="3" />
+		</div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var page = {'curPage':$('#page_index').val(),'pageSize':$('#page_number').val()};
+        select(page);
+        
+        // 查询
+        $('#blurry').click(function(){            
+            var obj = pageValue();			
+            var page = {'curPage':1,'pageSize':obj.page_number};
+            select(page);
+        });
+        
+       
+       
+         // 点击首页
+        $('.first').click(function(){
+            $('.pages li').removeClass('page_active');
+            var obj = pageValue();
+            if(Number(obj.page_index) < 2) {
+                $('.first').addClass('page_active').siblings().removeClass('page_active');return;
+            }
+            var page = {'curPage':1,'pageSize':obj.page_number};
+            select(page);
+        });
+        // 点击上一页
+        $('.pre').click(function(){
+            $('.pages li').removeClass('page_active');
+            var obj = pageValue();
+            if(Number(obj.page_index) < 2) {
+                $('.pre').addClass('page_active').siblings().removeClass('page_active');return;
+            }
+            var page = {'curPage':obj.page_pre,'pageSize':obj.page_number};
+            select(page);
+        })
+        // 点击下一页
+        $('.next').click(function(){
+            $('.pages li').removeClass('page_active');
+            var obj = pageValue();
+            if(Number(obj.page_index) > Number(obj.page_last)-1) {
+                $('.next').addClass('page_active').siblings().removeClass('page_active');return;
+            }
+            
+            var page = {'curPage':obj.page_next,'pageSize':obj.page_number};
+            select(page);
+        })
+        // 点击尾页
+        $('.last').click(function(){
+            $('.pages li').removeClass('page_active');
+            var obj = pageValue();
+            if(Number(obj.page_index) > Number(obj.page_last)-1) {
+                $('.last').addClass('page_active').siblings().removeClass('page_active');return;
+            }
+            var page = {'curPage':obj.page_last,'pageSize':obj.page_number};
+            select(page);
+        })
+        // 点击跳转指定页
+        $('#page_tourl').click(function(){
+            var obj = pageValue();
+            var toUrl = $('.tourl input').val();
+            if (Number(obj.page_index) == toUrl) return;
+            var page = {'curPage':toUrl,'pageSize':obj.page_number};
+            select(page);
+        })
+        
+        
+
+        
+        $('.more').toggle(
+            function(){
+                $('.quit').removeClass('none');
+            },
+            function(){
+                $('.quit').addClass('none');
+            }
+        )
+      
+        // 点击显示左边二级菜单
+        $('.order').toggle(
+            function(){
+                // console.log(111);
+                $('.personList').slideUp();
+                $(".order span:nth-child(1)").css('background-position','-6px -77px');
+                $(".order span:nth-child(2)").css('color','#FFFFFF');
+                $(".order span:nth-child(3)").css({'background-position':'-100px -78px','width':'11px'});
+            },
+            function(){
+                // console.log(111);
+                $('.personList').slideDown();
+                $(".order span:nth-child(1)").css('background-position','-35px -77px');
+                $(".order span:nth-child(2)").css('color','#f46322');
+                $(".order span:nth-child(3)").css({'background-position':'-124px -78px','width':'15px'});
+            }
+        )
+ 		//弹层显示
+		$('#par').focus(function(){
+			if($(this).val()){
+				$('.openWin').show();
+				return;
+			} 
+			DX.ajax_method({
+				'type':'POST',
+				'url' :'/demand/getParentPaties',
+				'param':{},
+				'callBack':function(res){
+					var html = '';
+					if(res.code == '200'){
+						console.log(res);
+						$.each(res.data,function(i,val){
+							html += '<li id="'+val.partid+'" class="item" name="'+val.partName+'">'+val.partName+'</li>';
+						})
+					}
+					$('.firNav').html(html);
+					$('.openWin').show();
+					$('.item').click(function(){
+						
+						if($(this).hasClass('active')){//选中重置
+							$('.secNav').html('');
+							$('#subId').val('');
+							$('#par').val('');
+							$(this).removeClass('active');
+							$('#parentId').val('');
+							$('#parentId').attr('name','');return;
+						}
+						showEr($(this).attr('id'));
+						$('#par').val($(this).text());
+						$(this).addClass('active').siblings().removeClass('active');
+						$('#parentId').val($(this).attr('id'));
+						$('#parentId').attr('name',$(this).attr('name'));
+					})
+					
+					//点击确认弹层
+					$('#btnS').click(function(){
+						$('.openWin').hide();
+					})
+									
+				}
+			});
+			
+			
+		})
+		
+		//获取二级菜单
+		function showEr(id){
+			DX.ajax_method({
+				'type':'POST',
+				'url' :'/demand/getSubPartiesByParent',
+				'param':{'pid':id},
+				'callBack':function(res){
+					console.log(res);
+					var html = '';
+					if(res.code == '200'){
+						console.log(res);
+						$.each(res.data,function(i,val){
+							html += '<li id="'+val.partid+'" class="item1">'+val.partName+'</li>';
+						})
+					}
+					$('.secNav').html(html);
+					$('.item1').click(function(){
+						if($(this).hasClass('active')){//选中重置
+							$('#subId').val('');
+							$(this).removeClass('active');
+							var t= $('#parentId').attr('name');
+							$('#par').val(t);return;
+						}
+						$('#subId').val($(this).attr('id'));
+						$(this).addClass('active').siblings().removeClass('active');
+						var t= $('#parentId').attr('name')+'/'+$(this).text();
+						$('#par').val(t);
+						// $('.openWin').hide();
+					})
+				}
+			})
+		}
+
+
+        // input处理
+        $('#userName').focus(function(){
+            $(this).css('background','#fff');
+        })
+        $('#userName').blur(function(){
+            if(!$(this).val()){
+                $(this).css('background','url(static/img/username.png) no-repeat  0px 0px');
+            }
+        })
+        $('#detailPart').focus(function(){
+            $(this).css('background','#fff');
+        })
+        $('#detailPart').blur(function(){
+            if(!$(this).val()){
+                $(this).css('background','url(static/img/detailpart.png) no-repeat 0px 0px');
+            }
+        })
+		
+        /* 获取分页value
+        * page_index 当前页码
+        * page_number 显示数量
+        * page_last 共多少页
+        */
+        function pageValue(){
+            var page_index = $('#page_index').val();
+            var page_number = $('#page_number').val();
+            var page_last = $('#page_last').val();
+            var page_pre = $('#page_pre').val();
+            var page_next = $('#page_next').val();
+            return obj = {"page_index":page_index,"page_number":page_number,"page_last":page_last,
+            'page_pre':page_pre,'page_next':page_next}
+        }
+        
+        //查询函数 
+        function select(obj){
+            var detailPart = $('#detailPart').val();//详细部位
+            var userName = $('#userName').val();//技术员
+            var state = $('#state').val();//状态
+			
+			var parentId = $('#parentId').val();//父id
+			var subId = $('#subId').val();//子id
+			
+            obj.detailPart = detailPart;
+			obj.state = state;
+			obj.userName = userName;
+			obj.parentId = parentId;
+			obj.subId = subId;
+            DX.ajax_method({
+                'type':'POST',
+                'url':'/demand/getDemandList',
+                'param':obj,
+                'callBack':selectcall
+            });
+        }
+        //数据渲染回调
+        function selectcall(res){
+            console.log(res);
+            $('.page_index').html('第'+res.data.pageNum+'页');
+            $('.page_count').html('总共'+res.data.pages+'页');
+            $('.page_count1').html('总共'+res.data.total+'条');
+            
+            $("#page_index").val(res.data.pageNum);
+            $("#page_last").val(res.data.pages);
+            $("#page_pre").val(res.data.prePage);
+            $("#page_next").val(res.data.nextPage);
+            var statex = ["等待接单","已接单","配置完成","已安排罐车","已完成"];
+			function stateF(index,id){
+				var opter =['<a href="javascript:void(0)" did='+id+' class="subA" style="color:red">确认</a>','<a href="javascript:void(0)" class="deploy" did="'+id+'" style="color:blue">开始配置</a>',
+				'<a href="#" style="color:#ccc">查看</a>','<a href="#" style="color:#ccc">查看</a>','<a href="#" style="color:#ccc">查看</a>'];
+				return opter[index];
+			}
+            var html='';
+            for (var i=0;i<res.data.list.length;i++) {
+                html+='<tr id="detail">';
+                html+='<td>'+(i+1)+'</td>';
+                html+='<td>'+res.data.list[i].did+'</td>';
+                html+='<td>'+res.data.list[i].partName+'</td>';
+                html+='<td>'+res.data.list[i].subPart+'</td>';
+                html+='<td>'+res.data.list[i].detailPart+'</td>';
+                html+='<td>'+res.data.list[i].teamName+'</td>';
+                html+='<td>'+res.data.list[i].principal+'</td>';
+                html+='<td>'+res.data.list[i].planCube+'</td>';
+                html+='<td>'+res.data.list[i].cube+'</td>';
+                html+='<td>'+res.data.list[i].addCube+'</td>';
+				html+='<td>'+res.data.list[i].cubeModel+'</td>';
+				html+='<td class="status">'+statex[res.data.list[i].status]+'</td>';
+				html+='<td>'+res.data.list[i].userName+'</td>';
+				html+='<td>'+stateF(res.data.list[i].status,res.data.list[i].did)+'</td>';
+				html+='</tr>';
+            }
+			console.log(html);
+            // $('#list tbody').html('');
+            // $('#list tbody').append(html);
+			
+			// 点击开始配置
+			$('.deploy').click(function(){
+				addDep($(this));
+			})
+			
+			// 点击确认更改操作
+			$('.subA').click(function(){
+				var did = $(this).attr('did');
+				var that =$(this);
+				DX.ajax_method({
+					'type':'POST',
+					'url':'/demand/updateDemand',
+					'param':{'status':1,'did':did},
+					'callBack':function(res){
+						if(res.code == '200'){
+							console.log(res);	
+							that.parent('td').siblings('.status').html('已接单');
+							that.parent().html('<a href="javascript:void(0)" class="deploy" did="'+did+'" style="color:blue">开始配置</a>');
+						}
+						
+						// 点击开始配置
+						$('.deploy').click(function(){
+							addDep($(this));
+						})
+					}
+				})
+			})
+			
+        }
+    
+		// 添加开始配置
+		function addDep(obj){
+			var html = '<table><td><span class="cwe">111</span></td></table>';
+			obj.parents('#detail').after(html);
+			$('.cwe').click(function(){console.log(444)})
+		}
+		// 配置提交
+		function subDep(obj){
+			var selectid = $('#jSelect').find('option:selected').attr('oid');
+			var selectv = $('#jSelect').val();
+			var did = obj.attr('did');
+			var obj = {'did':did,'jfid':selectid,'formulaName':selectv};
+// 			DX.ajax_method({
+// 				'type':'POST',
+// 				'url' :'/demand/saveJtFormula',
+// 				'param':obj,
+// 				'callBack':function(res){
+// 					console.log(res);
+// 					if(res.code == '200'){
+// 						window.location.href='manage.html';
+// 					}
+// 				}
+// 			})
+		}
+		
+
+})
+</script>

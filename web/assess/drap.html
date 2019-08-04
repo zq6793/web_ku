@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>等级划分</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/index.css" />
+	</head>
+	<body>
+		
+		<div class="rightBox">
+			
+			<!-- <div class="nav">
+				<span>当前所在位置：劳务队评价></span><span class="pointer">等级划分</span>
+				
+			</div> -->
+			<div class="drap clearfix">
+				<ul class="fl" ondrop="drop(event)" ondragover="allowDrop(event)" id="teamName">
+					<!-- <li id="left1" draggable="true" ondragstart="drag(event)">队伍</li>
+					<li>队伍</li>
+					<li>队伍</li>
+					<li>队伍</li>
+					<li>队伍</li> -->
+				</ul>
+				<div class="right fl" id="grade">
+					<!-- <div class="clum">
+						<h4 class="fl">A+ <span>（可选4支参赛队伍）</span></h4>
+						<ul ondrop="drop(event)" ondragover="allowDrop(event)" data-drop-done=1></ul>
+						<ul></ul>
+						<ul></ul>
+					</div> -->
+				</div>
+
+			</div>
+			<div class="footDrap" style="text-align: center;">
+				<span class="err fl" style="text-align: center;"></span>
+				<button type="button" class="next btnBlue" id="pre">上一步</button>
+				<button type="button" class="next btnBlue" id="next">下一步</button>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="static/js/common.js" type="text/javascript" charset="utf-8"></script> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		document.body.ondrop = function (event) {//阻止浏览器拖动搜索
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		var year = DX.getParam('year'); //全局修改的标志
+		var ids = DX.getParam('ids');
+		console.log(year);
+		if (ids) {
+			var flag = year ? 1 : 0;
+			DX.ajax_method({
+				'type': 'GET',
+				'url': '/eva/eva/findTeamByid',
+				'param': {
+					'param': ids,
+					'flag':flag
+				},
+				'callBack': callBack
+			})
+		}
+		//点击上一步
+		$('#pre').click(function() { //重新选择队伍
+			var str = '';
+			if (ids) {
+				str += '?ids=' + ids;
+			}
+			if (year) {
+				str += '&year=' + year;
+			}
+			console.log(str);
+			window.location.href = 'checklist2.html' + str;
+		})
+
+		// 点击下一步
+		$('#next').click(function() {
+			$('.err').hide();
+			var that = $(this);
+			var go = true;
+			//判断劳务队是否已拖完
+			$.each($('ul.fl li'), function(i, val) {
+				if ($(this).html()) {
+					go = false;
+					$('.err').show();
+					$('.err').html('劳务队还没拖完');
+					return false;
+				}
+			})
+			if (!go) return;
+			//传给后台的大数组
+			var arr = [];
+			$.each($('.right .clum'), function(i, val) {
+				var str = {};
+				$.each($(this).children('ul'), function(index, value) {
+
+					var teamid = $(this).children('span').attr('oid');
+					if (teamid == undefined) return true;
+					// str.level_id = $(this).attr('id');
+					// str.team_id = $(this).children('span').attr('oid');
+					str = {
+						"level_id": $(this).attr('id'),
+						"team_id": teamid
+					};
+					if (year) {
+						str.year_quarter = year;
+					}
+					// arr.push(JSON.stringify(str));
+					arr.push(str);
+
+				})
+
+			})
+
+			console.log(arr);
+			var url;
+			
+			//提交数据
+			if (year) { //全局修改和正常流程的地址判断
+				url = '/eva/dlc/GlobalchangesTHREE';
+			} else {
+				url = '/eva/dlc/insertDxLabor';
+			}
+			
+			DX.ajax_method({
+				'type': 'POST',
+				'url': url,
+				'param': {
+					'dxLaborEvaluation': JSON.stringify(arr)
+				},
+				'change':that[0],
+				'callBack': function(res) {
+					console.log(res);
+					if (res.code == '200') {
+						var str = '';
+						if (year) {
+							str = '&year=' + year;
+						}
+						window.location.href = 'drap2.html?ids=' + res.data + str;
+					} else {
+						$('.err').show();
+						$('.err').html(res.msg);
+					}
+				}
+			})
+			// console.log();
+		})
+	})
+	// 初始化回调
+	function callBack(res) {
+		console.log(res);
+		var team = '<h3 class="sum">共有' + res.data.size + '支评价队伍</h3>'; //劳务队
+		$.each(res.data.list, function(i, val) {
+			team += '<li ondrop="drop(event)" ondragover="allowDrop(event)" data-drop-done=1></li>';
+			// '<span id="left' + (i + 1) + '" oid="' + val.ctid +'" draggable="true" ondragstart="drag(event)" title="'+'负责人：' + val.contractor+'，身份证号：'+val.cardid+ '">' + val.team_name + '</span>'
+			
+		})
+		$('#teamName').html(team);
+		var grade = '';
+		$.each(res.data.lev1, function(index, val) {
+			if (val.number < 1) return true;
+			grade += '<div class="clum clearfix">';
+			grade += '<h4 class="fl">' + val.gread + ' <span>（可选' + val.number + '支队伍）</span></h4>';
+
+			for (var i = 0; i < val.number; i++) {
+				 
+				grade += '<ul ondrop="drop(event)" ondragover="allowDrop(event)" data-drop-done=1 id="' + val.id + '">';
+				if(val.list.length > 0){
+					grade += '<span id= "'+i+'left' + (index + 1) + '" oid="' +val.list[i].ctid +'" draggable="true" ondragstart="drag(event)" title="'+'负责人：' + val.list[i].contractor+'，身份证号：'+val.list[i].cardid+ '">' +val.list[i].team_name + '</span>';	
+				}
+				grade += '</ul>';
+
+			}
+			grade += '</div>';
+		})
+		$('#grade').html(grade);
+	}
+	//清除浏览器默认事件
+	function allowDrop(ev) {
+		ev.preventDefault();
+	}
+	//把可拖动元素set
+	function drag(ev) {
+		ev.dataTransfer.setData("Text", ev.target.id);
+	}
+	//有元素不能再拖进去
+	function drop(ev) {
+		if (ev.target.getAttribute('data-drop-done') == "1") {
+			var data = ev.dataTransfer.getData("Text");
+
+			ev.target.appendChild(document.getElementById(data));
+
+			ev.target.setAttribute('data-drop-done', "");
+			setAttr();
+		}
+	}
+	//拖完释放
+	function drop1(ev) {
+		var data = ev.dataTransfer.getData("Text");
+
+		ev.target.appendChild(document.getElementById(data));
+		setAttr();
+	}
+	// 重置可拖入的属性
+	function setAttr() {
+		$.each($('.right .clum ul'), function(i, val) {
+			if (!$(this).html()) {
+				$(this).attr('data-drop-done', 1);
+			};
+		})
+		$.each($('#teamName  li'), function(i, val) {
+			if (!$(this).html()) {
+				$(this).attr('data-drop-done', 1);
+			};
+		})
+	}
+</script>

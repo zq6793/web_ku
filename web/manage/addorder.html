@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>添加需求</title>
+    <link rel="stylesheet" href="../static/common.css">
+    <link rel="stylesheet" href="static/css/leftcommon.css">
+    <link rel="stylesheet" href="static/css/addorder.css">
+	<script src="../static/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=kgoH2T991nLs5v6trGsGyl92Nbx6U37F"></script>
+    <!--[if IE 9]>
+    <link rel="stylesheet" href="static/css/listCommonie.css">
+    <![endif]-->
+</head>
+<body>
+    <!-- 左边盒子为公共样式 -->
+    <div class="leftBox">
+        <!-- logo -->
+        <p class="logo"><img src="static/img/indexLogo.png" alt=""></p>
+        <!-- 每一个列表 -->
+        <a class="title" href="#">
+            <span></span>
+            <span>程序操作</span>
+            <span></span>
+        </a>
+		<a class="title order" href="#">
+		    <span></span>
+		    <span>拌合站</span>
+		    <span></span>
+		</a>
+        <ul class="personList">
+            <li><span class="active"></span><a href="addorder.html">需求发布</a></li>
+            <li><span></span><a href="manage.html">需求管理</a></li>
+        </ul>
+    </div>
+    <!-- 右侧表格盒子 --> 
+    <div class="rightBox">
+		<!-- 右侧公共部分头部 -->
+		<ul class="quit none">
+			<li><a href="#"><span></span>退出</a></li>
+			<li><a href="#"><span></span>帮助</a></li>
+		</ul>
+        <header>
+            <span>实验室管理系统</span>
+            <p class="tx">
+                 <img src="static/img/tx.png" alt="">
+                <span class="more"></span>
+            </p>
+        </header>
+        <!-- 位置，搜索，时间 -->
+        <div class="nav">
+            <span>当前所在位置：任务管理></span><span class="pointer">需求管理</span>
+        </div>
+        <div class="issue">
+            <h3>需求发布</h3>
+            <div class="detailxu">
+                <div class="gc">
+                    <p class="gc1" style="position: relative;">
+                        <span>单位工程</span>
+                        <input type="text" id='par'>
+                        <!-- 弹窗 -->
+                        	<div class="openWin">
+                        	    <ul class="firNav">
+                        	       
+                        	    </ul>
+                        	    <div class="secNav">
+                        	       
+                        	    </div>
+                        	</div>
+                        
+                    </p>
+                    <p class="gc1">
+                        <span>详细部位</span>
+                        <input type="text" id="detailPart">
+                    </p>
+					<p class="team">
+					    <span>施工队  </span>
+					    <select name="" id="teams">
+					        
+					    </select>
+					</p>
+                </div>
+                
+            </div>
+            <div class="detailxu design">
+                <div class="gc">
+                    <p class="gc1">
+                        <span>设计方量</span>
+                        <input type="text" id="planCube">
+                    </p>
+                    <p class="gc1">
+                        <span>需求方量</span>
+                        <input type="text" id="cube">
+                    </p>
+                    <p class="gc1">
+                        <span>强度等级</span>
+                        <select name="" id="models" class="strength">
+                           
+                        </select>
+                    </p>
+                </div>
+                <p class="team">
+                    <span>技术员</span>
+                    <select name="" id="users">
+                        
+                    </select>
+                </p>
+            </div>
+			<div class="map" id="map"></div>
+            <p>
+                <span>所选地点： </span><input type="text" class="noWrite">
+            </p>
+        </div>
+		<button type="button" id="submit">提 交</button>
+    </div>
+	
+	<!-- 部门id -->
+	<input type="hidden"  id="parentId" value="" name=""/>
+	<input type="hidden"  id="subId" value="" name=""/>
+</body>
+</html>
+<script>
+
+	$(document).ready(function(){
+		// 预先加载下拉内容select
+		DX.ajax_method({
+			'type':'POST',
+			'url' :'/demand/getTeamAndModelAndUsers',
+			'param':{},
+			'callBack':function(res){
+				console.log(res);
+				var html1='';//施工队
+				var html2 = '';//强度等级
+				var html3 = '';//技术员
+				if(res.code == '200'){
+					$.each(res.data.models,function(i,val){
+						html2 += "<option  value='"+val+"'>"+val+"</option>";
+					})
+					$.each(res.data.teams,function(i,val){
+						html1 += "<option oid='"+val.ctid+"' value='"+val.teamName+"'>"+val.teamName+"</option>";
+					})
+					$.each(res.data.users,function(i,val){
+						html3 += "<option oid='"+val.id+"' value='"+val.name+"'>"+val.name+"</option>";
+					})
+				}
+				$('#users').html(html3);
+				$('#teams').html(html1);
+				$('#models').html(html2);
+			}
+		});
+		
+
+		//提交
+		$('#submit').click(function(){
+			var partId = $('#subId').val();
+			var partName = $('#subId').attr('name');
+			var isParId = DX.isNull(partName);
+			if(isParId){
+				console.log('单位工程必须选二级单位');return;
+			}
+			var detailPart = $('#detailPart').val();
+			var isNullDetail = DX.isNull(detailPart);
+			if(isNullDetail){
+				console.log('详细部位不能为空');return;
+			}
+			var planCube = $('#planCube').val();
+			var isPlanCube = DX.isNull(planCube);
+			if(isPlanCube){
+				console.log('设计方量不能为空');return;
+			}
+			var cube = $('#cube').val();
+			var isCube = DX.isNull(cube);
+			if(isCube){
+				console.log('需求方量不能为空');return;
+			}
+			var cubeModel = $('#models').val();
+			// var fid = $('#models').find('option:selected').attr('oid');
+			var teamName = $('#teams').val();
+			var  ctId = $('#teams').find('option:selected').attr('oid');
+			var userId = $('#users').find('option:selected').attr('oid');
+			var userName = $('#users').val();
+			
+			var obj = {'partId':partId,'partName':partName,'detailPart':detailPart,'planCube':planCube,'cube':cube,'cubeModel':cubeModel,'ctId':ctId,'teamName':
+			teamName,'userId':userId,'userName':userName,'position':'116.332171,39.942047'};
+			console.log(obj);
+			request(obj,'/demand/submitDemand',submitCall);
+		})
+		
+		 // 百度地图API功能
+		var map = new BMap.Map("map");
+		var point = new BMap.Point(116.331398,39.897445);
+		map.centerAndZoom(point,12);
+		var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+		var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+		// var geolocation = new BMap.Geolocation();
+		map.addControl(top_left_control);        
+		map.addControl(top_left_navigation); 
+		map.enableScrollWheelZoom(true);
+		
+		var geoc = new BMap.Geocoder();    
+		map.addEventListener("click", function(e){ //通过点击百度地图，可以获取到对应的point, 由point的lng、lat属性就可以获取对应的经度纬度     var pt = e.point; geoc.getLocation(pt, function(rs){ //addressComponents对象可以获取到详细的地址信息 var addComp = rs.addressComponents; var site = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber; //将对应的HTML元素设置值 $("#site").val(site); $("#longitude").val(pt.lng); $("#latitude").val(pt.lat); }); });
+			var pt = e.point;
+			geoc.getLocation(pt, function(rs){
+			var addComp = rs.addressComponents;
+			var site = addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber;
+           
+			console.log('g'+pt.lng+'t'+pt.lat);
+			console.log(site);
+			})
+		})
+		
+		// 点击显示左边二级菜单
+		slilde($('.order'));
+		
+	})
+	//弹层显示
+	$('#par').focus(function(){
+		if($(this).val()){
+			$('.openWin').show();
+			return;
+		} 
+		DX.ajax_method({
+			'type':'POST',
+			'url' :'/demand/getParentPaties',
+			'param':{},
+			'callBack':function(res){
+				var html = '';
+				if(res.code == '200'){
+					console.log(res);
+					$.each(res.data,function(i,val){
+						html += '<li id="'+val.partid+'" class="item" name="'+val.partName+'">'+val.partName+'</li>';
+					})
+				}
+				$('.firNav').html(html);
+				
+				$('.item').click(function(){
+					showEr($(this).attr('id'));
+					$('#par').val($(this).text());
+					$(this).addClass('active').siblings().removeClass('active');
+					$('#parentId').val($(this).attr('id'));
+					$('#parentId').attr('name',$(this).attr('name'));
+				})
+			}
+		});
+		
+		$('.openWin').show();
+	})
+	
+	//获取二级菜单
+	function showEr(id){
+		DX.ajax_method({
+			'type':'POST',
+			'url' :'/demand/getSubPartiesByParent',
+			'param':{'pid':id},
+			'callBack':function(res){
+				console.log(res);
+				var html = '';
+				if(res.code == '200'){
+					console.log(res);
+					$.each(res.data,function(i,val){
+						html += '<li id="'+val.partid+'" class="item1" name="'+val.partName+'">'+val.partName+'</li>';
+					})
+				}
+				$('.secNav').html(html);
+				//点击
+				$('.item1').click(function(){
+					$('#subId').val($(this).attr('id'));
+					$('#subId').attr('name',$(this).attr('name'));
+					$(this).addClass('active').siblings().removeClass('active');
+					var t= $('#parentId').attr('name')+'/'+$(this).text();
+					$('#par').val(t);
+					$('.openWin').hide();
+				})
+			}
+		})
+	}
+	//提交回调
+	function submitCall(res){
+		console.log(res);
+	}
+	//请求
+	function request(obj,url,call){
+		DX.ajax_method({
+			'type':'POST',
+			'url' :url,
+			'param':obj,
+			'callBack':call
+		});
+	}
+
+
+//拌合站点击
+function slilde(obj){
+	obj.toggle(function(){
+		$('.personList').slideUp();
+		$(".order span:nth-child(1)").css('background-position','-6px -77px');
+		$(".order span:nth-child(2)").css('color','#FFFFFF');
+		$(".order span:nth-child(3)").css({'background-position':'-100px -78px','width':'11px'});
+	},
+	function(){
+		$('.personList').slideDown();
+		$(".order span:nth-child(1)").css('background-position','-34px -77px');
+		$(".order span:nth-child(2)").css('color','#f46322');
+		$(".order span:nth-child(3)").css({'background-position':'-124px -78px','width':'15px'});
+	})
+}
+
+</script>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>信用评价详情</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/asscom.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+	</head>
+	<body>
+		<!-- left -->
+		<!-- <div class="leftBox"> -->
+		    <!-- logo -->
+		    <!-- <p class="logo"><img src="static/img/indexLogo.png" alt=""></p> -->
+		    <!-- 每一个列表 -->
+			<!-- <a class="title clearfix" href="javascript:void(0)">
+			    <span class="left0"></span>
+			    <span>程序操作</span>
+			    <span class="direction"></span>
+			</a>
+			<ul class="personList none"> -->
+			    <!-- <li><span class=""></span><a href="index.html">劳务队展现</a></li> -->
+			<!-- </ul>
+		    <a class="title clearfix" href="javascript:void(0)">
+		        <span class="left1 "></span>
+		        <span>劳务队</span>
+		        <span class="direction"></span>
+		    </a>
+			<ul class="personList none">
+			    <li><span class=""></span><a href="index.html">劳务队展现</a></li> -->
+			    <!-- <li><span></span><a href="">劳务队修改</a></li> -->
+			<!-- </ul>
+			<a class="title clearfix active" href="javascript:void(0)">
+			    <span class="left2"></span>
+			    <span>队伍评价</span>
+			    <span class="direction"></span>
+			</a>
+		    <ul class="personList">
+		        <li><span class="active"></span><a href="show.html">队伍评价展示</a></li> -->
+		        <!-- <li><span class=""></span><a href="config.html">评价维护</a></li> -->
+		    <!-- </ul>
+			<a class="title clearfix " href="javascript:void(0)">
+			    <span class="left3"></span>
+			    <span>配置维护</span>
+			    <span class="direction"></span>
+			</a>
+			<ul class="personList none">
+			    <li><span class=""></span><a href="gradeconfig.html">劳务评分等级</a></li>
+				<li><span class=""></span><a href="valueconfig.html">产值得分</a></li>
+			    <li><span class=""></span><a href="scaleconfig.html">队伍规模等级</a></li>
+				<li><span class=""></span><a href="numberconfig.html">队伍参评个数</a></li>
+				<li><span class=""></span><a href="specialconfig.html">特殊项目</a></li>
+			</ul>
+		</div> -->
+		<!-- right-->
+		<div class="rightBox">
+<!--			<header>-->
+<!--			    <span>中铁十二局第一工程有限公司劳务队评价</span>-->
+<!--			    <div class="tx">-->
+<!--			        <img src="static/img/tx.png" alt="">-->
+<!--			        <span class="more"></span>-->
+<!--					-->
+<!--					&lt;!&ndash; 退出按钮 &ndash;&gt;-->
+<!--					<ul class="quit none">-->
+<!--						<li><a href="#"><span></span>退出</a></li>-->
+<!--						<li><a href="#"><span></span>帮助</a></li>-->
+<!--					</ul>-->
+<!--			    </div>-->
+<!--			</header>-->
+			<div class="nav">
+			    <span>当前所在位置：队伍评价></span><span class="pointer">信用评价详情</span>
+				<!-- <span>信用评价详情</span> -->
+			</div>
+			<div class="deatil">
+				<div class="head clearfix">
+					<span class="fl order ">1</span>
+					<h3 class="fl company">有限公司四十</h3>
+					<h3 class="fl fen">得分：<span class="blue" id="getFen">117</span></h3>
+				</div>
+				<!-- 得分构成 -->
+				<div class="getbranch clearfix">
+					<h3 class="titlegra">队伍得分构成</h3>
+					<ul class="fl" id="grade1">
+						<li>11</li>
+						<li>队伍级别得分</li>
+					</ul>
+					<ul class="fl" id="grade2">
+						<li>11</li>
+						<li>队伍类型得分</li>
+					</ul>
+					<ul class="fl" id="grade3">
+						<li>11</li>
+						<li>产值得分</li>
+					</ul>
+					<ul class="fl" id="grade4">
+						<li>11</li>
+						<li>公司施工年限得分</li>
+					</ul>
+					<ul class="fl" id="grade5">
+						<li>11</li>
+						<li>队伍规模</li>
+					</ul> 
+				</div>
+				<!-- 得分明细 -->
+				<div class="definite clearfix">
+					<h3>队伍得分明细</h3>
+					<div class="grade fl boxshad" id="grade">
+						<h4>队伍级别得分</h4>
+						<div class="selectback">
+							<span>当前等级：</span><span class="white one1">A+</span><span class="ml20">等级得分:</span><span class="white two1">111</span>
+						</div>
+						<!-- <ul class="clearfix pt10">
+							<li>等级</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+						</ul>
+						<ul class="clearfix pb10">
+							<li>得分</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+							<li>A+</li>
+						</ul> -->
+					</div>
+					<!-- 当期产值 -->
+					<div class="leftand boxshad fl clearfix" id="nowValue">
+						<h4>当期产值得分</h4>
+						<div class="left1 fl">
+							<p>当期产值：<span class="white one1">500</span></p>
+							<p>得分：<span class="white two1">500</span></p>
+						</div>
+						<div class="rightx fl">
+							<ul class="right1 bold clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<!-- <ul class="right1 actblue clearfix ">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul> -->
+						</div>
+					</div>
+					<!-- 公司年限得分 -->
+					<div class="leftand boxshad fl clearfix mt20 ml0" id="year">
+						<h4>公司施工年限得分</h4>
+						<div class="left1 fl">
+							<p>施工年限：<span class="white one1">500</span></p>
+							<p>年限得分：<span class="white two1">500</span></p>
+						</div>
+						<div class="rightx fl">
+							<ul class="right1 bold clearfix">
+								<li>年限</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<!-- <ul class="right1 actblue clearfix ">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul> -->
+						</div>
+					</div>
+					<!-- 近三年产值得分 -->
+					<div class="leftand boxshad fl clearfix mt20" id="three">
+						<h4>近三年产值得分</h4>
+						<div class="left1 fl">
+							<p>近三年产值：<span class="white one1">500</span></p>
+							<p>得 分：<span class="white two1">500</span></p>
+						</div>
+						<div class="rightx fl">
+							<ul class="right1 bold clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<!-- <ul class="right1 actblue clearfix ">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul> -->
+						</div>
+					</div>
+					<!--以往产值  -->
+					<div class="leftand boxshad fl clearfix mt20 ml0" id="before">
+						<h4>以往产值得分计算</h4>
+						<div class="left1 fl">
+							<p>以往产值：<span class="white one1">500</span></p>
+							<p>得 分：<span class="white two1">500</span></p>
+						</div>
+						<div class="rightx fl">
+							<ul class="right1 bold clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<!-- <ul class="right1 actblue clearfix ">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul> -->
+						</div>
+					</div>
+					<!-- 队伍规模得分 -->
+					<div class="leftand boxshad fl clearfix mt20 " id="peoplesize_level">
+						<h4>队伍规模得分</h4>
+						<div class="left1 fl">
+							<p>队伍规模：<span class="white one1">500</span></p>
+							<p>等级得分：<span class="white two1">500</span></p>
+						</div>
+						<div class="rightx fl spright">
+							<ul class="right1 bold clearfix">
+								<li>级别</li>
+								<li>人数</li>
+								<li>得分</li>
+							</ul>
+							<!-- <ul class="right1 actblue clearfix ">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul>
+							<ul class="right1 clearfix">
+								<li>类型</li>
+								<li>系数</li>
+								<li>计算方式</li>
+							</ul> -->
+						</div>
+					</div>
+					
+				</div>
+				<a href="show.html" class="back">返 回</a>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="static/js/common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var id = DX.getParam('id');
+		if(id){
+			DX.ajax_method({
+				'type':'POST',
+				'param':{'dleid':id},
+				'url':'/eva/dlc/findDlparticulars',
+				'callBack':callBack
+			})
+		}
+		
+	})
+	//页面渲染函数
+	function callBack(res){
+		console.log(res);
+		if(res.code == '200'){
+			$('.head .order').text(res.data.details.rownum);//排名
+			//添加class 排名
+			var classname = '';
+			switch (res.data.details.rownum){
+				case 1:
+					classname = 'one';
+					break;
+				case 2:
+					classname = 'twoq';
+					break;
+				case 3:
+					classname = 'threeq';
+					break;
+				default:
+					classname = 'other';
+					break;
+			}
+			$('.head .order').addClass(classname);
+			//公司名称
+			$('.head .company').text(res.data.details.team_name);
+			//得分
+			$('#getFen').text(res.data.details.count+"(项目部得分)");
+			//队伍构成
+			$("#grade1 li:first-child").text(res.data.details.level_id_score);
+			$("#grade2 li:first-child").text(res.data.details.partid_score);
+			// var number = Number(res.data.details.before_production_score)+Number(res.data.details.three_production_score)+Number(res.data.details.current_production_score);
+			// number =number.toFixed(8);
+			// console.log(numb)
+			// console.log(DX.toNonExponential(number))
+			$("#grade3 li:first-child").text(res.data.details.outputSUM);
+			$("#grade4 li:first-child").text(res.data.details.construction_year_score);
+			$("#grade5 li:first-child").text(res.data.details.team_size_score); 
+			//级别
+			$('#grade .one1').text(res.data.details.team_size_name);
+			$('#grade .two1').text(res.data.details.level_id_score);
+			each(res.data[1]);
+			//当前产值
+			$('#nowValue .one1').text(res.data.details.current_production);
+			
+			
+			$('#nowValue .two1').text(DX.toNonExponential(res.data.details.current_production_score));
+			nowValue(res.data.current);
+			//公司年限得分
+			$('#year .one1').text(res.data.details.construction_year);
+			$('#year .two1').text(DX.toNonExponential(res.data.details.construction_year_score));
+			year(res.data.year);
+			//近三年产值
+			$('#three .one1').text(res.data.details.three_production);
+			$('#three .two1').text(DX.toNonExponential(res.data.details.three_production_score));
+			var str1 = three(res.data.three);
+			 $('#three .rightx .bold').after(str1);
+			
+			//以往产值得分
+			$('#before .one1').text(res.data.details.before_production);
+			$('#before .two1').text(DX.toNonExponential(res.data.details.before_production_score));
+			var three1 = three(res.data.befor);
+			 $('#before .rightx .bold').after(three1);
+			
+			//队伍规模得分
+			$('#peoplesize_level .one1').text(res.data.details.peoplesize);
+			$('#peoplesize_level .two1').text(DX.toNonExponential(res.data.details.team_size_score));
+			peoplesize_level(res.data.peoplesize);
+		}
+	}
+	
+		//队伍规模得分
+	function peoplesize_level(data){
+		var str = '';
+		$.each(data,function(i,val){
+			// if(i == 0) return true;
+			if(val.flag){
+				str += '<ul class="right1 actblue clearfix ">'
+				str += '<li>'+val.level+'</li>';
+				str += '<li>'+val.pname+'</li>';
+				str += '<li>'+val.team_score+'</li>';
+				str +='</ul>';
+			}else{
+				str += '<ul class="right1 clearfix ">'
+				str += '<li>'+val.level+'</li>';
+				str += '<li>'+val.pname+'</li>';
+				str += '<li>'+val.team_score+'</li>';
+				str +='</ul>';
+			}
+			
+		})						
+		
+		$('#peoplesize_level .rightx .bold').after(str);
+	}
+	//近三年得分
+	function three(data){
+		var str = '';
+		$.each(data,function(i,val){
+			// if(i == 0) return true;
+			if(val.flag){
+				str += '<ul class="right1 actblue clearfix ">'
+				str += '<li>'+val.add_item+'</li>';
+				str += '<li>'+val.project_score+'</li>';
+				str += '<li>'+'产值*系数'+'</li>';
+				str +='</ul>';
+			}else{
+				str += '<ul class="right1 clearfix ">'
+				str += '<li>'+val.add_item+'</li>';
+				str += '<li>'+val.project_score+'</li>';
+				str += '<li>'+'产值*系数'+'</li>';
+				str +='</ul>';
+			}
+			
+		})						
+		return str;
+		// $('#three .rightx .bold').after(str);
+	}
+	
+	//公司年限
+	function year(data){
+		var str = '';
+		$.each(data,function(i,val){
+			if(i == 0) return true;
+			if(val.flag){
+				str += '<ul class="right1 actblue clearfix ">'
+				str += '<li>'+val.year_name+'</li>';
+				str += '<li>'+val.year_score+'</li>';
+				str += '<li>'+val.remark+'</li>';
+				str +='</ul>';
+			}else{
+				str += '<ul class="right1 clearfix ">'
+				str += '<li>'+val.year_name+'</li>';
+				str += '<li>'+val.year_score+'</li>';
+				str += '<li>'+val.remark+'</li>';
+				str +='</ul>';
+			}
+			
+		})						
+		
+		$('#year .rightx .bold').after(str);
+	}
+	//当期产值
+	function nowValue(data){
+		var str = '<ul class="right1 clearfix ">';
+		$.each(data,function(i,val){
+			if(val.flag){
+				str += '<ul class="right1 actblue  clearfix ">'
+				str += '<li>'+val.add_item+'</li>';
+				str += '<li>'+val.project_score+'</li>';
+				str += '<li>当期产值*系数</li>';
+				str +='</ul>';
+			}else{
+				str += '<ul class="right1  clearfix ">'
+				str += '<li>'+val.add_item+'</li>';
+				str += '<li>'+val.project_score+'</li>';
+				str += '<li>当期产值*系数</li>';
+				str +='</ul>';
+			}
+			
+		})						
+		
+		$('#nowValue .rightx .bold').after(str);
+	}
+	
+	//级别得分渲染
+	function each(data){
+		var str = '<ul class="clearfix pt10"><li class="">等级</li>';
+		var str1 = '<ul class="clearfix pb10"><li class="">得分</li>';
+		$.each(data,function(i,val){
+			if(val.flag){
+				str += '<li class="blue1">'+val.add_item+'</li>';
+				str1 += '<li class="blue1">'+val.project_score+'</li>';
+			}else{
+				str += '<li>'+val.add_item+'</li>';
+				str1 += '<li>'+val.project_score+'</li>';
+			}
+			
+		})
+		str += '</ul>';
+		str1 += '</ul>';
+
+		$('#grade .selectback').after(str+str1);
+	}
+	
+	
+</script>

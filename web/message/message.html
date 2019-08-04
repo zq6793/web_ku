@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>消息通知</title>
+		<link rel="stylesheet" href="../static/common.css">
+		<link rel="stylesheet" type="text/css" href="static/css/leftcommon.css"/>
+		<link rel="stylesheet" type="text/css" href="static/css/message.css"/>
+	</head>
+	<body>
+		
+		 <!-- 右侧表格盒子 -->
+		<div class="rightBox">
+			
+			<!-- 位置，搜索，时间 -->
+		   <!-- <div class="nav">
+				<span>当前所在位置：消息通知></span><span class="pointer">消息通知</span>
+			</div> -->
+			<div class="message">
+				<ul class="notice clearfix" id="notice">
+					<li class="activew" status='0'>待办事项</li>
+					<li status='1'>消息通知</li>
+				</ul>
+				<div class="contant" id="contant">
+					<!-- <p><span class="thead">【 <span>1111</span> 】</span><span>11111111111111</span></p> -->
+				</div>
+			</div>
+			<!-- 分页 -->
+			<div class="page1">
+				
+			</div>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/pages.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var status = false;
+		
+		pages.init({
+			'key':['onlyMsg'],
+			'value':[status],
+			'url':'/user/msg/findAll',
+			'callBack':callBack
+		})
+		
+		//点击加载消息通知
+		$('#notice li').click(function(){
+			var status = $(this).attr('status')==1;
+			console.log(status);
+			$(this).addClass('activew').siblings().removeClass('activew');
+			// var page = {'curPage':$('#page_index').val(),'pageSize':$('#page_number').val()};
+			// select(page);
+			pages.init({
+				'key':['onlyMsg'],
+				'value':[status],
+				'url':'/user/msg/findAll',
+				'callBack':callBack
+			})
+		})
+			
+			
+		})
+
+		var config = {
+			1:['../project/survey/checksur.html','id'],
+			2:['../project/survey/checksur.html','id'],
+			3:['../company/comsurvey/addcomsur.html','id'],
+			4:['../project/anew/addanew.html','id'],
+			5:['../project/anew/addanew.html','id'],
+			6:['../company/comanew/addcomanew.html','id'],
+			7:['../project/contract/checkcontract.html','id'],
+			8:['../project/contract/checkcontract.html','id'],
+			9:['../project/contract/checkcontract.html','id'],
+			10:['../project/contract/checkcontract.html','id'],
+			11:['../project/contract/checkcontract.html','id'],
+			12:['../company/comcontract/addcomcon.html','id'],
+			13:['../company/comcontract/addcomcon.html','id']
+		};
+		function callBack(res){
+			console.log(res);
+			var str='';
+			if(res.code == '200'){
+				$.each(res.data.list,function(i,val){
+					
+					str += '<p><span class="thead">【 <span>'+val.title+'</span> 】</span><span>'+val.msg+'</span>';
+					if(config[val.type]){
+						var str1 = "去处理";
+						if(val.status != 0){
+							str1 = "查看";
+						}
+						str += '<a href="'+config[val.type][0]+'?'+config[val.type][1]+'='+val.data+'">'+str1+'</a>';
+					}
+					
+					str += '</p>';
+				})
+				
+			}
+			
+			$('#contant').html(str);
+		}
+	
+</script>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>角色管理</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/powerallot.css" />
+	</head>
+	<body>
+		<!-- right -->
+		<!-- <div class="rightBox"> -->
+
+
+		<!-- 权限分配总体 -->
+		<div class="allotBox clearfix" id="allotBox" v-cloak>
+			<p class="titleHeader">角色列表</p>
+			<!-- 权限分配左侧 -->
+			<div class="allotLeftBox" id="rolelist">
+				<p class="addRole">
+					<button type="button" class="addRoleBtn pointer" @click="addRoleShow" :style="bindAddrole">添加新角色</button>
+				</p>
+				<div v-for="val,index in leftList" style="padding-right:10px;">
+					<a class="clearfix navHeader" href="javascript:void(0)" @click="changeImg(index)">
+						<span class="bg fl" :class="val.imgClass"></span>
+						<span class="navName fl">{{val.roleName}}</span>
+					</a>
+					<ul class="personList" :style="val.show">
+						<li v-for="value,i in val.subRoles" :class="value.checks">
+							<span></span><a href="javascript:void(0)" @click="checked(index,i)">{{value.roleName}}</a>
+						</li>
+						<!-- <li><span class="active"></span><a href="#.html">项目书记</a></li> -->
+					</ul>
+				</div>
+			</div>
+
+
+			<!-- 权限分配右侧 -->
+			<div class="allotRightBox none" :style="addRoles">
+				<div class="showNewRole">
+					<p>
+						<span>角色名称:</span>
+						<input type="text" class="writeIn" placeholder="请输入角色名称" v-model="roleName" :disabled="dislable1">
+					</p>
+					<p>
+						<span>选择部门:</span>
+						<select name="" id="choosePart" class="choosePart" v-model="departid" :disabled="dislable1">
+							<option v-for="val,index in departList" :value="val.rid">{{val.roleName}}</option>
+						</select>
+					</p>
+				</div>
+
+				<ul class="rightBoxHeader">
+					<li class="allotLimits pointer chooseIn">请选择基本权限</li>
+					<!-- <li class="allotUser pointer">角色用户</li> -->
+				</ul>
+				<!-- 点击角色权限出现 -->
+				<div class="limitsBox clearfix">
+					<div class="limitsLeft" id="rolesBox">
+						<p class="">程序权限</p>
+						<div v-for="val,index in perssion">
+							<a class="clearfix  limitsList" href="javascript:void(0)" @click="rightDepart(index)">
+								<span class="bg fl" :class="val.addclass"></span>
+								<span class="fl" style="line-height: 40px;">{{val.name}}</span>
+								<!-- <span class="direction fl"></span> -->
+							</a>
+							<ul class="personList" :style="val.show">
+								<label v-for="value,i in val.subPerms">
+									<!-- <span></span> -->
+									<input type="checkbox"  @click="clickPerssion(index,i)" :checked="value.checked"/>
+									<span>{{value.name}}</span>
+								</label>
+							</ul>
+						</div>
+
+					</div>
+					<!-- 右侧已分配 -->
+					<div class="limitsRight">
+						<p>已分配权限</p>
+						<div class="finishAllot" id="haves">
+							<div v-for="val,index in hasPerssion">
+								<a class="title clearfix active" href="javascript:void(0)" @click="rightDepart(index,0)">
+									<span class="bg fl" :class="val.addclass"></span>
+									<span class="fl" style="line-height: 40px;">{{val.name}}</span>
+									<!-- <span class="direction"></span> -->
+								</a>
+								<ul class="personList" :style="val.show">
+									<li v-for="value,i in val.subPerms">
+										<!-- <span></span> -->
+										<a href="javascript:void(0)">{{value.name}}</a>
+									</li>
+
+								</ul>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="man_bottom">
+					<ul>
+						<button type="button" class="subBtn" @click="addPerssion">保 存</button>
+						<button type="button" class="subBtn" style="background: red;margin-left: 20px;" :class="{'none' : isremove}" @click="deleteRole">删 除</button>
+					</ul>
+					<span class="err" style="display: block;">{{message}}</span>
+				</div>
+			</div>
+
+
+			<!-- 点击角色用户出现列表 -->
+			<div class="allotUserTable none" :style="show">
+				<div class="role_top clearfix">
+					<span class="fl">{{leftrole}}</span>
+					<span class="fl helpFont" id="helpFont" style="margin: 6px 0 0 5px;"></span>
+					<button type="button" class="btnBlue fl" @click="modRoleShow">编辑角色</button>
+					<button type="button" class="btnBlue fl" @click="addPeoples">添加成员</button>
+
+					<!-- 添加成员 -->
+					<div class="add_role none" :style="addPeople">
+						<h3>请选择成员</h3>
+						<ol>
+							<div  v-for="value,index in projectList">
+								<li class="clearfix">
+									<label><input type="checkbox" class="fl" @click="allSelect(index)" :checked="value.checked" /> <span class="fl">{{value.departName}}</span></label>
+									<span class="fr right" :class="value.addClass" @click="peopliedetil(index)"></span>
+								</li>
+								<ul class="none" :style="value.show">
+									<li class="clearfix" v-for="values,indexs in value.users">
+										<label><input type="checkbox" class="fl" :checked="values.checked" @click="oneSelect(index,indexs)" /> <span class="fl">{{values.name}}</span></label>
+									</li>
+								</ul>
+							</div>
+						</ol>
+						<p><button type="button" class="btnBlue" @click="submitPeople">确定</button><button type="button" class="btnBlue" @click="concle">取消</button></p>
+					</div>
+
+				</div>
+				<div class="helpContext" id="helpContext">
+					<p>1、点击 “编辑角色” 可修改角色权限 2、点击 “添加成员” 添加角色成员</p>
+				</div>
+				<table class="table" cellspacing="0" cellpadding="0">
+					<thead>
+						<tr>
+							<th>姓名</th>
+							<th>账号</th>
+							<th>职位</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="val,index in rightPeople">
+							<td>{{val.name}}</td>
+							<td>{{val.phone}}</td>
+							<td>{{val.jobName}}</td>
+							<td><span class="listToDetail"  @click="delPeople(index)">删除</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+		<!-- </div> -->
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: '#allotBox',
+		created: function() {
+			this.getLeft();
+		},
+		data: {
+			'message': '',
+			'addPeople': '', //添加成员的显示
+			'leftid': '', //菜单角色id
+			'leftrole': '', //左边选中角色
+			'show': '', //用户列表显示
+			'addRoles': '', //添加角色的显示
+			'bindAddrole': '', //添加角色样式
+			'dislable1':false,//角色部门可以编辑
+			'isremove':true,//删除是否不显示
+			
+			'leftList': [], //左边角色列表
+			'rightPeople': [], //右边人员列表
+			'departList': [], //部门列表
+			'perssion': [], //程序权限
+			'hasPerssion': [], //已有权限
+
+			'departid': '', //选取部门的id
+			'roleName': "", //添加角色的名称
+			'projectList': [], //添加人员的列表
+		},
+		methods: {
+			changeImg: function(index) { //展开左边二级菜单
+
+				var list = this.leftList;
+				this.leftList = [];
+				
+
+				if (list[index].imgClass == '') {
+					list[index].imgClass = 'bg_bottom';
+					// this.leftList[index].imgClass = 'bg_bottom';
+					list[index].show = 'display:block';
+				} else {
+					console.log(index);
+					list[index].imgClass = '';
+					list[index].show = 'display:none';
+				}
+				this.leftList = list;
+				console.log(this.leftList);
+			},
+			getLeft: function(rid,crid) { //获取角色菜单 添加和编辑角色时带参数 rid父集id crid子集id
+				
+				var $this = this;
+				DX.ajax_method({
+					'url': '/user/role/findRoles',
+					'callBack': function(res) {
+						console.log(res);
+						if (res.code == '200') {
+							$this.leftList = res.data;
+							var index = 0;
+							var index1 = 0;
+							for (var i = 0; i < res.data.length; i++) {
+								if(res.data[i].rid == rid){
+									$this.leftList[i].show = 'display:block';
+									$this.leftList[i].imgClass = 'bg_bottom';
+									index = i;
+									
+									for (var j=0;j<res.data[i].subRoles.length;j++) {
+										if(res.data[i].subRoles[j].rid == crid){
+											index1 = j;
+										}
+									}
+								}else{
+									$this.leftList[i].show = 'display:none';
+									$this.leftList[i].imgClass = '';
+								}
+								
+							}
+							
+							if(rid){//编辑角色和添加角色调用
+								$this.checked(index,index1);
+							}
+
+						}
+					}
+				})
+			},
+			checked: function(index, index1) { //点击左边角色
+				this.concle();
+				this.leftid = this.leftList[index].subRoles[index1].rid;
+				this.leftrole = this.leftList[index].subRoles[index1].roleName;
+
+				this.show = 'display:block';
+				this.addRoles = '';
+				this.bindAddrole = '';
+				//添加选中效果
+				var temp = this.leftList;
+				this.leftList = [];
+				for (var i = 0; i < temp.length; i++) {
+
+					for (var j = 0; j < temp[i].subRoles.length; j++) {
+						temp[i].subRoles[j].checks = '';
+					}
+				}
+				temp[index].subRoles[index1].checks = 'selects';
+				
+				this.dislable1 = temp[index].subRoles[index1].isbasis==1;
+				this.departid = temp[index].rid;
+				
+				this.leftList = temp;
+				clickTr();//选中效果
+				this.getPeople();
+			},
+			getPeople: function() { //获取右边人员信息
+				var $this = this;
+				DX.ajax_method({
+					'param': {
+						'rid': $this.leftid
+					},
+					'url': '/user/emp/findUserByRid',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							$this.rightPeople = res.data;
+						}
+					}
+				})
+			},
+			delPeople: function(index) { //删除操作
+				var id = this.rightPeople[index].id;
+				var $this = this;
+				DX.ajax_method({
+					'type': 'POST',
+					'param': {
+						'rid': $this.leftid,
+						'uid': id
+					},
+					'url': '/user/emp/removeRoleFromUser',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							$this.getPeople();
+						}
+					}
+				})
+			},
+			addRoleShow: function() { //点击添加角色按钮
+				this.addRoles = 'display:block';
+				this.show = '';
+				this.bindAddrole = 'border: 1px solid #1296db;background:#1296db;color:#fff';
+				
+				this.roleName = '';
+				this.leftid = '';
+				this.dislable1 = false;
+				this.isremove = true;
+				
+				var temp = this.leftList;
+				this.leftList = [];
+				for (var i = 0; i < temp.length; i++) {//左边选中样式清空
+
+					for (var j = 0; j < temp[i].subRoles.length; j++) {
+						temp[i].subRoles[j].checks = '';
+					}
+				}
+
+				this.leftList = temp;
+
+				this.getDepart(0);
+				this.getPerssion(0);
+			},
+			modRoleShow:function(){//编辑角色
+				this.addRoles = 'display:block';
+				this.show = '';
+				console.log(this.leftList[0].subRoles[0].isbasis==1);
+				// this.dislable1 = this.leftList[0].subRoles[0].isbasis==1;
+				this.isremove = this.dislable1;
+				this.roleName = this.leftrole;
+				
+				
+				this.getDepart();
+				this.getPerssion();
+			},
+			getDepart: function(param) { //获取部门列表  param=0添加角色
+				var $this = this;
+				DX.ajax_method({
+					'url': '/user/role/findRoleDepart',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							if(param == 0){
+								$this.departid = res.data[0].rid;
+							}
+							$this.departList = res.data;
+
+						}
+					}
+				})
+			},
+			getPerssion: function(param) { //获取程序权限 param=0添加角色
+				var obj = {};
+				//编辑的时候传rid
+				if (param != 0) {
+					obj = {
+						'rid': this.leftid
+					};
+				}
+				var $this = this;
+				DX.ajax_method({
+					'url': '/user/perm/findPerms',
+					'param': obj,
+					'callBack': function(res) {
+						if (res.code == '200') {
+							console.log(res);
+							//全部权限
+							$this.perssion = res.data.rolePerms;
+							for (var i = 0; i < res.data.rolePerms.length; i++) {
+								$this.perssion[i].addclass = '';
+								$this.perssion[i].show = '';
+							}
+
+							//已有权限
+							$this.hasPerssion = res.data.hadPerms;
+							for (var i = 0; i < res.data.hadPerms.length; i++) {
+								$this.hasPerssion[i].addclass = '';
+								$this.hasPerssion[i].show = '';
+							}
+						}
+					}
+				})
+			},
+			rightDepart: function(index, param) { //展开右边权限
+				// debugger;
+				var list = this.perssion;
+				
+				if (param == 0) {//点击已有权限
+					list = this.hasPerssion;
+					this.hasPerssion = [];
+				} else {
+					this.perssion = [];
+				}
+
+				console.log(list);
+
+				if (list[index].addclass == '') {
+					list[index].addclass = 'bg_bottom';
+					list[index].show = 'display:block';
+				} else {
+					list[index].addclass = '';
+					list[index].show = 'display:none';
+				}
+				
+				if (param == 0) {//点击已有权限
+					this.hasPerssion = list;
+				} else {
+					this.perssion = list;
+				}
+
+
+			},
+			clickPerssion: function(index, index1) { //点击具体权限
+				var tmp = this.perssion;
+				this.perssion = [];
+
+				if (tmp[index].subPerms[index1].checked) {
+					tmp[index].subPerms[index1].checked = false;
+				} else {
+					tmp[index].subPerms[index1].checked = true;
+				}
+				console.log(tmp);
+				this.perssion = tmp;
+			},
+			addPerssion: function() { //保存权限
+				var $this = this;
+				this.message = '';
+				var data = this.perssion;
+				console.log(data);
+
+				var pids = [];//整理选中权限
+				for (var i = 0; i < data.length; i++) {
+					for (var j = 0; j < data[i].subPerms.length; j++) {
+						if (data[i].subPerms[j].checked) {
+							pids.push(data[i].subPerms[j].pid);
+						}
+					}
+				}
+
+				if (DX.isNull($this.roleName)) {
+					this.message = '角色名称不能为空';
+					return;
+				}
+				if(pids.length<1){
+					this.message = '请选择程序权限';
+					return;
+				}
+				
+				var obj = {
+					'roleName': $this.roleName,
+					'departId': $this.departid,
+					'pids[]': pids
+				}
+				var url = '/user/role/saveRole';
+				
+				if(this.leftid != ''){//编辑重写
+					obj.rid = this.leftid;
+					url = '/user/role/updateRole';
+				}
+				
+				DX.ajax_method({
+					'type': 'POST',
+					'param': obj,
+					'url': url,
+					'callBack': function(res) {
+						if (res.code == '200') {
+							// $this.leftid = res.data; //rid
+							// $this.getPerssion();
+							$this.getLeft(res.data.departId,res.data.rid);
+						}
+					}
+				})
+			},
+			addPeoples: function() {//点击添加成员
+				this.addPeople = 'display:block';
+				this.peopleList();
+			},
+			concle: function() {//点击取消关闭弹层
+				this.addPeople = 'display:none';
+			},
+
+			peopleList: function() { //获取添加人员列表信息
+				var $this = this;
+				DX.ajax_method({
+					'param':{'rid':$this.leftid},
+					'url': '/user/emp/findUserInDepart',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							console.log(res);
+							$this.projectList = res.data;
+							for (var i = 0; i < res.data.length; i++) {
+								$this.projectList[i].addClass = '';
+								$this.projectList[i].show = '';
+								
+								$this.projectList[i].checked = '';
+								
+								for (var j=0;j<res.data[i].users.length;j++) {
+									res.data[i].users[j].checked = '';
+								}
+							}
+							console.log($this.projectList);
+						}
+					}
+				})
+			},
+			peopliedetil: function(res) { //人员展示二级菜单
+				var tmp = this.projectList;
+				this.projectList = [];
+				// for (var i = 0; i < tmp.length; i++) {
+				// 	tmp[i].addClass = '';
+				// 	tmp[i].show = '';
+				// }
+				
+				if (tmp[res].addClass == '') {
+				
+					tmp[res].show = 'display:block';
+					tmp[res].addClass = 'img_bottom';
+				} else {
+					tmp[res].addClass = '';
+					tmp[res].show = '';
+				}
+				this.projectList = tmp;
+			},
+			allSelect:function(index){//人员全选 二级全部选中
+				
+				var temp = this.projectList;
+				if(temp[index].checked == 'checked'){
+					temp[index].checked = '';
+					for (var i=0;i<temp[index].users.length;i++) {
+						temp[index].users[i].checked = '';
+					}
+				}else{
+					temp[index].checked = 'checked';
+					for (var i=0;i<temp[index].users.length;i++) {
+						temp[index].users[i].checked = 'checked';
+					}
+				}
+				
+				this.projectList = [];
+				this.projectList = temp;
+			},
+			oneSelect:function(index,indexs){//单个checkbox选中
+				var temp = this.projectList;
+				if(temp[index].users[indexs].checked == 'checked'){
+					temp[index].users[indexs].checked = '';
+				}else{
+					temp[index].users[indexs].checked = 'checked';
+				}
+				
+				this.projectList = [];
+				this.projectList = temp;
+			},
+			submitPeople:function(){//添加提交的人员信息
+				var res = this.projectList;
+				
+				var data = [];
+				for (var i=0;i<res.length;i++) {
+					for (var j=0;j<res[i].users.length;j++) {
+						if(res[i].users[j].checked == 'checked'){
+							data.push(res[i].users[j].id);
+						}
+					}
+				}
+				if(data.length <1){alert('请勾选人员');return;}
+				var $this= this;
+				DX.ajax_method({
+					'type':'POST',
+					'param':{'rid':$this.leftid,'uids[]':data},
+					'url':'/user/emp/addRoleToUsers',
+					'callBack':function(res){
+						if(res.code == '200'){
+							
+							$this.concle();
+							$this.getPeople();
+						}
+					}
+				})
+			},
+			deleteRole:function(){//删除角色
+				var result = confirm('确认删除该角色');
+				if(!result) return;
+				
+				var $this = this;
+				DX.ajax_method({
+					'type':'POST',
+					'param':{'rid':$this.leftid},
+					'url':'/role/deleteRole',
+					'callBack':function(res){
+						if(res.code == '200'){
+							location.reload();
+						}
+					}
+				})
+			}
+		},
+
+		watch: {
+
+		}
+	})
+	
+	function clickTr(){
+		setTimeout(function(){
+			$('.table tbody tr').click(function(){
+				DX.clickTr($(this));
+			})
+		},100);
+	}
+</script>

@@ -1,0 +1,13 @@
+/* 兼容ie9浏览器css样式 */
+.perMess p{
+    float: left\9;
+}
+.perMess input{
+    margin-top:10px\9;
+}
+.sex select{
+    margin-top:10px\9;
+}
+.information select{
+    margin-top:10px\9;
+}

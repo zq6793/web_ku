@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>申请职位</title>
+		<link rel="stylesheet" type="text/css" href="../static/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/common.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/style.css" />
+	</head>
+	<body>
+		<div class="newwork" id="newWork" v-cloak>
+			<!-- <ul class="clearfix worknav">
+				<li class="fl active">添加身份</li>
+				<li class="fl" @click="toUrl">变更身份</li>
+			</ul> -->
+			<!-- <h3>申请职位</h3> -->
+			<a href="identityinformationlist.html" class="back">我的身份信息列表</a>
+			<ul class="clearfix">
+				<p class="fl clearfix">
+					<em>*</em> 选择单位：
+				</p>
+				<select name="" class="fl" v-model="state">
+					<option value="1" v-if="!unit">公司</option>
+					<option value="0">项目部</option>
+				</select>
+			</ul>
+			<ul class="clearfix" v-if="isshow">
+				<p class="fl clearfix">
+					<em>*</em> 选择项目部：
+				</p>
+				<select name="" class="fl" @change="getProjects" v-model="projectid">
+					<option value="">请选择</option>
+					<option v-for='val,index in projectlist' :value="val.projectId">{{val.abbreviation}}</option>
+				</select>
+			</ul>
+			<ul class="clearfix" v-if="isWork">
+				<p class="fl clearfix">
+					<em>*</em> 选择部门：
+				</p>
+				<select name="" class="fl" v-model="projet">
+					<option value=''>请选择</option>
+					<option v-for='val,index in projects' :value="val.projectId">{{val.projectName}}</option>
+				</select>
+			</ul>
+			<ul class="clearfix" v-if="isWork">
+				<p class="fl clearfix">
+					<em>*</em> 选择职位：
+				</p>
+				<select name="" class="fl" v-model="worker">
+					<option value="">请选择</option>
+					<option v-for="val,index in workers" :value="val.jid">{{val.jobName}}</option>
+				</select>
+			</ul>
+			<ul class="clearfix" v-if="isWork" v-show="isSurper">
+				<p class="fl clearfix">
+					<em>*</em> 是否主管：
+				</p>
+				<label class="fl" style="margin-left: 10px;"><input type="radio" value="1" name="1" @click="radioClick" /> 是</label>
+				<label class="fl" style="margin-left: 30px;"><input type="radio" value="0" name="1" checked @click="radioClick" />
+					否</label>
+
+			</ul>
+			<p class="errl">{{errmesage}}</p>
+			<button id="" class="submitb pointer" @click="addSub">提交申请</button>
+		</div>
+	</body>
+</html>
+<script src="../static/js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/dx.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/js/vue.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: '#newWork',
+		created: function() {
+			this.isShow();
+			this.isUnit();
+			if (this.state == 1) {
+				this.getProjects();
+			}
+
+
+		},
+		data: {
+			'isSurper': true, // 是否主管 显示与否 部领导不显示
+			'unitP': true, //在机关是否有项目部角色
+			'unit': false, //判断是否有机关角色
+			'errmesage': '',
+			'isshow': false,
+			'state': 1, //公司是1 项目部0
+			'isWork': true, //有项目部申请项目部的时候  职位，是否主管，部门不显示。
+			'isSupervisor': 0, //是否主管 0不是 1是
+			'projet': '', //部门id
+			'worker': '', //职位id
+			'projectid': "", //项目部id
+
+			'projects': [], //部门数组
+			'workers': [], //职位数组
+			'projectlist': [], //项目部数组
+		},
+		methods: {
+			isShow: function() { //控制隐藏 是否为公司
+				this.isshow = this.state == 1 ? false : true;
+			},
+			radioClick: function(event) { //单选 选择是否主管
+
+				this.isSupervisor = event.target.value;
+			},
+			isUnit: function() {
+				var $this = this;
+				DX.ajax_method({
+					'type': "GET",
+					'param': {},
+					'url': '/user/emp/hasUnitAndProject',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							console.log(res);
+							// 有机关且有项目部
+							if (res.data.unit == true && res.data.project == true) {
+								$this.state = 0;
+								$this.unit = true;
+								$this.isWork = false;
+							}
+							// 没机关且有项目部
+							if (res.data.unit == false && res.data.project == true) {
+								$this.state = 0;
+								$this.unit = false;
+								$this.isWork = true;
+							}
+
+							// 有机关且没项目部
+							if (res.data.unit == true && res.data.project == false) {
+								$this.unitP = false;
+								$this.state = 0;
+								$this.unit = true;
+								$this.isWork = true;
+							}
+
+
+						}
+					}
+				})
+			},
+			getProject: function() { //获取项目部
+				var $this = this; //如果当前在项目部的话  并且选择项目部的话  iswork设置为false    职位不显示
+				if (this.state == 0 && !this.unit) {
+					this.isWork = false;
+				}
+
+				DX.ajax_method({
+					'type': "GET",
+					'param': {},
+					'url': '/user/project/getProjectsForApplyJob',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							$this.projectlist = res.data;
+						}
+					}
+				})
+
+			},
+			getProjects: function() { //获取部门（切换） 
+				var $this = this;
+				var url = '/user/project/anon/getSubProjects';
+				if ($this.state == 1) {
+					url = '/user/unit/anon/findUnitDepart'
+				}
+
+				if (this.state == 0 && !this.unit) {
+					this.isWork = false;
+				}
+
+				if (this.state == 1 && !this.unit) {
+					this.isWork = true;
+				}
+				DX.ajax_method({
+					'type': "GET",
+					'param': {},
+					'url': url,
+					'callBack': function(res) {
+						if (res.code == '200') {
+							console.log(res);
+							$this.projects = res.data;
+						}
+					}
+				})
+			},
+			getWorker: function() { //获取职位
+				var $this = this;
+				var prid = $this.projectid;
+				if ($this.state == 1) {
+					var prid = 0;
+				}
+				DX.ajax_method({
+					'type': "GET",
+					'param': {
+						'proid': prid,
+						'departId': $this.projet
+					},
+					'url': '/user/job/anon/findJobsForRegister',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							console.log(res);
+							$this.workers = res.data;
+						}
+					}
+				})
+			},
+			addSub: function(values) { //提交数据
+				this.errmesage = '';
+				var $this = this;
+				var obj = {};
+
+				if (this.unit) { //有机关角色  
+					console.log(this.unitP);
+					if (this.unitP) { //有机关角色并且有项目部角色
+						if (this.projectid == '') {
+							this.errmesage = '请选择项目部';
+							return;
+						}
+						obj.proid = $this.projectid;
+					} else { //有机关角色没有项目部角色
+
+						if (this.projet == '') {
+							this.errmesage = '请选择部门';
+							return;
+						}
+						if (this.worker == '') {
+							this.errmesage = '请选择职位';
+							return;
+						}
+
+						obj = {
+							'jid': $this.worker,
+							'departId': $this.projet,
+							'isSupervisor': $this.isSupervisor,
+						}
+
+						if (this.projectid == '') {
+							this.errmesage = '请选择项目部';
+							return;
+						}
+						obj.proid = $this.projectid;
+					}
+				} else { //没有机关角色
+					console.log(this.state);
+
+					if (this.state == 1) {
+						if (this.projet == '') {
+							this.errmesage = '请选择部门';
+							return;
+						}
+						if (this.worker == '') {
+							this.errmesage = '请选择职位';
+							return;
+						}
+
+
+						obj = {
+							'jid': $this.worker,
+							'departId': $this.projet,
+							'isSupervisor': $this.isSupervisor,
+						}
+						obj.proid = 0;
+					}
+
+					if (this.state == 0) {
+						if (this.projectid == '') {
+							this.errmesage = '请选择项目部';
+							return;
+						}
+
+						obj.proid = $this.projectid;
+					}
+
+				}
+
+				if (this.projet == 1) {
+					obj.isSupervisor = -1;
+				}
+				console.log(obj);
+				// return;
+				DX.ajax_method({
+					'type': 'POST',
+					'param': obj,
+					'change': values.target,
+					'url': '/user/emp/applyJob',
+					'callBack': function(res) {
+						if (res.code == '200') {
+							console.log(res);
+							$this.errmesage = "已添加成功，请等待审核";
+					
+						} else {
+							$this.errmesage = res.msg;
+						}
+					}
+				})
+			},
+			toUrl:function(){
+				window.location.href='changework.html';
+			}
+		},
+		watch: {
+			state: function(newval, oldval) {
+				if (newval == 0) { //项目部
+					this.isshow = true;
+					this.projects = [];
+					this.projet = '';
+					this.worker = '';
+					this.workers = [];
+					this.getProject();
+				} else {
+					this.isshow = false;
+					this.projectid = '';
+					this.projet = '';
+					this.worker = '';
+					this.getProjects();
+					this.workers = [];
+				}
+			},
+			projet: function(newval, oldval) { //部门id
+				if (newval != '') {
+					this.getWorker();
+				}
+				if (newval == 1) {
+					this.isSurper = false;
+				} else {
+					this.isSurper = true;
+				}
+			}
+		}
+	})
+</script>
